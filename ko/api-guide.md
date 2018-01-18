@@ -1,6 +1,6 @@
 ## Storage > Block Storage > API 가이드
 
-블록 스토리지 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/ko/Infrastructure%20Common/ko/api-common/)를 참조합니다.
+블록 스토리지 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/ko/Infrastructure%20Common/ko/api-guide/)를 참조합니다.
 
 ## 블록 스토리지 API
 
