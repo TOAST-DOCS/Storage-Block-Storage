@@ -4,6 +4,11 @@
 
 블록 스토리지 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](/Compute/Instance/ko/api-guide/#api-endpoint-url)과 [토큰 API](/Compute/Instance/ko/api-guide/#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에 토큰은 Request Body에 포함하여 사용합니다.
 
+예를 들어, 블록 스토리지 정보 조회는 다음 URL로 요청해야 합니다.
+
+	GET https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/volumes?id={volumeId}
+
+
 ## 블록 스토리지 API
 
 블록 스토리지 생성/삭제 및 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결/해제하는 기능은 [인스턴스 추가 기능 API](/Compute/Instance/ko/api-guide/#_8)를 통해 제공됩니다.
@@ -29,7 +34,7 @@
 | downloading | Image 다운로드 중 |
 | uploading | Image로 업로드 중 |
 
-### 블록 스토리지 조회
+### 블록 스토리지 정보 조회
 
 블록 스토리지의 정보를 조회합니다.
 
