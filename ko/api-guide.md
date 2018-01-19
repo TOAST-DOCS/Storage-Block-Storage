@@ -1,10 +1,12 @@
 ## Storage > Block Storage > API 가이드
 
-블록 스토리지 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/Infrastructure%20Common/ko/api-guide/)를 참조합니다.
+## 사전 준비
+
+블록 스토리지 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](/Compute/Instance/ko/api-guide/#api-endpoint-url)과 [토큰 API](/Compute/Instance/ko/api-guide/#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에 토큰은 Request Body에 포함하여 사용합니다.
 
 ## 블록 스토리지 API
 
-블록 스토리지 생성/삭제 및 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결/해제하는 기능은 [인스턴스 API](/Compute/Instance/ko/api-guide/)를 통해 제공됩니다.
+블록 스토리지 생성/삭제 및 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결/해제하는 기능은 [인스턴스 추가 기능 API](/Compute/Instance/ko/api-guide/#_8)를 통해 제공됩니다.
 
 ### 블록 스토리지 상태
 
@@ -103,7 +105,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | Token ID |
+| tokenId | Header | String | - | 토큰 ID |
 
 #### Request Body
 ```
