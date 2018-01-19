@@ -1,10 +1,10 @@
 ## Storage > Block Storage > API 가이드
 
-블록 스토리지 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/ko/Infrastructure%20Common/ko/api-guide/)를 참조합니다.
+블록 스토리지 API를 사용하려면 토큰 발급과 같은 사전 준비가 필요합니다. [API 사용 준비](/Infrastructure%20Common/ko/api-guide/)를 참조합니다.
 
 ## 블록 스토리지 API
 
-블록 스토리지 생성/삭제 및 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결/해제하는 기능은 [인스턴스 API](ko/Compute/Instance/ko/api-guide/)를 통해 제공됩니다.
+블록 스토리지 생성/삭제 및 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결/해제하는 기능은 [인스턴스 API](/Compute/Instance/ko/api-guide/)를 통해 제공됩니다.
 
 ### 블록 스토리지 상태
 
@@ -91,10 +91,10 @@ X-Auth-Token: {tokenId}
 | Size | Body | Integer | 블록 스토리지 크기 (GB) |
 | Status | Body | String | 블록 스토리지 상태 |
 
-#### 블록 스토리지 생성
+### 블록 스토리지 생성
 새로운 블록 스토리지를 생성합니다.
 
-##### Method, URL
+#### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/volumes
 X-Auth-Token: {tokenId}
@@ -105,7 +105,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | tokenId | Header | String | - | Token ID |
 
-##### Request Body
+#### Request Body
 ```
 {
     "volume": {
@@ -132,7 +132,7 @@ Content-Type: application/json;charset=UTF-8
 | Metadata Key / Metadata Value | Body | String | O | 블록 스토리지에 기입하고자 하는 메타데이터 정보 |
 | Block Storage Name | Body | String | - | 블록 스토리지 이름 |
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
@@ -167,10 +167,10 @@ Content-Type: application/json;charset=UTF-8
 | Size | Body | Integer | 블록 스토리지 크기 (GB) |
 | Status | Body | String | 블록 스토리지 상태 |
 
-#### 블록 스토리지 삭제
+### 블록 스토리지 삭제
 블록 스토리지를 삭제합니다. Status가 "available" "in-use" "error" "error_restoring" 인 블록 스토리지만 삭제할 수 있습니다.
 
-##### Method, URL
+#### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/volumes?id={volumeId}
 X-Auth-Token: {tokenId}
@@ -180,10 +180,10 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 | volumeId | Query | String | - | 삭제할 블록 스토리지 ID |
 
-##### Request Body
+#### Request Body
 이 API는 request body를 필요로 하지 않습니다.
 
-##### Response Body
+#### Response Body
 ```json
 {
     "header": {
