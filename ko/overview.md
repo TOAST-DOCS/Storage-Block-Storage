@@ -1,18 +1,18 @@
 ## Storage > Block Storage > 개요
 
-블록 스토리지는 인스턴스 기본 디스크 외에 추가로 연결하여 사용할 수 있는 가상 디스크입니다. 
+블록 스토리지는 인스턴스 기본 디스크 외에 추가로 연결하여 사용할 수 있는 가상 디스크입니다.
 
 - 연결된 인스턴스를 삭제하더라도 블록 스토리지는 삭제되지 않습니다.
 - 블록 스토리지는 여러 개의 인스턴스에서 동시에 연결하여 사용할 수 없습니다.
-- 연결이 해제된 블록 스토리지는 다른 인스턴스에 연결하여 쓸 수 있습니다. 
+- 연결이 해제된 블록 스토리지는 다른 인스턴스에 연결하여 쓸 수 있습니다.
 - 블록 스토리지는 같은 가용성 영역 안에 있는 인스턴스에만 연결 가능합니다.
 
-블록 스토리지는 여러 상황에서 쓰입니다. 
+블록 스토리지는 여러 상황에서 쓰입니다.
 
 - 기본 디스크의 저장 공간이 부족할 때 블록 스토리지를 추가로 장착하여 인스턴스의 저장공간을 늘일 수 있습니다.
 - 인스턴스를 삭제하기 전에 인스턴스의 기본 디스크에 있는 데이터를 영구 보관하기 위해 블록 디스크를 장착하고 데이터를 복사할 수 있습니다.
 
-블록 스토리지를 사용하려면 먼저, 
+블록 스토리지를 사용하려면 먼저,
 
 1. [블록 스토리지를 생성](/Storage/Block%20Storage/ko/console-guide/#_1)하고,
 2. 그 블록 스토리지를 [대상 인스턴스에 연결](/Storage/Block%20Storage/ko/console-guide/#_4)한 후에,
@@ -23,38 +23,83 @@
 
 ## 빈 블록 스토리지 사용하기
 ### 리눅스
+#### 파티션 생성하기
+블록 스토리지가 인스턴스에 연결되면 빈 디스크 장치로 등록됩니다. 등록된 디스크 목록은 리눅스의 `lsblk` 명령어를 통해 확인할 수 있습니다.
+```
+# lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+vda    253:0    0  20G  0 disk
+├─vda1 253:1    0   2G  0 part [SWAP]
+└─vda2 253:2    0  18G  0 part /
+vdb    253:16   0  10G  0 disk
+```
+위의 예제는 기본 디스크인 `vda`와 추가 디스크인 `vdb`가 연결되어 있음을 나타냅니다. `lsblk`의 출력 결과를 보면 `vda`에 파티션이 생성되어 있지만 `vdb`는 비어 있는 것을 알 수 있습니다.
 
-블록 스토리지가 인스턴스에 연결되면,
+> [참고] 디스크 장치의 이름은 `vd[a-z]+` 형태로 표현됩니다. 인스턴스에 블록 스토리지를 연결한 순서대로 알파벳 문자가 하나씩 올라가게 됩니다. 위의 예제에서 `vdb` 디스크는 두번째로 연결된 디스크를 의미합니다. 계속해서 디스크를 연결하면 `vdc`, `vdd`와 같은 형태로 이름을 부여받게 됩니다. 장치의 이름은 콘솔의 스토리지 목록 화면에서 확인할 수 있습니다.
 
-	# lsblk
-	NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
-	vda    253:0    0  20G  0 disk 
-	├─vda1 253:1    0   2G  0 part [SWAP]
-	└─vda2 253:2    0  18G  0 part /
-	vdb    253:16   0  10G  0 disk
+먼저 빈 디스크 장치인 `vdb`에 파티션을 생성하겠습니다. 일반적으로 디스크 전체를 사용하는 파티션 하나를 만들게 됩니다. 필요에 따라서 여러 개의 파티션을 생성하여 디스크를 나눠 사용할 수도 있습니다. 이 예제에서는 파티션을 하나만 생성해보도록 하겠습니다. 파티션을 생성하는 리눅스 명령어는 `fdisk`입니다. `fdisk`를 사용하여 파티션을 생성하는 방법은 다음과 같습니다.
+```
+# fdisk /dev/vdb
+Command (m for help): n
 
-와 같이 기본 디스크인 `vda`외에 `vdb`가 장착됩니다.
+Partition number (1-4): 1
+First cylinder (1-20805, default 1): 1
+Last cylinder, +cylinders or +size{K,M,G} (1-20805, default 20805): 20805
+Command (m for help): w
+```
+쉘에서 `fdisk /dev/{장치 이름}`을 입력하면 장치의 파티션 관리 명령을 내릴 수 있는 프롬프트가 나옵니다. 이 프롬프트에서 사용할 수 있는 명령 리스트를 보려면 `m`을 입력합니다. 이 예제에서는 새로운 파티션을 생성할 것이므로 "New Partition"을 의미하는 `n`을 입력합니다. 그러면 아래와 같이 생성할 파티션의 타입을 물어봅니다. 이 예제에서는 "Primary"를 의미하는 `p`를 입력하겠습니다.
+```
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+```
+다음으로 파티션의 타입을 결정하면 생성할 파티션의 갯수를 물어봅니다. 이 예제에서는 파티션 한개를 생성할 것이므로 `1`을 입력하고 넘어갑니다.
+```
+Partition number (1-4, default 1): 1
+```
+다음으로 파티션의 크기를 결정합니다. 생성한 블록 스토리지의 크기에 따라 입력할 수 있는 범위가 달라집니다. 이 예제에서는 전체 디스크를 사용하는 파티션을 생성할 것이므로 기본값을 사용하도록 합니다.
+```
+First sector (2048-20971519, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-20971519, default 20971519):
+Using default value 20971519
+Partition 1 of type Linux and of size 10 GiB is set
+```
+기본적인 파티션 설정이 끝났습니다. 지금까지 입력한 설정을 디스크에 반영하기 위해서 `w`를 입력합니다.
+```
+Command (m for help): w
+The partition table has been altered!
 
-새로 부착된 블록 스토리지는 빈 디스크이므로, 파티셔닝, 포맷, 마운트 과정을 거쳐야 사용 가능합니다. 다양한 방법으로 파티셔닝과 포맷이 가능합니다. 아래는 CentOS 인스턴스에서 `fdisk`와 `mkfs.ext4`를 이용하여 리눅스 시스템에서 일반적인 용도로 많이 사용되는 EXT4 파일 시스템을 만드는 과정을 예시로 나타낸 것입니다.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+```
+이것으로 파티션 생성 과정이 끝났습니다.
 
-	# fdisk /dev/vdb
-	Command (m for help): n
-	Command action
-	   e   extended
-	   p   primary partition (1-4)
-	p
-	Partition number (1-4): 1
-	First cylinder (1-20805, default 1): 1
-	Last cylinder, +cylinders or +size{K,M,G} (1-20805, default 20805): 20805
-	Command (m for help): w
+### 파티션 포맷하기
+생성한 파티션을 사용하려면 포맷을 해야 합니다. 포맷할 파티션을 찾기 위해 앞서 설명한 `lsblk` 명령어를 사용하겠습니다.
+```
+[root@host-192-168-0-67 ~]# lsblk /dev/vdb
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+vdb    253:16   0  10G  0 disk
+└─vdb1 253:17   0  10G  0 part /mnt/vdb
+```
+위의 예제에서 `vdb` 디스크에 `vdb1` 이라는 파티션이 생성된 것을 확인할 수 있습니다. 일반적으로 리눅스에서 파티션의 이름은 장치이름 + 숫자 형태가 됩니다.
 
-	# mkfs.ext4 /dev/vdb1
-	
-파일 시스템까지 만들어진 디스크는 마운트 할 위치를 만들고 그 디렉토리에 마운트 한 이후에 사용합니다. 
+이제 `vdb1` 파티션을 포맷해보도록 하겠습니다. 리눅스에서는 `mkfs` 명령어를 통해 파티션을 포맷합니다. 파티션을 포맷할 때 반드시 사용할 파일 시스템을 지정해야 합니다. 이 예제에서는 `xfs`를 사용하겠습니다. `xfs` 파일 시스템을 사용해서 포맷하는 방법은 다음과 같습니다.
+```
+# mkfs -t xfs /dev/vdb1
+```
+시간이 지나면 포맷이 완료됩니다.
+
+### 디스크 마운트
+파일 시스템까지 만들어진 디스크는 마운트 과정을 거쳐야 접근할 수 있습니다. 일반적으로 리눅스에서 디스크 마운트는 `mount` 명령어를 사용합니다. 그러나 `mount` 명령으로 마운트를 하는 경우 인스턴스가 재부팅되면 마운트가 해제되기 때문에 권장하는 방법은 아닙니다. 이 예제에서는 `fstab` 파일에 마운트할 디스크를 기술하는 방법으로 마운트하겠습니다.
 
 	# mkdir /mnt/new_disk
 	# mount /dev/vdb1 /mnt/new_disk
 
+
+> [참고] 위의 명령어는 다 sudo로 하셈 Cent OS는 기본이 root이지만 ubuntu나 debian은 다를 것임 암튼 그럼
 
 ### 윈도우
 
