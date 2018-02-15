@@ -142,26 +142,26 @@ tmpfs           921M     0  921M   0% /sys/fs/cgroup
 
 > [참고] 위의 과정을 한번에 처리하려면 아래의 스크립트를 참고하시기 바랍니다.
 > ```
->  #!/bin/bash
->  
->  DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
->  
->  for DEVICE_NAME in ${DEVICES[@]}
->  do
->     MOUNT_DIR=/mnt/$DEVICE_NAME
->     FS_TYPE=xfs
+> #!/bin/bash
+> <br>
+> DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)Â
+> <br>
+> for DEVICE_NAME in ${DEVICES[@]}
+> do
+>    MOUNT_DIR=/mnt/$DEVICE_NAME
+>    FS_TYPE=xfs
+> <br>
+>    mkdir -p $MOUNT_DIR
+> <br>
+>    echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
+>    PART_NAME="/dev/${DEVICE_NAME}1"
+>    mkfs -t $FS_TYPE -f $PART_NAME > /dev/null
 >
->     mkdir -p $MOUNT_DIR
+>    UUID=`blkid $PART_NAME -o export | grep UUID | cut -d'=' -f 2`
+>    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime 1 2" >> /etc/fstab
 >
->     echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
->     PART_NAME="/dev/${DEVICE_NAME}1"
->     mkfs -t $FS_TYPE -f $PART_NAME > /dev/null
->
->     UUID=`blkid $PART_NAME -o export | grep UUID | cut -d'=' -f 2`
->     echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime 1 2" >> /etc/fstab
->
->     mount -a
->  done
+>    mount -a
+> done
 > ```
 
 
