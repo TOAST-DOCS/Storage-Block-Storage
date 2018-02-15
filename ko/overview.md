@@ -141,7 +141,7 @@ tmpfs           921M     0  921M   0% /sys/fs/cgroup
 `df` 명령의 결과에서 새 파티션이 마운트되어 있는 것을 확인할 수 있습니다. 각 명령어에 대한 자세한 설명은 리눅스의 `man` 명령을 사용하시기 바랍니다.
 
 > [참고] 위의 과정을 한번에 처리하려면 아래의 스크립트를 참고하시기 바랍니다.
-> ```bash
+> ```
 >  #!/bin/bash
 >  
 >  DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
