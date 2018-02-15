@@ -144,16 +144,16 @@ tmpfs           921M     0  921M   0% /sys/fs/cgroup
 
 ```
 #!/bin/bash
-<br>
+
 DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
-<br>
+
 for DEVICE_NAME in ${DEVICES[@]}
 do
     MOUNT_DIR=/mnt/$DEVICE_NAME
     FS_TYPE=xfs
-<br>
+
    mkdir -p $MOUNT_DIR
-<br>
+
     echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
     PART_NAME="/dev/${DEVICE_NAME}1"
     mkfs -t $FS_TYPE -f $PART_NAME > /dev/null
@@ -252,14 +252,13 @@ D                                  NTFS             Fixed            Healthy    
 이제 윈도우 탐색기에서 디스크가 추가된 것을 확인 할 수 있습니다. PowerShell에 대한 보다 자세한 설명은 [윈도우 PowerShell 공식 가이드](https://docs.microsoft.com/ko-kr/powershell/module/?view=win10-ps)를 참고하시기 바랍니다.
 
 > [참고] 위의 과정을 한번에 처리하려면 아래의 스크립트를 참고하시기 바랍니다.
-> ```
-> PS C:\Users\Administrator> Get-Disk |
-> >> Where PartitionStyle -eq 'RAW' |
-> >> Initialize-Disk -PartitionStyle MBR -PassThru |
-> >> New-Partition -AssignDriveLetter -UseMaximumSize |
-> >> Format-Volume -FileSystem NTFS -Confirm:$false
-> >>
-> ```
+```
+PS C:\Users\Administrator> Get-Disk |
+   Where PartitionStyle -eq 'RAW' |
+   Initialize-Disk -PartitionStyle MBR -PassThru |
+   New-Partition -AssignDriveLetter -UseMaximumSize |
+   Format-Volume -FileSystem NTFS -Confirm:$false
+```
 
 ## 블록 스토리지 스냅숏
 
