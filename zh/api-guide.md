@@ -1,4 +1,4 @@
-## Storage > Block Storage > API Guide
+## Storage > Block Storage > API 가이드
 
 ## 사전 준비
 
@@ -70,11 +70,11 @@ X-Auth-Token: {tokenId}
                 }
             ],
             "availabilityZone": "{Availability Zone Name}",
-            "createdAt": "Created At",
+            "createdAt": "{Created At}",
             "description": "{Description}",
             "id": "{Block Storage ID}",
             "metadata": {
-                "Metadata Key": "{Metadata Value}"
+                "{Metadata Key}": "{Metadata Value}"
             },
             "name": "{Block Storage Name}",
             "size": "{Size}",
@@ -113,12 +113,11 @@ Content-Type: application/json;charset=UTF-8
 | tokenId | Header | String | - | 토큰 ID |
 
 #### Request Body
-```
+```json
 {
     "volume": {
         "description": "{Description}",
         "availabilityZone":"{Availability Zone Name}",
-        "snapshotId":"{Snapshot ID}",
         "size":"{Size}",
         "name":"{Block Storage Name}",
         "volumeType":"{Volume Type}",
@@ -133,8 +132,7 @@ Content-Type: application/json;charset=UTF-8
 | --- | --- | --- | --- | --- |
 | Description | Body | String | O | 블록 스토리지 설명 |
 | Availability Zone Name | Body | String | - | 블록 스토리지를 생성할 가용성 영역 이름 |
-| Snaptshot ID | Body | String | O | 스냅샷으로부터 블록 스토리지를 생성하고자 할 경우 사용하는 스냅샷 ID |
-| Size | Body | Integer | - | 블록 스토리지 크기. GB |
+| Size | Body | Integer | - | 블록 스토리지 크기 (GB). 10 ~ 1000 범위, 10단위 입력 |
 | Volume Type | Body | String | - | 생성할 블록 스토리지의 종류, 현재는 별도로 타입이 제공되지 않으므로 빈 문자열로 설정.  |
 | Metadata Key / Metadata Value | Body | String | O | 블록 스토리지에 기입하고자 하는 메타데이터 정보 |
 | Block Storage Name | Body | String | - | 블록 스토리지 이름 |
@@ -150,11 +148,11 @@ Content-Type: application/json;charset=UTF-8
     "volume": {
         "attachments": [],
         "availabilityZone": "{Availability Zone Name}",
-        "createdAt": "Created At",
+        "createdAt": "{Created At}",
         "description": "{Description}",
         "id": "{Block Storage ID}",
         "metadata": {
-            "Metadata Key": "{Metadata Value}"
+            "{Metadata Key}": "{Metadata Value}"
         },
         "name": "{Block Storage Name}",
         "size": "{Size}",
