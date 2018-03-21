@@ -1,4 +1,4 @@
-## Storage > Block Storage > API 가이드
+## Storage > Block Storage > API Guide
 
 ## 사전 준비
 
