@@ -14,8 +14,8 @@
 
 블록 스토리지를 사용하려면 다음 과정을 진행해야 합니다.
 
-1. [블록 스토리지를 생성](/Storage/Block%20Storage/ko/console-guide/#_1)합니다.
-2. 생성한 블록 스토리지를 [대상 인스턴스에 연결](/Storage/Block%20Storage/ko/console-guide/#_4)합니다.
+1. [블록 스토리지를 생성](/Storage/Block%20Storage/ja/console-guide/#_1)합니다.
+2. 생성한 블록 스토리지를 [대상 인스턴스에 연결](/Storage/Block%20Storage/ja/console-guide/#_4)합니다.
 3. 블록 스토리지 [파티션 작업, 포맷, 마운트](#_1)하여 사용합니다.
 
 블록 스토리지는 인스턴스 실행 중에도 연결할 수 있습니다. 연결된 블록 스토리지는 빈 디스크이므로 사용하기 전에 인스턴스의 운영체제에 따라 파티션 작업, 포맷, 마운트 작업을 직접 진행해야 합니다.
@@ -51,7 +51,7 @@ First cylinder (1-20805, default 1): 1
 Last cylinder, +cylinders or +size{K,M,G} (1-20805, default 20805): 20805
 Command (m for help): w
 ```
-셸에서 `fdisk /dev/{장치 이름}`을 입력하면 장치의 파티션 관리 명령을 입력할 수 있는 프롬프트가 나옵니다. 이 프롬프트에서 사용할 수 있는 명령 목록을 보려면 `m`을 입력합니다. 이 예제에서는 새로운 파티션을 생성할 것이므로 'New Partition'을 의미하는 `n`을 입력합니다. 그러면 아래와 같이 생성할 파티션의 타입을 물어봅니다. 이 예제에서는 'Primary'를 의미하는 `p`를 입력합니다. 파티션과 관련한 보다 자세한 정보는 [마스터 부트 레코드](https://ko.wikipedia.org/wiki/%EB%A7%88%EC%8A%A4%ED%84%B0_%EB%B6%80%ED%8A%B8_%EB%A0%88%EC%BD%94%EB%93%9C)를 참고합니다.
+셸에서 `fdisk /dev/{장치 이름}`을 입력하면 장치의 파티션 관리 명령을 입력할 수 있는 프롬프트가 나옵니다. 이 프롬프트에서 사용할 수 있는 명령 목록을 보려면 `m`을 입력합니다. 이 예제에서는 새로운 파티션을 생성할 것이므로 'New Partition'을 의미하는 `n`을 입력합니다. 그러면 아래와 같이 생성할 파티션의 타입을 물어봅니다. 이 예제에서는 'Primary'를 의미하는 `p`를 입력합니다. 파티션과 관련한 보다 자세한 정보는 [마스터 부트 레코드](https://ja.wikipedia.org/wiki/%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%96%E3%83%BC%E3%83%88%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89)를 참고합니다.
 ```
 Partition type:
    p   primary (0 primary, 0 extended, 4 free)
@@ -90,7 +90,7 @@ vdb    253:16   0  10G  0 disk
 ```
 위의 예제에서 `vdb` 디스크에 `vdb1`이라는 파티션이 생성된 것을 확인할 수 있습니다. 일반적으로 Linux에서 파티션의 이름은 '장치이름 + 숫자' 형태입니다.
 
-이제 `vdb1` 파티션을 포맷하겠습니다. Linux에서는 `mkfs` 명령어를 사용합니다. 파티션을 포맷할 때 반드시 사용할 파일 시스템을 지정해야 합니다. 이 예제에서는 널리 쓰이는 Linux 파일 시스템 중 하나인 `xfs`를 이용하여 포맷하겠습니다. Linux에서 사용 가능한 파일 시스템에 대해서는 [파일 시스템](https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%BC_%EC%8B%9C%EC%8A%A4%ED%85%9C#%EB%A6%AC%EB%88%85%EC%8A%A4%EC%9D%98_%ED%8C%8C%EC%9D%BC_%EC%8B%9C%EC%8A%A4%ED%85%9C)을 참고합니다.
+이제 `vdb1` 파티션을 포맷하겠습니다. Linux에서는 `mkfs` 명령어를 사용합니다. 파티션을 포맷할 때 반드시 사용할 파일 시스템을 지정해야 합니다. 이 예제에서는 널리 쓰이는 Linux 파일 시스템 중 하나인 `xfs`를 이용하여 포맷하겠습니다. Linux에서 사용 가능한 파일 시스템에 대해서는 [파일 시스템](https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0)을 참고합니다.
 ```
 # mkfs -t xfs /dev/vdb1
 ```
@@ -199,7 +199,7 @@ Windows 인스턴스에 연결된 블록 스토리지는 오프라인 상태의 
 2. **디스크 관리**의 디스크 목록에서 볼륨을 생성한 디스크를 마우스 오른쪽 버튼으로 클릭한 후 **드라이브 문자 및 경로 변경**을 선택합니다.
 3. 새 볼륨의 드라이브 문자 및 경로를 추가합니다.
 
-이제 Windows 탐색기에서 디스크가 추가된 것을 확인할 수 있습니다. 디스크 관리에 관한 보다 자세한 설명은 [새 디스크 초기화 | Microsoft Docs](https://docs.microsoft.com/ko-kr/windows-server/storage/disk-management/initialize-new-disks)를 참고합니다.
+이제 Windows 탐색기에서 디스크가 추가된 것을 확인할 수 있습니다. 디스크 관리에 관한 보다 자세한 설명은 [새 디스크 초기화 | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/storage/disk-management/initialize-new-disks)를 참고합니다.
 
 > [참고] Windows의 디스크 형식은 두 가지입니다.
 > * MBR: 예전부터 사용되는 디스크 형식이며, 2TB 이하의 디스크에서 사용합니다.
@@ -254,7 +254,7 @@ DriveLetter       FileSystemLabel  FileSystem       DriveType        HealthStatu
 D                                  NTFS             Fixed            Healthy                   9.92 GB          9.97 GB
 ```
 
-이제 Windows 탐색기에서 디스크가 추가된 것을 확인할 수 있습니다. PowerShell에 대한 보다 자세한 설명은 [PowerShell Module Browser | Microsoft Docs](https://docs.microsoft.com/ko-kr/powershell/module/?view=win10-ps)를 참고합니다.
+이제 Windows 탐색기에서 디스크가 추가된 것을 확인할 수 있습니다. PowerShell에 대한 보다 자세한 설명은 [PowerShell Module Browser | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/module/?view=win10-ps)를 참고합니다.
 
 > [참고] 위의 과정을 한 번에 처리하려면 아래의 스크립트를 참고하시기 바랍니다.
 ```

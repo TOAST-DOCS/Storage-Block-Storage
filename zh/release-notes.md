@@ -6,7 +6,7 @@
 * Public API 추가
     * Object Storage에 이어 Block Storage를 API로 사용할 수 있습니다.
     * 현재 제한적인 기능만 이용할 수 있으며, 추후 API 추가를 통해 기능이 확장될 예정입니다.
-    * [블록 스토리지 API 가이드](/Storage/Block%20Storage/ko/api-guide/)를 참고하시기 바랍니다.
+    * [블록 스토리지 API 가이드](/Storage/Block%20Storage/zh/api-guide/)를 참고하시기 바랍니다.
 
 
 
