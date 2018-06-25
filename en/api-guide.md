@@ -1,8 +1,8 @@
-## Storage > Block Storage > API Guide
+## Storage > Block Storage > API 가이드
 
 ## 사전 준비
 
-블록 스토리지 API를 사용하려면 앱키와 토큰이 필요합니다. [API Endpoint URL](/Compute/Instance/ko/api-guide/#api-endpoint-url)과 [토큰 API](/Compute/Instance/ko/api-guide/#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에 토큰은 Request Body에 포함하여 사용합니다.
+블록 스토리지 API를 사용하려면 앱키(Appkey)와 토큰이 필요합니다. [API Endpoint URL](/Compute/Instance/en/api-guide/#api-endpoint-url)과 [토큰 API](/Compute/Instance/en/api-guide/#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에, 토큰은 Request Body에 포함하여 사용합니다.
 
 예를 들어, 블록 스토리지 정보 조회는 다음 URL로 요청해야 합니다.
 
@@ -11,11 +11,11 @@
 
 ## 블록 스토리지 API
 
-블록 스토리지 생성/삭제 및 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결/해제하는 기능은 [인스턴스 추가 기능 API](/Compute/Instance/ko/api-guide/#_8)를 통해 제공됩니다.
+블록 스토리지 생성, 삭제, 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결하고 해제하는 기능은 [인스턴스 추가 기능 API](/Compute/Instance/en/api-guide/#_8)로 제공됩니다.
 
 ### 블록 스토리지 상태
 
-블록 스토리지는 다음과 같은 상태 값을 갖습니다.
+블록 스토리지는 다음과 같은 상탯값을 갖습니다.
 
 | Status | Description |
 | --- | --- |
@@ -25,14 +25,14 @@
 | detaching | 인스턴스에서 연결 해제 중 |
 | in-use | 인스턴스에 연결되어 사용 중인 상태 |
 | deleting | 삭제 중 |
-| error | 생성 중 에러 발생 |
-| error_deleting | 삭제 중 에러 발생 |
+| error | 생성 중 오류 발생 |
+| error_deleting | 삭제 중 오류 발생 |
 | backing-up | 백업 진행 중 |
 | restoring-backup | 백업 복구 중 |
-| error_backing-up | 백업 진행 중 에러 발생 |
-| error_restoring | 백업 복구 중 에러 발생 |
-| downloading | Image 다운로드 중 |
-| uploading | Image로 업로드 중 |
+| error_backing-up | 백업 진행 중 오류 발생 |
+| error_restoring | 백업 복구 중 오류 발생 |
+| downloading | 이미지 다운로드 중 |
+| uploading | 이미지로 업로드 중 |
 
 ### 블록 스토리지 정보 조회
 
@@ -47,10 +47,10 @@ X-Auth-Token: {tokenId}
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
-| volumeId | Query | String | O | 조회할 블록 스토리지 ID. 기재하지 않을 경우 모든 블록 스토리지의 정보를 조회합니다. |
+| volumeId | Query | String | O | 조회할 블록 스토리지 ID. 없으면 모든 블록 스토리지의 정보를 조회합니다. |
 
 #### Request Body
-이 API는 request body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 ```json
@@ -95,7 +95,7 @@ X-Auth-Token: {tokenId}
 | Block Storage ID | Body | String | 블록 스토리지 ID |
 | Metadata Key / Value | Body | Boolean | 블록 스토리지에 기재된 메타 데이터 |
 | Block Storage Name | Body | String | 블록 스토리지 이름 |
-| Size | Body | Integer | 블록 스토리지 크기 (GB) |
+| Size | Body | Integer | 블록 스토리지 크기(GB) |
 | Status | Body | String | 블록 스토리지 상태 |
 
 ### 블록 스토리지 생성
@@ -132,7 +132,7 @@ Content-Type: application/json;charset=UTF-8
 | --- | --- | --- | --- | --- |
 | Description | Body | String | O | 블록 스토리지 설명 |
 | Availability Zone Name | Body | String | - | 블록 스토리지를 생성할 가용성 영역 이름 |
-| Size | Body | Integer | - | 블록 스토리지 크기 (GB). 10 ~ 1000 범위, 10단위 입력 |
+| Size | Body | Integer | - | 블록 스토리지 크기(GB). 10~1000 범위, 10단위로 입력 |
 | Volume Type | Body | String | - | 생성할 블록 스토리지의 종류, 현재는 별도로 타입이 제공되지 않으므로 빈 문자열로 설정.  |
 | Metadata Key / Metadata Value | Body | String | O | 블록 스토리지에 기입하고자 하는 메타데이터 정보 |
 | Block Storage Name | Body | String | - | 블록 스토리지 이름 |
@@ -173,7 +173,7 @@ Content-Type: application/json;charset=UTF-8
 | Status | Body | String | 블록 스토리지 상태 |
 
 ### 블록 스토리지 삭제
-블록 스토리지를 삭제합니다. Status가 "available" "in-use" "error" "error_restoring" 인 블록 스토리지만 삭제할 수 있습니다.
+블록 스토리지를 삭제합니다. Status가 "available" "in-use" "error" "error_restoring"인 블록 스토리지만 삭제할 수 있습니다.
 
 #### Method, URL
 ```
@@ -186,7 +186,7 @@ X-Auth-Token: {tokenId}
 | volumeId | Query | String | - | 삭제할 블록 스토리지 ID |
 
 #### Request Body
-이 API는 request body를 필요로 하지 않습니다.
+이 API는 Request Body가 필요 없습니다.
 
 #### Response Body
 ```json
