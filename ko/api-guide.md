@@ -78,7 +78,8 @@ X-Auth-Token: {tokenId}
             },
             "name": "{Block Storage Name}",
             "size": "{Size}",
-            "status": "{Status}"
+            "status": "{Status}",
+						"volumeType": "{Volume Type}"
         }
     ]
 }
@@ -97,6 +98,7 @@ X-Auth-Token: {tokenId}
 | Block Storage Name | Body | String | 블록 스토리지 이름 |
 | Size | Body | Integer | 블록 스토리지 크기(GB) |
 | Status | Body | String | 블록 스토리지 상태 |
+| Volume Type | Body | String | 블록 스토리지 종류. "General HDD" 또는 "General SSD" 중 하나. |
 
 ### 블록 스토리지 생성
 새로운 블록 스토리지를 생성합니다.
@@ -133,7 +135,7 @@ Content-Type: application/json;charset=UTF-8
 | Description | Body | String | O | 블록 스토리지 설명 |
 | Availability Zone Name | Body | String | - | 블록 스토리지를 생성할 가용성 영역 이름 |
 | Size | Body | Integer | - | 블록 스토리지 크기(GB). 10~1000 범위, 10단위로 입력 |
-| Volume Type | Body | String | - | 생성할 블록 스토리지의 종류, 현재는 별도로 타입이 제공되지 않으므로 빈 문자열로 설정.  |
+| Volume Type | Body | String | O | 생성할 블록 스토리지 종류. "General HDD" 또는 "General SSD" 중 하나. |
 | Metadata Key / Metadata Value | Body | String | O | 블록 스토리지에 기입하고자 하는 메타데이터 정보 |
 | Block Storage Name | Body | String | - | 블록 스토리지 이름 |
 
@@ -156,7 +158,8 @@ Content-Type: application/json;charset=UTF-8
         },
         "name": "{Block Storage Name}",
         "size": "{Size}",
-        "status": "{Status}"
+        "status": "{Status}",
+				"volumeType": "{Volume Type}"
     }
 }
 ```
@@ -171,6 +174,7 @@ Content-Type: application/json;charset=UTF-8
 | Block Storage Name | Body | String | 블록 스토리지 이름 |
 | Size | Body | Integer | 블록 스토리지 크기 (GB) |
 | Status | Body | String | 블록 스토리지 상태 |
+| Volume Type | Body | String | 블록 스토리지 종류. "General HDD" 또는 "General SSD" 중 하나. |
 
 ### 블록 스토리지 삭제
 블록 스토리지를 삭제합니다. Status가 "available" "in-use" "error" "error_restoring"인 블록 스토리지만 삭제할 수 있습니다.
