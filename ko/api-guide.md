@@ -79,7 +79,7 @@ X-Auth-Token: {tokenId}
             "name": "{Block Storage Name}",
             "size": "{Size}",
             "status": "{Status}",
-						"volumeType": "{Volume Type}"
+            "volumeType": "{Volume Type}"
         }
     ]
 }
@@ -159,7 +159,7 @@ Content-Type: application/json;charset=UTF-8
         "name": "{Block Storage Name}",
         "size": "{Size}",
         "status": "{Status}",
-				"volumeType": "{Volume Type}"
+        "volumeType": "{Volume Type}"
     }
 }
 ```
