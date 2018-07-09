@@ -79,7 +79,7 @@ This API does not require the request body.
             "name": "{Block Storage Name}",
             "size": "{Size}",
             "status": "{Status}",
-	    "volumeType": "{Volume Type}"
+            "volumeType": "{Volume Type}"
         }
     ]
 }
