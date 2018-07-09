@@ -78,7 +78,8 @@ This API does not require the request body.
             },
             "name": "{Block Storage Name}",
             "size": "{Size}",
-            "status": "{Status}"
+            "status": "{Status}",
+	    "volumeType": "{Volume Type}"
         }
     ]
 }
@@ -97,6 +98,7 @@ This API does not require the request body.
 | Block Storage Name | Body | String | Name of block storage |
 | Size | Body | Integer | Size of block storage (GB) |
 | Status | Body | String | Status of block storage |
+| Volume Type | Body | String | Type of block storage; one of "General HDD" or "General SSD" |
 
 ### Create Block Storage 
 Create new block storage. 
