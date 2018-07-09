@@ -2,7 +2,7 @@
 
 ## Prerequisites 
 
-To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Instance/ko/api-guide/#api-endpoint-url) and [Token API](/Compute/Instance/ko/api-guide/#api). Include Appkey to API Endpoint URL and token to the Request Body.
+To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Instance/en/api-guide/#api-endpoint-url) and [Token API](/Compute/Instance/en/api-guide/#api). Include Appkey to API Endpoint URL and token to the Request Body.
 
 For instance, retrieving block storage must be requested to the following URL:  
 
@@ -11,7 +11,7 @@ For instance, retrieving block storage must be requested to the following URL:
 
 ## Block Storage API
 
-Block storage can be created, deleted, and retrieved. Attaching/detaching block storage are available via [Additional Instance Functions API](/Compute/Instance/ko/api-guide/#_8). 
+Block storage can be created, deleted, and retrieved. Attaching/detaching block storage are available via [Additional Instance Functions API](/Compute/Instance/en/api-guide/#_8). 
 
 ### Status of Block Storage 
 

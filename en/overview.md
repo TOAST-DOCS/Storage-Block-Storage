@@ -14,8 +14,8 @@ Block storage is useful in many situations:
 
 Must follow the procedure as below, to use block storage: 
 
-1. [Create block storage](/Storage/Block%20Storage/ko/console-guide/#_1).  
-2. [Attach it to the instance ](/Storage/Block%20Storage/ko/console-guide/#_4).
+1. [Create block storage](/Storage/Block%20Storage/en/console-guide/#_1).  
+2. [Attach it to the instance ](/Storage/Block%20Storage/en/console-guide/#_4).
 3. [Divide partitions, format, and mount ](#_1) to use block storage.
 
 Block storage can be attached while an instance is running. Since block storage is attached as empty disk, partitioning, formatting, and mounting may be required depending on the instance operating system. 
@@ -51,7 +51,7 @@ First cylinder (1-20805, default 1): 1
 Last cylinder, +cylinders or +size{K,M,G} (1-20805, default 20805): 20805
 Command (m for help): w
 ```
-Enter `fdisk /dev/{device name}`in the shell and a prompt will show to enter commands for partition management of a device. To view the list of available commands in the prompt, enter `m`. In this example, enter `n` which means 'New Partition', instead, as a new partition is to be created. Then, you'll be required to enter the type of partition to create. Here, enter `p`  which refers to 'Primary'. For more details on partitioning, refer to [Master Boot Records](https://ko.wikipedia.org/wiki/%EB%A7%88%EC%8A%A4%ED%84%B0_%EB%B6%80%ED%8A%B8_%EB%A0%88%EC%BD%94%EB%93%9C).
+Enter `fdisk /dev/{device name}`in the shell and a prompt will show to enter commands for partition management of a device. To view the list of available commands in the prompt, enter `m`. In this example, enter `n` which means 'New Partition', instead, as a new partition is to be created. Then, you'll be required to enter the type of partition to create. Here, enter `p`  which refers to 'Primary'. For more details on partitioning, refer to [Master Boot Records](https://en.wikipedia.org/wiki/Master_boot_record).
 ```
 Partition type:
    p   primary (0 primary, 0 extended, 4 free)
@@ -90,7 +90,7 @@ vdb    253:16   0  10G  0 disk
 ```
 The example shows how a partition called `vdb1` has been created under the `vdb` disk. Generally in Linux, a partition is named, 'device name + number'.   
 
-Now, let's format the `vdb1` partition. In Linux,  `mkfs`  is used as the command word. To format partitions, it is required  to specify a corresponding file system. In this example, let's use `xfs`, which is one of the widely used Linux file systems. Refer to [File Systems](https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%BC_%EC%8B%9C%EC%8A%A4%ED%85%9C#%EB%A6%AC%EB%88%85%EC%8A%A4%EC%9D%98_%ED%8C%8C%EC%9D%BC_%EC%8B%9C%EC%8A%A4%ED%85%9C) for available Linux file systems. 
+Now, let's format the `vdb1` partition. In Linux,  `mkfs`  is used as the command word. To format partitions, it is required  to specify a corresponding file system. In this example, let's use `xfs`, which is one of the widely used Linux file systems. Refer to [File Systems](https://en.wikipedia.org/wiki/File_system) for available Linux file systems. 
 ```
 # mkfs -t xfs /dev/vdb1
 ```
@@ -198,7 +198,7 @@ Configure the volume available at **Disk Management**.
 2. Right-click the disk with volume created on the list of disks at **Disk Management** and select **Change Drive Letter and Paths**. 
 3. Add a drive letter and paths to a new volume. 
 
- You can find disks added via Windows browser. For more details on disk management, refer to [Initialize new disks | Microsoft Docs](https://docs.microsoft.com/ko-kr/windows-server/storage/disk-management/initialize-new-disks).
+ You can find disks added via Windows browser. For more details on disk management, refer to [Initialize new disks | Microsoft Docs](https://docs.microsoft.com/en-us/windows-server/storage/disk-management/initialize-new-disks).
 
 > [Note] Windows provides two types of disks: 
 > * Master Boot Record (MBR): Original disk type, which is applied to less than 2TB-disks. 
@@ -253,7 +253,7 @@ DriveLetter       FileSystemLabel  FileSystem       DriveType        HealthStatu
 D                                  NTFS             Fixed            Healthy                   9.92 GB          9.97 GB
 ```
 
- You can find disks added via Windows browser. For more details on PowerShell, refer to [PowerShell Module Browser | Microsoft Docs](https://docs.microsoft.com/ko-kr/powershell/module/?view=win10-ps).
+ You can find disks added via Windows browser. For more details on PowerShell, refer to [PowerShell Module Browser | Microsoft Docs](https://docs.microsoft.com/en-us/powershell/module/?view=win10-ps).
 
 > [Note] Take reference of the script as below to process the procedure in the above all at once.  
 ```
