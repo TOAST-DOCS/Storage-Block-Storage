@@ -1,51 +1,51 @@
-## Storage > Block Storage > 콘솔 사용 가이드
+## Storage > Block Storage > Console Guide 
 
-## 블록 스토리지 생성
+## Create Block Storage
 
-인스턴스에 연결할 블록 스토리지를 생성합니다. 블록 스토리지 크기는 최소 10GB, 최대 1,000GB입니다.
+Create block storage to be attached to an instance. The size ranges from 10GB, up to 1,000GB. 
 
-블록 스토리지는 아무 데이터도 들어 있지 않은 빈 블록 스토리지로 만들 수도 있으며, 기존 블록 스토리지의 스냅숏으로도 생성할 수 있습니다.
+Block storage can be created with empty storage containing no data, or by snapshots of existing block storage.  
 
-빈 블록 스토리지를 생성하려면 **Block Storage 소스**를 **소스 없음, 빈 Block Storage**로 선택합니다. 빈 블록 스토리지는 인스턴스에 연결 후, 파티션을 나누고 포맷을 한 후에 사용해야 합니다. 블록 스토리지 사용법은 [블록 스토리지 개요 > 빈 블록 스토리지 사용](/Storage/Block%20Storage/en/overview/#_1)를 참고합니다. 빈 블록 스토리지가 위치할 가용성 영역(availability zone)은 생성할 블록 스토리지를 연결할 인스턴스가 있는 가용성 영역을 사용합니다. 볼륨 타입은 필요한 I/O 성능에 따라 **범용 HDD**나 **범용 SSD** 중 하나를 선택합니다.
+To create an empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#_1) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For volume type, choose either **General HDD** or **General SSD**, based on the required I/O performance.
 
-블록 스토리지의 스냅숏으로부터 블록 스토리지를 생성할 수도 있습니다. 스냅숏으로부터 블록 스토리지를 생성하는 경우, 블록 스토리지의 크기는 스냅숏의 크기와 같거나 더 커야 합니다. 크기를 더 크게 설정한다면 고객이 직접 기존 블록 스토리지의 파티션을 조정하거나 새로운 파티션을 추가하여 늘어난 저장 공간을 사용해야 합니다.
+You can also create block storage from snapshots. In this case, the size of block storage must be same or larger than that of a snapshot. To set a larger size, customer must adjust partitions of existing block storage or add more partitions so as to make use of increased space. 
 
-스냅숏으로 블록 스토리지를 생성하는 경우, 블록 스토리지의 가용성 영역은 스냅숏이 저장되어 있는 가용성 영역으로 고정됩니다. 스냅숏과 다른 가용성 영역으로는 블록 스토리지 생성할 수 없습니다.
+To create block storage with snapshots, the availability zone of block storage shall be fixed in the zone where the snapshot is saved:  cannot create block storage in any different availability zone.   
 
-## 블록 스토리지 삭제
+## Delete Block Storage 
 
-블록 스토리지를 삭제하기 전에 다음 사항을 확인합니다.
+Check the following before block storage is deleted: 
 
-* 인스턴스에 연결되어 있는 블록 스토리지는 삭제할 수 없습니다. 먼저 연결을 해제합니다.
-* 스냅숏을 가지고 있는 블록 스토리지는 삭제할 수 없습니다. 블록 스토리지의 스냅숏을 모두 삭제합니다.
+* Cannot delete block storage attached to an instance: detach first. 
+* Cannot delete block storage which has snapshots: delete all snapshots of block storage. 
 
-한번 삭제된 블록 스토리지는 다시 복구할 수 없습니다.
+Block storage, once deleted, cannot be restored. 
 
-## 연결 관리
+## Manage Attachment 
 
-### 블록 스토리지 연결
+### Attach Block Storage
 
-인스턴스에 블록 스토리지를 연결합니다. 인스턴스가 실행 중일 때에도 연결할 수 있습니다. 블록 스토리지는 같은 가용성 영역에 있는 인스턴스에만 연결할 수 있습니다. 블록 스토리지를 생성할 때 연결할 인스턴스와 동일한 가용성 영역에서 블록 스토리지를 만들도록 합니다.
+Attach block storage to an instance: it is available even when an instance is running. Block storage can be attached to those instances that belong to the same availability zone only. Make sure the block storage is created within a same availability zone where the instance to be attached with belongs to. 
 
-빈 블록 스토리지를 연결하면 인스턴스에서 파티션을 나누고 포맷한 후에 사용해야 합니다. 포맷이 된 블록 스토리지는 마운트하여 사용합니다. 스냅숏으로 만든 블록 스토리지도 고객이 직접 인스턴스 내에서 마운트해야 사용할 수 있습니다.
+To use empty block storage, its partition must be divided at the instance and formatted: the formatted block storage needs to be mounted. For block storage created by using snapshots, customer must mount it within instance before use. 
 
-> [참고]
-> 운영체제의 기능에 따라 자동으로 마운트되어 별도의 마운트 과정이 필요 없을 수도 있습니다. 
+> [Note]
+> Depending on the operating system, mounting may be automatically applied, requiring no further mounting process. 
 
-### 블록 스토리지 연결 해제
+### Detach Block Storage
 
-인스턴스에서 필요 없는 블록 스토리지를 연결 해제합니다. 
+Detach unnecessary block storage from an instance. 
 
-인스턴스가 실행 중인 상태에서도 블록 스토리지를 연결 해제할 수 있습니다. 블록 스토리지 데이터에 손상을 주지 않고 연결 해제하려면 인스턴스 안에서 블록 스토리지를 마운트 해제해야 합니다.
+Detaching block storage is available even when an instance is running. To detach without damaging block storage data, block storage must be unmounted within the instance. 
 
-**Linux 인스턴스**
+**Linux Instance**
 
-	# umount <마운트 포인트>
+	# umount <Mount-points>
 
-**Windows 인스턴스**
+**Windows Instance**
 
-**디스크 관리**에서 해당 디스크를 **오프라인**으로 만든 후 연결 해제합니다.
+Create an **offline** disk in **Manage Disks** and detach.  
 
-## 스냅숏 생성
+## Create Snapshots 
 
-블록 스토리지의 읽기 전용 복사본을 만듭니다. 블록 스토리지가 인스턴스에 연결되어 있는 상태에서도 블록 스토리지 스냅숏을 생성할 수 있지만 데이터의 정합성과 안정성을 보장하려면 인스턴스에서 연결을 해제하고 블록 스토리지 스냅숏을 생성하기를 권장합니다. 
+Create a read-only copy of block storage. It is possible to create block storage snapshots even while the storage is attached to an instance: however, to ensure data integrity and stability, it is recommended to detach from instance first, and create block storage snapshots.  
