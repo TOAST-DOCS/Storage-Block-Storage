@@ -123,7 +123,7 @@ mkdir -p /mnt/vdb
 ```
 마운트 대상 디렉터리가 준비되었으면 다음과 같이 디스크를 등록합니다.
 ```
-# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f xfs defaults,nodev,noatime 1 2" >> /etc/fstab
+# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime 1 2" >> /etc/fstab
 ```
 마지막으로 `/etc/fstab`의 내용을 반영해야 합니다. `mount -a` 명령어로 `/etc/fstab`에 등록된 모든 디스크를 마운트합니다.
 ```
@@ -145,31 +145,57 @@ tmpfs           921M     0  921M   0% /sys/fs/cgroup
 각 명령어에 대한 자세한 설명은 Linux의 `man` 명령으로 확인할 수 있습니다.
 
 > [참고] 위의 과정을 한 번에 처리하려면 아래의 스크립트를 참고하시기 바랍니다.
-> 아래의 스크립트는 CentOS에서 테스트한 것입니다.
+> 아래의 스크립트는 CentOS 7에서 테스트한 것입니다.
 
-```
-#!/bin/bash
+> ```
+> #!/bin/bash
+>
+> DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
+>
+> for DEVICE_NAME in ${DEVICES[@]}
+> do
+>     MOUNT_DIR=/mnt/$DEVICE_NAME
+>     FS_TYPE=xfs
+>
+>     mkdir -p $MOUNT_DIR
+>
+>     echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
+>     PART_NAME="/dev/${DEVICE_NAME}1"
+>     mkfs -t $FS_TYPE $PART_NAME > /dev/null
+>
+>     UUID=`blkid $PART_NAME -o export | grep "^UUID=" | cut -d'=' -f 2`
+>     echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime 1 2" >> /etc/fstab
+>
+>     mount -a
+> done
+> ```
 
-DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
 
-for DEVICE_NAME in ${DEVICES[@]}
-do
-    MOUNT_DIR=/mnt/$DEVICE_NAME
-    FS_TYPE=xfs
-
-   mkdir -p $MOUNT_DIR
-
-    echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
-    PART_NAME="/dev/${DEVICE_NAME}1"
-    mkfs -t $FS_TYPE -f $PART_NAME > /dev/null
-
-    UUID=`blkid $PART_NAME -o export | grep UUID | cut -d'=' -f 2`
-    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime 1 2" >> /etc/fstab
-
-    mount -a
-done
-```
-
+> [참고] CentOS6, Debian, Ubuntu는 기본 파일 시스템이 ext4 입니다.
+> 따라서 아래의 스크립트를 사용해야 합니다.
+>
+> ```
+> #!/bin/bash
+>
+> DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
+>
+> for DEVICE_NAME in ${DEVICES[@]}
+> do
+>     MOUNT_DIR=/mnt/$DEVICE_NAME
+>     FS_TYPE=ext4
+>
+>     mkdir -p $MOUNT_DIR
+>
+>     echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
+>     PART_NAME="/dev/${DEVICE_NAME}1"
+>     mkfs -t $FS_TYPE $PART_NAME > /dev/null
+>
+>     UUID=`blkid $PART_NAME -o export | grep "^UUID=" | cut -d'=' -f 2`
+>     echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime 1 2" >> /etc/fstab
+>
+>     mount -a
+> done
+> ```
 
 ### Windows
 Windows에서 볼륨을 추가하는 방법은 크게 두 가지입니다. 첫 번째는 GUI 기반의 **서버 관리자**를 사용하는 것이고, 두 번째는 CLI 기반의 **PowerShell**을 사용하는 것입니다. 이 문서에서는 각각의 방법을 간략하게 소개합니다.
@@ -256,14 +282,30 @@ D                                  NTFS             Fixed            Healthy    
 
 이제 Windows 탐색기에서 디스크가 추가된 것을 확인할 수 있습니다. PowerShell에 대한 보다 자세한 설명은 [PowerShell Module Browser | Microsoft Docs](https://docs.microsoft.com/ko-kr/powershell/module/?view=win10-ps)를 참고합니다.
 
-> [참고] 위의 과정을 한 번에 처리하려면 아래의 스크립트를 참고하시기 바랍니다.
-```
-PS C:\Users\Administrator> Get-Disk |
-   Where PartitionStyle -eq 'RAW' |
-   Initialize-Disk -PartitionStyle GPT -PassThru |
-   New-Partition -AssignDriveLetter -UseMaximumSize |
-   Format-Volume -FileSystem NTFS -Confirm:$false
-```
+> [참고] 위의 과정을 한 번에 처리하려면 아래의 스크립트를 참고하시기 바랍니다. 아래의 스크립트는 PowerShell 3.0 이상을 지원하는 Windows 2012, 2016에서 테스트한 것입니다.
+> ```
+> Get-Disk |
+> Where PartitionStyle -eq 'RAW' |
+> Initialize-Disk -PartitionStyle GPT -PassThru |
+> New-Partition -AssignDriveLetter -UseMaximumSize |
+> Format-Volume -FileSystem NTFS -Confirm:$false
+> ```
+
+
+> [참고] PowerShell 2.0까지 지원하는 Windows 2008에서는 아래의 스크립트를 사용하여 디스크를 추가할 수 있습니다.
+> ```
+> $newdisk = gwmi -Query "SELECT * FROM Win32_diskdrive where partitions=0"
+> $index = $newdisk.index
+> $Scriptblock=@"
+> select disk=$index
+> clean
+> convert GPT
+> Create Partition Primary
+> Format fs=ntfs quick
+> assign
+> "@
+> $Scriptblock | diskpart
+> ```
 
 ## 블록 스토리지 스냅숏
 
