@@ -157,7 +157,7 @@ tmpfs           921M     0  921M   0% /sys/fs/cgroup
 >     MOUNT_DIR=/mnt/$DEVICE_NAME
 >     FS_TYPE=xfs
 >
->    mkdir -p $MOUNT_DIR
+>     mkdir -p $MOUNT_DIR
 >
 >     echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
 >     PART_NAME="/dev/${DEVICE_NAME}1"
