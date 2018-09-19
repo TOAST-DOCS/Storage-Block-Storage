@@ -176,6 +176,7 @@ done
 
 ```
 #!/bin/bash
+
 DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
 
 for DEVICE_NAME in ${DEVICES[@]}
