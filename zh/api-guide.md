@@ -156,7 +156,8 @@ Content-Type: application/json;charset=UTF-8
         },
         "name": "{Block Storage Name}",
         "size": "{Size}",
-        "status": "{Status}"
+        "status": "{Status}",
+        "volumeType": "{Volume Type}"
     }
 }
 ```
