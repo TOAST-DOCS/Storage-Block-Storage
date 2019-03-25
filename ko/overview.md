@@ -256,9 +256,9 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 `New-Partition` 명령으로 파티션을 생성합니다. 각 옵션 설명은 다음과 같습니다.
-* -DiskNumber: 파티션을 생성할 디스크 번호를 선택합니다.
-* -AssignDriveLetter: 생성한 파티션에 드라이브 문자를 자동으로 할당하도록 설정합니다.
-* -UseMaximumSize: 파티션의 크기로 디스크 가용 용량 전체를 선택합니다.
+* ‒DiskNumber: 파티션을 생성할 디스크 번호를 선택합니다.
+* ‒AssignDriveLetter: 생성한 파티션에 드라이브 문자를 자동으로 할당하도록 설정합니다.
+* ‒UseMaximumSize: 파티션의 크기로 디스크 가용 용량 전체를 선택합니다.
 
 ```
 PS C:\Users\Administrator> New-Partition -DiskNumber 1 -AssignDriveLetter -UseMaximumSize
