@@ -260,7 +260,6 @@ Number Friendly Name                            OperationalStatus               
 * -AssignDriveLetter: 생성한 파티션에 드라이브 문자를 자동으로 할당하도록 설정합니다.
 * -UseMaximumSize: 파티션의 크기로 디스크 가용 용량 전체를 선택합니다.
 
-
 ```
 PS C:\Users\Administrator> New-Partition -DiskNumber 1 -AssignDriveLetter -UseMaximumSize
    Disk Number: 1
