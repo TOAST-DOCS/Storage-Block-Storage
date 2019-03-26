@@ -219,8 +219,9 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 `Initialize-Disk`コマンドでディスクを初期化します。各オプションの説明は次のとおりです。
-- Number：初期化するディスクの番号を指定します。
-- PartitionStyle：パーティション形式を指定します。この例では**サーバー管理者**での場合同様、パーティション形式をGPTに指定します。
+
+* Number：初期化するディスクの番号を指定します。
+* PartitionStyle：パーティション形式を指定します。この例では**サーバー管理者**での場合同様、パーティション形式をGPTに指定します。
 
 ```
 PS C:\Users\Administrator> Initialize-Disk -Number 1 -PartitionStyle GPT
@@ -230,9 +231,10 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 `New-Partition`コマンドでパーティションを作成します。各オプションの説明は次のとおりです。
-- DiskNumber：パーティションを作成するディスク番号を選択します。
-- AssignDriveLetter：作成したパーティションにドライブ文字を自動的に割り当てるように設定します。
-- UseMaximumSize：パーティションのサイズにディスク可用容量全体を選択します。
+
+* DiskNumber：パーティションを作成するディスク番号を選択します。
+* AssignDriveLetter：作成したパーティションにドライブ文字を自動的に割り当てるように設定します。
+* UseMaximumSize：パーティションのサイズにディスク可用容量全体を選択します。
 
 ```
 PS C:\Users\Administrator> New-Partition -DiskNumber 1 -AssignDriveLetter -UseMaximumSize
@@ -243,8 +245,9 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 `Format-Volume`コマンドでパーティションをフォーマットします。各オプションの説明は次のとおりです。
-- FileSystem：使用するファイルシステム形式を指定します。この例ではNTFSに指定します。
-- Confirm：ユーザー確認のためのプロンプト出力をするか指定します。この例では尋ねないようにfalseに設定します。
+
+* FileSystem：使用するファイルシステム形式を指定します。この例ではNTFSに指定します。
+* Confirm：ユーザー確認のためのプロンプト出力をするか指定します。この例では尋ねないようにfalseに設定します。
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false

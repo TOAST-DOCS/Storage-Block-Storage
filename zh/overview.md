@@ -219,8 +219,9 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 使用`Initialize-Disk`命令初始化磁盘。各选项说明如下：
-- Number:选择要初始化的磁盘编号。
-- PartitionStyle:选择分区形式。在此示例中，与在**服务器管理器**中的情况一样，将选择GPT分区形式。 
+
+* Number:选择要初始化的磁盘编号。
+* PartitionStyle:选择分区形式。在此示例中，与在**服务器管理器**中的情况一样，将选择GPT分区形式。 
 
 ```
 PS C:\Users\Administrator> Initialize-Disk -Number 1 -PartitionStyle GPT
@@ -230,9 +231,10 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 通过`New-Partition`命令创建分区。各选项说明如下：
-- DiskNumber:选择要创建分区的磁盘编号。
-- AssignDriveLetter:设置自动为创建的分区分配驱动器号。
-- UseMaximumSize:选择整个磁盘容量作为分区大小。
+
+* DiskNumber:选择要创建分区的磁盘编号。
+* AssignDriveLetter:设置自动为创建的分区分配驱动器号。
+* UseMaximumSize:选择整个磁盘容量作为分区大小。
 
 ```
 PS C:\Users\Administrator> New-Partition -DiskNumber 1 -AssignDriveLetter -UseMaximumSize
@@ -243,8 +245,9 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 使用`Format-Volume`命令格式化分区。各选项说明如下：
-- FileSystem: 选定要使用的文件系统类型。在此示例中将选择NTFS。
-- Confirm: 选定以使用者确认为目的的提示输出与否。在该例题中，为了防止出现提示等选择框，而设定为false。
+
+* FileSystem: 选定要使用的文件系统类型。在此示例中将选择NTFS。
+* Confirm: 选定以使用者确认为目的的提示输出与否。在该例题中，为了防止出现提示等选择框，而设定为false。
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false
