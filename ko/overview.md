@@ -246,8 +246,8 @@ Number Friendly Name                            OperationalStatus               
 
 `Initialize-Disk` 명령으로 디스크를 초기화합니다. 각 옵션 설명은 다음과 같습니다.
 
-- Number: 초기화할 디스크의 번호를 지정합니다.
-- PartitionStyle: 디스크 형식을 지정합니다. 이 예제에서는 **서버 관리자**에서의 경우와 마찬가지로 디스크 형식을 GPT로 지정합니다.
+* Number: 초기화할 디스크의 번호를 지정합니다.
+* PartitionStyle: 디스크 형식을 지정합니다. 이 예제에서는 **서버 관리자**에서의 경우와 마찬가지로 디스크 형식을 GPT로 지정합니다.
 
 ```
 PS C:\Users\Administrator> Initialize-Disk -Number 1 -PartitionStyle GPT
@@ -258,9 +258,9 @@ Number Friendly Name                            OperationalStatus               
 
 `New-Partition` 명령으로 파티션을 생성합니다. 각 옵션 설명은 다음과 같습니다.
 
-- DiskNumber: 파티션을 생성할 디스크 번호를 선택합니다.
-- AssignDriveLetter: 생성한 파티션에 드라이브 문자를 자동으로 할당하도록 설정합니다.
-- UseMaximumSize: 파티션의 크기로 디스크 가용 용량 전체를 선택합니다.
+* DiskNumber: 파티션을 생성할 디스크 번호를 선택합니다.
+* AssignDriveLetter: 생성한 파티션에 드라이브 문자를 자동으로 할당하도록 설정합니다.
+* UseMaximumSize: 파티션의 크기로 디스크 가용 용량 전체를 선택합니다.
 
 ```
 PS C:\Users\Administrator> New-Partition -DiskNumber 1 -AssignDriveLetter -UseMaximumSize
@@ -271,8 +271,8 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 `Format-Volume` 명령으로 파티션을 포맷합니다. 각 옵션 설명은 다음과 같습니다.
-- FileSystem: 사용할 파일 시스템 형식을 지정합니다. 이 예제에서는 NTFS로 지정합니다.
-- Confirm: 사용자 확인을 위한 프롬프트 출력 여부를 지정합니다. 이 예제에서는 묻지 않도록 false로 설정합니다.
+* FileSystem: 사용할 파일 시스템 형식을 지정합니다. 이 예제에서는 NTFS로 지정합니다.
+* Confirm: 사용자 확인을 위한 프롬프트 출력 여부를 지정합니다. 이 예제에서는 묻지 않도록 false로 설정합니다.
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false
