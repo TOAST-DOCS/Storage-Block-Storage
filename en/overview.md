@@ -242,8 +242,8 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 Type`Format-Volume` to format partitions. Each option is described as follows: 
-* -FileSystem: Specify a file system format to be applied. NTFS is used in this example. 
-* -Confirm: Specify whether to show prompt to confirm users. It is set False so as not to ask. 
+- FileSystem: Specify a file system format to be applied. NTFS is used in this example. 
+- Confirm: Specify whether to show prompt to confirm users. It is set False so as not to ask. 
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false

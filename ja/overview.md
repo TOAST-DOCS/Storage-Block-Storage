@@ -243,8 +243,8 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 `Format-Volume`コマンドでパーティションをフォーマットします。各オプションの説明は次のとおりです。
-* -FileSystem：使用するファイルシステム形式を指定します。この例ではNTFSに指定します。
-* -Confirm：ユーザー確認のためのプロンプト出力をするか指定します。この例では尋ねないようにfalseに設定します。
+- FileSystem：使用するファイルシステム形式を指定します。この例ではNTFSに指定します。
+- Confirm：ユーザー確認のためのプロンプト出力をするか指定します。この例では尋ねないようにfalseに設定します。
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false

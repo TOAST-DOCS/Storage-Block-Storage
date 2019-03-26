@@ -243,8 +243,8 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 使用`Format-Volume`命令格式化分区。各选项说明如下：
-* -FileSystem: 选定要使用的文件系统类型。在此示例中将选择NTFS。
-* -Confirm: 选定以使用者确认为目的的提示输出与否。在该例题中，为了防止出现提示等选择框，而设定为false。
+- FileSystem: 选定要使用的文件系统类型。在此示例中将选择NTFS。
+- Confirm: 选定以使用者确认为目的的提示输出与否。在该例题中，为了防止出现提示等选择框，而设定为false。
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false
