@@ -97,6 +97,7 @@ X-Auth-Token: {tokenId}
 | Block Storage Name | Body | String | 块存储名称 |
 | Size | Body | Integer | 块存储大小(GB) |
 | Status | Body | String | 块存储状态 |
+| Volume Type | Body | String | O | 块存储类型。"General HDD"或"General SSD"之一。|
 
 ### 创建块存储
 创建新的块存储。

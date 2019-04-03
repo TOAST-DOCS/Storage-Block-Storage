@@ -135,7 +135,7 @@ Content-Type: application/json;charset=UTF-8
 | Description | Body | String | O | Description of block storage |
 | Availability Zone Name | Body | String | - | Name of availability zone to create block storage |
 | Size | Body | Integer | - | Size of block storage (GB): enter by 10, between 10 and 1000. |
-| Volume Type | Body | String | - | Type of block storage to create: currently set in empty character string as types are unavailable |
+| Volume Type | Body | String | O | Type of block storage; one of "General HDD" or "General SSD" |
 | Metadata Key / Metadata Value | Body | String | O | Metadata information wanted for block storage |
 | Block Storage Name | Body | String | - | Name of block storage |
 
