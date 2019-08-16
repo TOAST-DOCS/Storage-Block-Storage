@@ -47,26 +47,26 @@ vdb    253:16   0  10G  0 disk
 Command (m for help): n
 
 Partition number (1-4): 1
-First cylinder (1-20805、 default 1): 1
-Last cylinder、 +cylinders or +size{K、M、G} (1-20805、 default 20805): 20805
+First cylinder (1-20805, default 1): 1
+Last cylinder, +cylinders or +size{K,M,G} (1-20805, default 20805): 20805
 Command (m for help): w
 ```
 シェルで`fdisk /dev/{デバイス名}`を入力すると、デバイスのパーティション管理コマンドを入力できるプロンプトが現れます。このプロンプトで使用できるコマンドリストを見るには`m`を入力します。この例では、新たなパーティションを作成するので、'New Partition'を意味する`n`を入力します。すると下記のように作成するパーティションのタイプを尋ねられます。この例では'Primary'を意味する`p`を入力します。パーティション関連のより詳細な情報については[マスターブートレコード](https://ja.wikipedia.org/wiki/%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%96%E3%83%BC%E3%83%88%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89)を参照してください。
 ```
 Partition type:
-   p   primary (0 primary、 0 extended、 4 free)
+   p   primary (0 primary, 0 extended, 4 free)
    e   extended
 Select (default p): p
 ```
 パーティションのタイプを決定すると、作成するパーティションの個数を尋ねられます。この例ではパーティションを1つ作成するので`1`を入力します。
 ```
-Partition number (1-4、 default 1): 1
+Partition number (1-4, default 1): 1
 ```
 次にパーティションのサイズを決定します。作成したブロックストレージのサイズによって入力できる範囲が異なります。この例ではディスク全体を使用するパーティションを作成するので基本値を使用します。
 ```
-First sector (2048-20971519、 default 2048):
+First sector (2048-20971519, default 2048):
 Using default value 2048
-Last sector、 +sectors or +size{K、M、G} (2048-20971519、 default 20971519):
+Last sector, +sectors or +size{K,M,G} (2048-20971519, default 20971519):
 Using default value 20971519
 Partition 1 of type Linux and of size 10 GiB is set
 ```
@@ -103,10 +103,10 @@ vdb    253:16   0  10G  0 disk
 # /etc/fstab
 # Created by anaconda on Tue Nov 17 18:37:50 2015
 #
-# Accessible filesystems、 by reference、 are maintained under '/dev/disk'
-# See man pages fstab(5)、 findfs(8)、 mount(8) and/or blkid(8) for more info
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
 #
-UUID=3d9cc015-610e-4482-9071-fbf998d68121 /                       xfs     defaults、nodev、noatime        1 1
+UUID=3d9cc015-610e-4482-9071-fbf998d68121 /                       xfs     defaults,nodev,noatime        1 1
 ```
 ディスク1つが既に登録されていることを確認できます。登録されたディスクはインスタンスの基本ディスク(root disk)です。
 
@@ -123,7 +123,7 @@ mkdir -p /mnt/vdb
 ```
 マウント対象ディレクトリが準備されている場合は、次のようにディスクを登録します。
 ```
-# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f xfs defaults、nodev、noatime 1 2" >> /etc/fstab
+# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f xfs defaults,nodev,noatime 1 2" >> /etc/fstab
 ```
 最後に`/etc/fstab`の内容を反映する必要があります。 `mount -a`コマンドで`/etc/fstab`に登録された全てのディスクをマウントします。
 ```
@@ -150,7 +150,7 @@ tmpfs           921M     0  921M   0% /sys/fs/cgroup
 ```
 #!/bin/bash
 
-DEVICES=(`lsblk -s -d -o name、type | grep disk | awk '{print $1}'`)
+DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
 
 for DEVICE_NAME in ${DEVICES[@]}
 do
@@ -164,7 +164,7 @@ do
     mkfs -t $FS_TYPE -f $PART_NAME > /dev/null
 
     UUID=`blkid $PART_NAME -o export | grep UUID | cut -d'=' -f 2`
-    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults、nodev、noatime 1 2" >> /etc/fstab
+    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime 1 2" >> /etc/fstab
 
     mount -a
 done
