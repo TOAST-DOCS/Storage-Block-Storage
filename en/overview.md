@@ -218,8 +218,9 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 Initialize a disk with the `Initialize-Disk` command. Each option is described as follows: 
-* -Number: Specify the disk number to initialize. 
-* -PartitionStyle: Specify the type of disk. In this example, GPT is selected, like in **Server Manager**. 
+
+* Number: Specify the disk number to initialize. 
+* PartitionStyle: Specify the type of disk. In this example, GPT is selected, like in **Server Manager**. 
 
 ```
 PS C:\Users\Administrator> Initialize-Disk -Number 1 -PartitionStyle GPT
@@ -229,9 +230,10 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 Create partitions, with `New-Partition`. Each option is described as follows: 
-* -DiskNumber: Select the disk number to create partitions for. 
-* -AssignDriveLetter: Set for automatic assignment of drive letters for newly-created partitions.
-* -UseMaximumSize: Select the entire available disk volumes with the partition size. 
+
+* DiskNumber: Select the disk number to create partitions for. 
+* AssignDriveLetter: Set for automatic assignment of drive letters for newly-created partitions.
+* UseMaximumSize: Select the entire available disk volumes with the partition size. 
 
 ```
 PS C:\Users\Administrator> New-Partition -DiskNumber 1 -AssignDriveLetter -UseMaximumSize
@@ -242,8 +244,9 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 Type`Format-Volume` to format partitions. Each option is described as follows: 
-* -FileSystem: Specify a file system format to be applied. NTFS is used in this example. 
-* -Confirm: Specify whether to show prompt to confirm users. It is set False so as not to ask. 
+
+* FileSystem: Specify a file system format to be applied. NTFS is used in this example. 
+* Confirm: Specify whether to show prompt to confirm users. It is set False so as not to ask. 
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false

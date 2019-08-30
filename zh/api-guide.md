@@ -97,6 +97,7 @@ X-Auth-Token: {tokenId}
 | Block Storage Name | Body | String | 块存储名称 |
 | Size | Body | Integer | 块存储大小(GB) |
 | Status | Body | String | 块存储状态 |
+| Volume Type | Body | String | 块存储类型。"General HDD"或"General SSD"之一。|
 
 ### 创建块存储
 创建新的块存储。
@@ -133,7 +134,7 @@ Content-Type: application/json;charset=UTF-8
 | Description | Body | String | O | 块存储描述 |
 | Availability Zone Name | Body | String | - | 块存储所在可用区的名称 |
 | Size | Body | Integer | - | 块存储大小(GB). 10~1000 范围, 以10整数倍为单位的方式输入 |
-| Volume Type | Body | String | - | 要创建的块存储的类型，目前无法另行提供类型，因此应以空字符串方式设置。 |
+| Volume Type | Body | String | O | 块存储类型。"General HDD"或"General SSD"之一。|
 | Metadata Key / Metadata Value | Body | String | O | 要写入块存储的元数据信息 |
 | Block Storage Name | Body | String | - | 块存储名称 |
 
@@ -156,7 +157,8 @@ Content-Type: application/json;charset=UTF-8
         },
         "name": "{Block Storage Name}",
         "size": "{Size}",
-        "status": "{Status}"
+        "status": "{Status}",
+        "volumeType": "{Volume Type}"
     }
 }
 ```

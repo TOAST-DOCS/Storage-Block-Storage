@@ -20,15 +20,18 @@
 
 ブロックストレージはインスタンス実行中にも接続できます。接続されたブロックストレージは空のディスクなので、使用する前にインスタンスのオペレーションシステムに応じてパーティション作業、フォーマット、マウント作業を直接進行する必要があります。
 
-
 ## 空のブロックのストレージの使用
+
 ### Linux
+
 インスタンスに接続した後、下記の手順を進行します。
 
 > [参考]この例に登場する全てのコマンドは、必ず`root`権限で実行する必要があります。
 
 #### パーティションの作成
-ブロックストレージがインスタンスに接続されると、空のディスクデバイスとして登録されます。登録されたディスクリストはLinuxの`lsblk`コマンドで確認できます。
+
+ブロックストレージがインスタンスに接続されると、空のディスクデバイスとして登録されます。登録されたディスクリストは Linux の`lsblk`コマンドで確認できます。
+
 ```
 # lsblk
 NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
@@ -37,40 +40,50 @@ vda    253:0    0  20G  0 disk
 └─vda2 253:2    0  18G  0 part /
 vdb    253:16   0  10G  0 disk
 ```
+
 上記の例は基本ディスクの`vda`と追加ディスクの`vdb`が接続されていることを表しています。 `lsblk`の出力結果を見ると`vda`にパーティションが生成されていますが、 `vdb`は空であることがわかります。
 
-> [参考]ディスクデバイスの名前は`vda`、 `vdb`、 `vdc`…というように、インスタンスにブロックストレージを接続した順にアルファベット文字が1つずつ変わります。上の例で`vdb`ディスクは2番目に接続されたディスクを意味します。デバイスの名前はコンソールのストレージリスト画面で確認できます。
+> [参考]ディスクデバイスの名前は`vda`、 `vdb`、 `vdc`…というように、インスタンスにブロックストレージを接続した順にアルファベット文字が 1 つずつ変わります。上の例で`vdb`ディスクは 2 番目に接続されたディスクを意味します。デバイスの名前はコンソールのストレージリスト画面で確認できます。
 
-まず空のディスクデバイスの`vdb`にパーティションを作成します。次のように`fdisk`ユーティリティを利用してディスク全体を1つのパーティションで作成します。必要に応じて1つのディスクを複数のパーティションに分割することもできます。
+まず空のディスクデバイスの`vdb`にパーティションを作成します。次のように`fdisk`ユーティリティを利用してディスク全体を 1 つのパーティションで作成します。必要に応じて 1 つのディスクを複数のパーティションに分割することもできます。
+
 ```
 # fdisk /dev/vdb
 Command (m for help): n
 
 Partition number (1-4): 1
-First cylinder (1-20805、 default 1): 1
-Last cylinder、 +cylinders or +size{K、M、G} (1-20805、 default 20805): 20805
+First cylinder (1-20805, default 1): 1
+Last cylinder, +cylinders or +size{K,M,G} (1-20805, default 20805): 20805
 Command (m for help): w
 ```
+
 シェルで`fdisk /dev/{デバイス名}`を入力すると、デバイスのパーティション管理コマンドを入力できるプロンプトが現れます。このプロンプトで使用できるコマンドリストを見るには`m`を入力します。この例では、新たなパーティションを作成するので、'New Partition'を意味する`n`を入力します。すると下記のように作成するパーティションのタイプを尋ねられます。この例では'Primary'を意味する`p`を入力します。パーティション関連のより詳細な情報については[マスターブートレコード](https://ja.wikipedia.org/wiki/%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%96%E3%83%BC%E3%83%88%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89)を参照してください。
+
 ```
 Partition type:
-   p   primary (0 primary、 0 extended、 4 free)
+   p   primary (0 primary, 0 extended, 4 free)
    e   extended
 Select (default p): p
 ```
-パーティションのタイプを決定すると、作成するパーティションの個数を尋ねられます。この例ではパーティションを1つ作成するので`1`を入力します。
+
+パーティションのタイプを決定すると、作成するパーティションの個数を尋ねられます。この例ではパーティションを 1 つ作成するので`1`を入力します。
+
 ```
-Partition number (1-4、 default 1): 1
+Partition number (1-4, default 1): 1
 ```
+
 次にパーティションのサイズを決定します。作成したブロックストレージのサイズによって入力できる範囲が異なります。この例ではディスク全体を使用するパーティションを作成するので基本値を使用します。
+
 ```
-First sector (2048-20971519、 default 2048):
+First sector (2048-20971519, default 2048):
 Using default value 2048
-Last sector、 +sectors or +size{K、M、G} (2048-20971519、 default 20971519):
+Last sector, +sectors or +size{K,M,G} (2048-20971519, default 20971519):
 Using default value 20971519
 Partition 1 of type Linux and of size 10 GiB is set
 ```
+
 基本的なパーティション設定が終わりました。これまで入力した設定をディスクに反映するために`w`を入力します。
+
 ```
 Command (m for help): w
 The partition table has been altered!
@@ -78,58 +91,75 @@ The partition table has been altered!
 Calling ioctl() to re-read partition table.
 Syncing disks.
 ```
+
 これでパーティション作成手順が終わりました。
 
 #### パーティションのフォーマット
+
 作成したパーティションを使用するには、フォーマットする必要があります。`lsblk`コマンドでフォーマットするパーティションを探します。
+
 ```
 [root@host-192-168-0-67 ~]# lsblk /dev/vdb
 NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
 vdb    253:16   0  10G  0 disk
 └─vdb1 253:17   0  10G  0 part /mnt/vdb
 ```
-上の例で`vdb`ディスクに`vdb1`というパーティションが作成されたのを確認できます。一般的にLinuxでパーティションの名前は'デバイス名 + 数字'の形式です。
 
-次に`vdb1`パーティションをフォーマットします。 Linuxでは`mkfs`コマンドを使用します。パーティションをフォーマットする時、必ず使用するファイルシステムを指定する必要があります。この例では広く使われているLinuxファイルシステムの1つである`xfs`を利用してフォーマットします。Linuxで使用可能なファイルシステムについては[ファイルシステム](https://wiki.gentoo.org/wiki/Filesystem/ja)を参照してください。
+上の例で`vdb`ディスクに`vdb1`というパーティションが作成されたのを確認できます。一般的に Linux でパーティションの名前は'デバイス名 + 数字'の形式です。
+
+次に`vdb1`パーティションをフォーマットします。 Linux では`mkfs`コマンドを使用します。パーティションをフォーマットする時、必ず使用するファイルシステムを指定する必要があります。この例では広く使われている Linux ファイルシステムの 1 つである`xfs`を利用してフォーマットします。Linux で使用可能なファイルシステムについては[ファイルシステム](https://wiki.gentoo.org/wiki/Filesystem/ja)を参照してください。
+
 ```
 # mkfs -t xfs /dev/vdb1
 ```
 
 #### ディスクのマウント
+
 ファイルシステムまで作成したディスクには、マウントするとアクセスできます。簡単に`mount`コマンドでディスクをマウントすることもできますが、インスタンスが再起動されるとマウントが解除(unmount)されます。この例では`/etc/fstab`ファイルにマウントするディスクを追加して、インスタンス起動時に自動的にマウントする方法を説明します。
 
 下記は`/etc/fstab`ファイルの内容を出力したものです。
+
 ```
 # /etc/fstab
 # Created by anaconda on Tue Nov 17 18:37:50 2015
 #
-# Accessible filesystems、 by reference、 are maintained under '/dev/disk'
-# See man pages fstab(5)、 findfs(8)、 mount(8) and/or blkid(8) for more info
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
 #
-UUID=3d9cc015-610e-4482-9071-fbf998d68121 /                       xfs     defaults、nodev、noatime        1 1
+UUID=3d9cc015-610e-4482-9071-fbf998d68121 /                       xfs     defaults,nodev,noatime        1 1
 ```
-ディスク1つが既に登録されていることを確認できます。登録されたディスクはインスタンスの基本ディスク(root disk)です。
 
-ディスクを登録するには、ディスクのデバイス固有IDが必要です。デバイス固有IDは下記のように`blkid`コマンドで確認できます。
+ディスク 1 つが既に登録されていることを確認できます。登録されたディスクはインスタンスの基本ディスク(root disk)です。
+
+ディスクを登録するには、ディスクのデバイス固有 ID が必要です。デバイス固有 ID は下記のように`blkid`コマンドで確認できます。
+
 ```
 # blkid /dev/vdb1
 /dev/vdb1: UUID="5a4004f4-3ba6-4484-9459-7c2b321b727f" TYPE="xfs"
 ```
-出力内容の中で、`UUID`に該当する項目がデバイス固有IDです。
+
+出力内容の中で、`UUID`に該当する項目がデバイス固有 ID です。
 
 マウント対象ディレクトリを作成します。マウント対象ディレクトリはなんでも構いません。この例では`/mnt/vdb`で行います。
+
 ```
 mkdir -p /mnt/vdb
 ```
+
 マウント対象ディレクトリが準備されている場合は、次のようにディスクを登録します。
+
 ```
-# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f xfs defaults、nodev、noatime 1 2" >> /etc/fstab
+# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime 1 2" >> /etc/fstab
 ```
+
 最後に`/etc/fstab`の内容を反映する必要があります。 `mount -a`コマンドで`/etc/fstab`に登録された全てのディスクをマウントします。
+
 ```
 # mount -a
 ```
+
 `df`コマンドで正常にマウントできたか確認します。
+
 ```
 # df -h
 Filesystem      Size  Used Avail Use% Mounted on
@@ -140,17 +170,18 @@ tmpfs           921M   89M  832M  10% /run
 tmpfs           921M     0  921M   0% /sys/fs/cgroup
 /dev/vdb1        10G   33M   10G   1% /mnt/vdb
 ```
+
 新しいパーティションがマウントされていることを確認できます。
 
-各コマンドの詳細についてはLinuxの`man`コマンドで確認できます。
+各コマンドの詳細については Linux の`man`コマンドで確認できます。
 
 > [参考]上記の手順を一気に処理するには、下記のスクリプトを参照してください。
-> 下記のスクリプトはCentOSでテストしたものです。
+> 下記のスクリプトは CentOS でテストしたものです。
 
 ```
 #!/bin/bash
 
-DEVICES=(`lsblk -s -d -o name、type | grep disk | awk '{print $1}'`)
+DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
 
 for DEVICE_NAME in ${DEVICES[@]}
 do
@@ -164,18 +195,19 @@ do
     mkfs -t $FS_TYPE -f $PART_NAME > /dev/null
 
     UUID=`blkid $PART_NAME -o export | grep UUID | cut -d'=' -f 2`
-    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults、nodev、noatime 1 2" >> /etc/fstab
+    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime 1 2" >> /etc/fstab
 
     mount -a
 done
 ```
 
-
 ### Windows
-Windowsでボリュームを追加する方法は大きく2つです。1つ目はGUIベースの**サーバー管理者**を使用する方法で、 2つ目はCLIベースの**PowerShell**を使用する方法です。この文書では、それぞれの方法を簡単に紹介します。
+
+Windows でボリュームを追加する方法は大きく 2 つです。1 つ目は GUI ベースの**サーバー管理者**を使用する方法で、 2 つ目は CLI ベースの**PowerShell**を使用する方法です。この文書では、それぞれの方法を簡単に紹介します。
 
 #### **サーバー管理者**を使用してボリューム追加
-Windowsインスタンスに接続されたブロックストレージは、オフライン状態のディスクとして表示されます。このディスクを使用するには、オンライン状態に変更してボリュームを作成する必要があります。オンライン状態に切り替える手順は次のとおりです。
+
+Windows インスタンスに接続されたブロックストレージは、オフライン状態のディスクとして表示されます。このディスクを使用するには、オンライン状態に変更してボリュームを作成する必要があります。オンライン状態に切り替える手順は次のとおりです。
 
 1. インスタンスに接続した後、起動画面で**サーバー管理者**をクリックします。
 2. **サーバー管理者 > ダッシュボード** 画面で**ファイル及びストレージサービス**を選択します。
@@ -199,17 +231,20 @@ Windowsインスタンスに接続されたブロックストレージは、オ�
 2. **ディスクの管理**のディスクリストから、ボリュームを作成したディスクを右クリックして **ドライブ文字とパスの変更**を選択します。
 3. 新しいボリュームのドライブ文字とパスを追加します。
 
-これでWindowsエクスプローラでディスクが追加されたことを確認できます。ディスク管理に関するより詳細な説明は[新しいディスクの初期化 | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/storage/disk-management/initialize-new-disks)を参照してください。
+これで Windows エクスプローラでディスクが追加されたことを確認できます。ディスク管理に関するより詳細な説明は[新しいディスクの初期化 | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/storage/disk-management/initialize-new-disks)を参照してください。
 
-> [参考] Windowsのディスク形式は2種類です。
-> * MBR：以前から使用されているディスク形式で、 2TB以下のディスクで使用します。
-> * GPT： 2TB以上のディスクで使用する新しいディスク形式です。
-> **サーバー管理者**で設定したディスクは基本的にGPT形式です。
+> [参考] Windows のディスク形式は 2 種類です。
+>
+> - MBR：以前から使用されているディスク形式で、 2TB 以下のディスクで使用します。
+> - GPT： 2TB 以上のディスクで使用する新しいディスク形式です。
+>   **サーバー管理者**で設定したディスクは基本的に GPT 形式です。
 
-#### PowerShellを使用してボリュームを追加
-Windowsで提供するPowerShellでもボリュームを追加できます。 **スタート**をクリックして**Windows PowerShell**をクリックします。
+#### PowerShell を使用してボリュームを追加
+
+Windows で提供する PowerShell でもボリュームを追加できます。 **スタート**をクリックして**Windows PowerShell**をクリックします。
 
 `Get-Disk`コマンドで現在のインスタンスに接続されているディスクリストを出力します。下の結果で`RAW`と表示されているディスクが新たに追加するディスクです。
+
 ```
 PS C:\Users\Administrator> Get-Disk
 Number Friendly Name                            OperationalStatus                    Total Size Partition Style
@@ -219,8 +254,9 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 `Initialize-Disk`コマンドでディスクを初期化します。各オプションの説明は次のとおりです。
-* -Number：初期化するディスクの番号を指定します。
-* -PartitionStyle：パーティション形式を指定します。この例では**サーバー管理者**での場合同様、パーティション形式をGPTに指定します。
+
+- Number：初期化するディスクの番号を指定します。
+- PartitionStyle：パーティション形式を指定します。この例では**サーバー管理者**での場合同様、パーティション形式を GPT に指定します。
 
 ```
 PS C:\Users\Administrator> Initialize-Disk -Number 1 -PartitionStyle GPT
@@ -230,9 +266,10 @@ Number Friendly Name                            OperationalStatus               
 ```
 
 `New-Partition`コマンドでパーティションを作成します。各オプションの説明は次のとおりです。
-* -DiskNumber：パーティションを作成するディスク番号を選択します。
-* -AssignDriveLetter：作成したパーティションにドライブ文字を自動的に割り当てるように設定します。
-* -UseMaximumSize：パーティションのサイズにディスク可用容量全体を選択します。
+
+- DiskNumber：パーティションを作成するディスク番号を選択します。
+- AssignDriveLetter：作成したパーティションにドライブ文字を自動的に割り当てるように設定します。
+- UseMaximumSize：パーティションのサイズにディスク可用容量全体を選択します。
 
 ```
 PS C:\Users\Administrator> New-Partition -DiskNumber 1 -AssignDriveLetter -UseMaximumSize
@@ -243,8 +280,9 @@ PartitionNumber  DriveLetter Offset                                        Size 
 ```
 
 `Format-Volume`コマンドでパーティションをフォーマットします。各オプションの説明は次のとおりです。
-* -FileSystem：使用するファイルシステム形式を指定します。この例ではNTFSに指定します。
-* -Confirm：ユーザー確認のためのプロンプト出力をするか指定します。この例では尋ねないようにfalseに設定します。
+
+- FileSystem：使用するファイルシステム形式を指定します。この例では NTFS に指定します。
+- Confirm：ユーザー確認のためのプロンプト出力をするか指定します。この例では尋ねないように false に設定します。
 
 ```
 PS C:\Users\Administrator> Format-Volume -DriveLetter D -FileSystem NTFS -Confirm:$false
@@ -254,9 +292,10 @@ DriveLetter       FileSystemLabel  FileSystem       DriveType        HealthStatu
 D                                  NTFS             Fixed            Healthy                   9.92 GB          9.97 GB
 ```
 
-これで、Windowsエクスプローラでディスクが追加されたことを確認できます。 PowerShellのより詳細な説明は[PowerShell Module Browser | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/module/?view=win10-ps)を参照してください。
+これで、Windows エクスプローラでディスクが追加されたことを確認できます。 PowerShell のより詳細な説明は[PowerShell Module Browser | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/module/?view=win10-ps)を参照してください。
 
 > [参考]上の手順を一度に処理するには、下記のスクリプトを参考にしてください。
+
 ```
 PS C:\Users\Administrator> Get-Disk |
    Where PartitionStyle -eq 'RAW' |
@@ -272,7 +311,7 @@ PS C:\Users\Administrator> Get-Disk |
 ブロックストレージのスナップショットは読み取り専用になっているので、インスタンスに直接接続して使用できません。スナップショットを使用するにはスナップショットからブロックストレージを作成し、作成されたブロックストレージをインスタンスに接続します。
 
 > [注意]
-ブロックストレージのスナップショットを持つブロックストレージは削除できません。ブロックストレージを削除するには、そのブロックストレージの全てのスナップショットを削除してください。
+> ブロックストレージのスナップショットを持つブロックストレージは削除できません。ブロックストレージを削除するには、そのブロックストレージの全てのスナップショットを削除してください。
 
 ### 課金
 

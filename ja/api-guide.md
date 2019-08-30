@@ -56,29 +56,29 @@ X-Auth-Token: {tokenId}
 ```json
 {
     "header": {
-        "isSuccessful": true、
-        "resultCode": 0、
+        "isSuccessful": true,
+        "resultCode": 0,
         "resultMessage": "SUCCESS"
-    }、
+    },
     "volumes": [
         {
             "attachments": [
                 {
-                    "device": "{Device Name}"、
-                    "instanceId": "{Attached Instance ID}"、
+                    "device": "{Device Name}",
+                    "instanceId": "{Attached Instance ID}",
                     "attachmentId": "{Attachment ID}"
                 }
-            ]、
-            "availabilityZone": "{Availability Zone Name}"、
-            "createdAt": "{Created At}"、
-            "description": "{Description}"、
-            "id": "{Block Storage ID}"、
+            ],
+            "availabilityZone": "{Availability Zone Name}",
+            "createdAt": "{Created At}",
+            "description": "{Description}",
+            "id": "{Block Storage ID}",
             "metadata": {
                 "{Metadata Key}": "{Metadata Value}"
-            }、
-            "name": "{Block Storage Name}"、
-            "size": "{Size}"、
-            "status": "{Status}"、
+            },
+            "name": "{Block Storage Name}",
+            "size": "{Size}",
+            "status": "{Status}",
             "volumeType": "{Volume Type}"
         }
     ]
@@ -118,11 +118,11 @@ Content-Type: application/json;charset=UTF-8
 ```json
 {
     "volume": {
-        "description": "{Description}"、
-        "availabilityZone":"{Availability Zone Name}"、
-        "size":"{Size}"、
-        "name":"{Block Storage Name}"、
-        "volumeType":"{Volume Type}"、
+        "description": "{Description}",
+        "availabilityZone":"{Availability Zone Name}",
+        "size":"{Size}",
+        "name":"{Block Storage Name}",
+        "volumeType":"{Volume Type}",
         "metadata": {
         	"{Metadata Key}" : "{Metadata Value}"
         }
@@ -143,22 +143,22 @@ Content-Type: application/json;charset=UTF-8
 ```json
 {
     "header": {
-        "isSuccessful": true、
-        "resultCode": 0、
+        "isSuccessful": true,
+        "resultCode": 0,
         "resultMessage": "SUCCESS"
-    }、
+    },
     "volume": {
-        "attachments": []、
-        "availabilityZone": "{Availability Zone Name}"、
-        "createdAt": "{Created At}"、
-        "description": "{Description}"、
-        "id": "{Block Storage ID}"、
+        "attachments": [],
+        "availabilityZone": "{Availability Zone Name}",
+        "createdAt": "{Created At}",
+        "description": "{Description}",
+        "id": "{Block Storage ID}",
         "metadata": {
             "{Metadata Key}": "{Metadata Value}"
-        }、
-        "name": "{Block Storage Name}"、
-        "size": "{Size}"、
-        "status": "{Status}"、
+        },
+        "name": "{Block Storage Name}",
+        "size": "{Size}",
+        "status": "{Status}",
         "volumeType": "{Volume Type}"
     }
 }
@@ -196,8 +196,8 @@ X-Auth-Token: {tokenId}
 ```json
 {
     "header": {
-        "isSuccessful": true、
-        "resultCode": 0、
+        "isSuccessful": true,
+        "resultCode": 0,
         "resultMessage": "SUCCESS"
     }
 }
