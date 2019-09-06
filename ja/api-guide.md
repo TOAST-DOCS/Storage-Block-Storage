@@ -1,5 +1,7 @@
 ## Storage > Block Storage > APIガイド
 
+APIは現在、韓国リージョンでのみ使用できます。
+
 ## 事前準備
 
 ブロックストレージAPIを使用するには、アプリケーションキー(Appkey)とトークンが必要です。 [API Endpoint URL](/Compute/Instance/ja/api-guide/#api-endpoint-url)と[トークンAPI](/Compute/Instance/ja/api-guide/#api)を利用してアプリケーションキーとトークンを準備します。アプリケーションキーはAPI Endpoint URLに、トークンはRequest Headerに含めて使用します。
