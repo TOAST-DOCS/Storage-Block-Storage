@@ -1,5 +1,7 @@
 ## Storage > Block Storage > API Guide 
 
+API is currently available only in the Korea region.
+
 ## Prerequisites 
 
 To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Instance/en/api-guide/#api-endpoint-url) and [Token API](/Compute/Instance/en/api-guide/#api). Include Appkey to API Endpoint URL and token to the Request Header.
