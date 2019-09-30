@@ -1,5 +1,7 @@
 ## Storage > Block Storage > API指南
 
+API目前仅限韩国地区使用。
+
 ## 事前准备
 
 如果要使用块存储（block storage ）API，则需要App key与令牌（token）。利用[API Endpoint URL](/Compute/Instance/zh/api-guide/#api-endpoint-url)和 [令牌 API](/Compute/Instance/zh/api-guide/#api)来准备App key和令牌。API Endpoint URL中包含App key， Request Body中包含令牌。
