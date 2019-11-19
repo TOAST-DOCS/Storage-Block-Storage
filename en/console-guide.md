@@ -34,7 +34,7 @@ To use empty block storage, its partition must be divided at the instance and fo
 
 ### Detach Block Storage
 
-Detach unnecessary block storage from an instance. 
+Detach unnecessary block storage from an instance. Note, however, that default disk cannot be detached.
 
 Detaching block storage is available even when an instance is running. To detach without damaging block storage data, block storage must be unmounted within the instance. 
 
