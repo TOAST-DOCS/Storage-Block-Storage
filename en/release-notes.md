@@ -1,5 +1,12 @@
 ## Storage > Block Storage > Release Notes
 
+### Nov. 26, 2019
+
+#### Features
+
+* Default disk is displayed on the list of block storages.
+
+
 ### 2019.01.29
 
 #### 기능 추가
