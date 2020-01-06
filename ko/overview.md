@@ -24,8 +24,6 @@
 ## 빈 블록 스토리지 사용
 ### Linux
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YLg7SFRaxGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 인스턴스에 접속한 후 아래의 과정을 진행합니다.
 
 > [참고] 이 예제에서 나오는 모든 명령은 반드시 `root` 권한으로 실행해야 합니다.
