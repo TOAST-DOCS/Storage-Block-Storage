@@ -1,5 +1,9 @@
 ## Storage > Block Storage > 콘솔 사용 가이드
 
+## 동영상 가이드
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KR_sqTLPuOk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## 블록 스토리지 생성
 
 인스턴스에 연결할 블록 스토리지를 생성합니다. 블록 스토리지 크기는 최소 10GB, 최대 1,000GB입니다.

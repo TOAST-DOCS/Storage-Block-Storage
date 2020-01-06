@@ -23,6 +23,9 @@
 
 ## 빈 블록 스토리지 사용
 ### Linux
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YLg7SFRaxGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 인스턴스에 접속한 후 아래의 과정을 진행합니다.
 
 > [참고] 이 예제에서 나오는 모든 명령은 반드시 `root` 권한으로 실행해야 합니다.
@@ -201,6 +204,9 @@ done
 ```
 
 ### Windows
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/j-B8Y45V--g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Windows에서 볼륨을 추가하는 방법은 크게 두 가지입니다. 첫 번째는 GUI 기반의 **서버 관리자**를 사용하는 것이고, 두 번째는 CLI 기반의 **PowerShell**을 사용하는 것입니다. 이 문서에서는 각각의 방법을 간략하게 소개합니다.
 
 #### **서버 관리자**를 사용하여 볼륨 추가
