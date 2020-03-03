@@ -12,7 +12,7 @@ GET /
 이 API는 요청 본문을 요구하지 않습니다.
 
 #### 응답
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -24,7 +24,7 @@ GET /
       "id": "v1.0",
       "links": [
         {
-          "href": "http://10.162.50.101:8776/v1/",
+          "href": "https://kr1-api-volume.cloud.toast.com/v1/",
           "rel": "self"
         }
       ]
@@ -35,7 +35,7 @@ GET /
       "id": "v2.0",
       "links": [
         {
-          "href": "http://10.162.50.101:8776/v2/",
+          "href": "https://kr1-api-volume.cloud.toast.com/v2/",
           "rel": "self"
         }
       ]
@@ -46,6 +46,8 @@ GET /
 
 </p>
 </details>
+
+---
 
 ## 볼륨 타입
 ### 볼륨 타입 목록 보기
@@ -59,7 +61,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -71,8 +73,7 @@ X-Auth-Token: {tokenId}
 | volume_types.name | Body | String | 볼륨 타입 이름 |
 | volume_types.extra_specs | Body | Object | 볼륨 타입 관련 추가 사양 정보 객체 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -81,9 +82,18 @@ X-Auth-Token: {tokenId}
     {
       "os-volume-type-access:is_public": true,
       "extra_specs": {
+        "volume_backend_name": "ssd_general"
+      },
+      "id": "4e36aa51-df30-422e-aff1-eba1f3d9612f",
+      "name": "General SSD",
+      "description": null
+    },
+    {
+      "os-volume-type-access:is_public": true,
+      "extra_specs": {
         "volume_backend_name": "hdd_general"
       },
-      "id": "3d4736f6-6424-48f9-9c15-93b658ebff35",
+      "id": "6bda35e2-b2b9-497a-8f65-67a73839c856",
       "name": "General HDD",
       "description": null
     }
@@ -94,9 +104,12 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+---
+
 ## 볼륨
 ### 볼륨 상태
-볼륨은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
+볼륨은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다.
+가능한 상태 목록은 다음과 같습니다.
 
 | 상태 명 | 설명 |
 |--|--|
@@ -133,7 +146,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | sort | Query | String | - | 정렬 기준이될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨의 갯수<br>기본 값은 1000으로 설정 |
@@ -150,51 +163,34 @@ X-Auth-Token: {tokenId}
 | volumes.name | Body | String | 볼륨 이름 |
 | volumes_links  | Body | Object | 페이지네이션을 위한 정보 객체<br>`limit`, `offset`를 추가한 경우 반환<br>다음 목록을 가리키는 경로를 포함 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
 {
   "volumes": [
-      {
-          "id": "45baf976-c20a-4894-a7c3-c94b7376bf55",
-          "links": [
-              {
-                  "href": "http://localhost:8776/v2/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/45baf976-c20a-4894-a7c3-c94b7376bf55",
-                  "rel": "self"
-              },
-              {
-                  "href": "http://localhost:8776/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/45baf976-c20a-4894-a7c3-c94b7376bf55",
-                  "rel": "bookmark"
-              }
-          ],
-          "name": "vol-004"
-      },
-      {
-          "id": "5aa119a8-d25b-45a7-8d1b-88e127885635",
-          "links": [
-              {
-                  "href": "http://localhost:8776/v2/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/5aa119a8-d25b-45a7-8d1b-88e127885635",
-                  "rel": "self"
-              },
-              {
-                  "href": "http://localhost:8776/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/5aa119a8-d25b-45a7-8d1b-88e127885635",
-                  "rel": "bookmark"
-              }
-          ],
-          "name": "vol-003"
-      }
-  ],
-  "volumes_links": [{
-      "href": "https://158.69.65.111/volume/v2/4ad9f06ab8654e40befa59a2e7cac86d/volumes/detail?limit=1&marker=3b451d5d-9358-4a7e-a746-c6fd8b0e1462",
-      "rel": "next"
-  }]
+    {
+      "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570",
+      "links": [
+        {
+          "href": "https://kr1-api-volume.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "rel": "self"
+        },
+        {
+          "href": "https://kr1-api-volume.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "rel": "bookmark"
+        }
+      ],
+      "name": null
+    }
+  ]
 }
 ```
 
 </p>
 </details>
+
+---
 
 ### 볼륨 상세 목록 보기
 현재 테넌트에 속한 볼륨 목록을 반환합니다.
@@ -209,7 +205,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | sort | Query | String | - | 정렬 기준이될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨의 갯수<br>기본 값은 1000으로 설정 |
@@ -218,7 +214,7 @@ X-Auth-Token: {tokenId}
 
 #### 응답
 
-| 이름 | 종류 | 속성 | 설명 |
+| 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | volumes | Body | Array | 볼륨 상세 정보 객체 목록 |
 | volumes.attachments | Body | Object | 볼륨 연결 정보 객체 |
@@ -250,83 +246,42 @@ X-Auth-Token: {tokenId}
 | volumes.replication_status | Body | String | 볼륨 복제 상태 |
 | volumes.volumes_links  | Body | Object | 페이지네이션을 위한 정보 객체<br>`limit`, `offset`를 추가한 경우 반환<br>다음 목록을 가리키는 경로를 포함 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
 {
-  "volumes_links": [
-    {
-      "href": "http://alp-gov-cinder.iaas.tcc1.cloud.toastoven.net:8776/v2/19eeb40d58684543aef29cbb5ebfe8f0/volumes/detail?limit=1&marker=6f96cef5-0b27-4f97-bea4-3ff7bb8d7b8c",
-      "rel": "next"
-    }
-  ],
   "volumes": [
     {
-      "attachments": [
-        {
-          "server_id": "36e4a785-432f-4872-9248-cfe981155c52",
-          "attachment_id": "1c760212-dba3-484c-afe5-d9da10d09029",
-          "host_name": null,
-          "volume_id": "6f96cef5-0b27-4f97-bea4-3ff7bb8d7b8c",
-          "device": "/dev/vda",
-          "id": "6f96cef5-0b27-4f97-bea4-3ff7bb8d7b8c"
-        }
-      ],
+      "attachments": [],
       "links": [
         {
-          "href": "http://alp-gov-cinder.iaas.tcc1.cloud.toastoven.net:8776/v2/19eeb40d58684543aef29cbb5ebfe8f0/volumes/6f96cef5-0b27-4f97-bea4-3ff7bb8d7b8c",
+          "href": "https://kr1-api-volume.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "self"
         },
         {
-          "href": "http://alp-gov-cinder.iaas.tcc1.cloud.toastoven.net:8776/19eeb40d58684543aef29cbb5ebfe8f0/volumes/6f96cef5-0b27-4f97-bea4-3ff7bb8d7b8c",
+          "href": "https://kr1-api-volume.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "bookmark"
         }
       ],
-      "availability_zone": "kr-pub-b",
+      "availability_zone": "kr-pub-a",
       "encrypted": false,
       "os-volume-replication:extended_status": null,
       "volume_type": "General HDD",
       "snapshot_id": null,
-      "id": "6f96cef5-0b27-4f97-bea4-3ff7bb8d7b8c",
-      "size": 20,
-      "user_id": "1f056df3ce654bc19a12bd522d6a2147",
-      "os-vol-tenant-attr:tenant_id": "19eeb40d58684543aef29cbb5ebfe8f0",
-      "metadata": {
-        "readonly": "False",
-        "attached_mode": "rw"
-      },
-      "status": "in-use",
-      "volume_image_metadata": {
-        "tc_env": "sysmon",
-        "project_domain": "WDI;NORMAL",
-        "container_format": "bare",
-        "min_ram": "0",
-        "disk_format": "qcow2",
-        "image_name": "CentOS 6.10 (2020.02.18)",
-        "image_id": "cd632922-d08a-4c20-9e0b-3f90350aee1c",
-        "os_architecture": "amd64",
-        "min_disk": "20",
-        "login_username": "centos",
-        "os_type": "linux",
-        "description": "CentOS 6.10 (2020.02.18)",
-        "os_distro": "CentOS",
-        "hypervisor_type": "qemu",
-        "release_date": "2020.02.18",
-        "monitoring_agent": "sysmon",
-        "os_version": "6.10",
-        "checksum": "63570f149c62be0914235206cef6bcb4",
-        "deprecate_date": "",
-        "size": "2199846912"
-      },
+      "id": "17975e9d-1533-40db-bd02-2072cd2ccb7f",
+      "size": 50,
+      "user_id": "5e6524d826084188ae549815b3e33380",
+      "os-vol-tenant-attr:tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
+      "metadata": {},
+      "status": "available",
       "description": null,
       "multiattach": false,
       "source_volid": null,
       "consistencygroup_id": null,
-      "name": null,
-      "bootable": "true",
-      "created_at": "2020-03-02T12:24:54.000000",
+      "name": "volume-f4f47065-300e-480e-8c9c-fb7ec985bffb",
+      "bootable": "false",
+      "created_at": "2018-12-18T05:43:12.000000",
       "os-volume-replication:driver_data": null,
       "replication_status": "disabled"
     }
@@ -350,13 +305,13 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
-| volumeId | URI | UUID | O | 볼륨 ID |
+| projectId | URL | String | O | 테넌트 ID |
+| volumeId | URL | UUID | O | 볼륨 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
 
-| 이름 | 종류 | 속성 | 설명 |
+| 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | volume | Body | Object | 볼륨 상세 정보 객체 |
 | volume.attachments | Body | Object | 볼륨 연결 정보 객체 |
@@ -387,46 +342,51 @@ X-Auth-Token: {tokenId}
 | volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
 | volume.replication_status | Body | String | 볼륨 복제 상태 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
 {
-    "volume": {
-        "status": "available",
-        "attachments": [],
-        "links": [
-            {
-                "href": "http://localhost:8776/v2/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/5aa119a8-d25b-45a7-8d1b-88e127885635",
-                "rel": "self"
-            },
-            {
-                "href": "http://localhost:8776/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/5aa119a8-d25b-45a7-8d1b-88e127885635",
-                "rel": "bookmark"
-            }
-        ],
-        "availability_zone": "nova",
-        "bootable": "false",
-        "os-vol-host-attr:host": "ip-10-168-107-25",
-        "source_volid": null,
-        "snapshot_id": null,
-        "id": "5aa119a8-d25b-45a7-8d1b-88e127885635",
-        "description": "Super volume.",
-        "name": "vol-002",
-        "created_at": "2013-02-25T02:40:21.000000",
-        "volume_type": "None",
-        "os-vol-tenant-attr:tenant_id": "0c2eba2c5af04d3f9e9d0d410b371fde",
-        "size": 1,
-        "metadata": {
-            "contents": "not junk"
-        }
-    }
+  "volume": {
+    "attachments": [],
+    "links": [
+      {
+        "href": "https://kr1-api-volume.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "rel": "self"
+      },
+      {
+        "href": "https://kr1-api-volume.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "rel": "bookmark"
+      }
+    ],
+    "availability_zone": "kr-pub-a",
+    "encrypted": false,
+    "os-volume-replication:extended_status": null,
+    "volume_type": "General HDD",
+    "snapshot_id": null,
+    "id": "17975e9d-1533-40db-bd02-2072cd2ccb7f",
+    "size": 50,
+    "user_id": "5e6524d826084188ae549815b3e33380",
+    "os-vol-tenant-attr:tenant_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
+    "metadata": {},
+    "status": "available",
+    "description": null,
+    "multiattach": false,
+    "source_volid": null,
+    "consistencygroup_id": null,
+    "name": "volume-f4f47065-300e-480e-8c9c-fb7ec985bffb",
+    "bootable": "false",
+    "created_at": "2018-12-18T05:43:12.000000",
+    "os-volume-replication:driver_data": null,
+    "replication_status": "disabled"
+  }
 }
 ```
 
 </p>
 </details>
+
+---
 
 ### 볼륨 생성하기
 새로운 볼륨을 생성합니다. 이미지 또는 스냅숏으로부터 새로운 볼륨을 생성할 수 있습니다.
@@ -441,7 +401,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | volume | Body | Object | O | 볼륨 생성 요청 객체 |
 | volume.size | Body | Integer | O | 볼륨 크기 |
@@ -456,8 +416,7 @@ X-Auth-Token: {tokenId}
 | volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID |
 | volume.metadata | Body | Object | - | 볼륨 메타데이터 객체 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -514,49 +473,45 @@ X-Auth-Token: {tokenId}
 | volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
 | volume.replication_status | Body | String | 볼륨 복제 상태 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
 {
-    "volume": {
-        "status": "creating",
-        "migration_status": null,
-        "user_id": "0eea4eabcf184061a3b6db1e0daaf010",
-        "attachments": [],
-        "links": [
-            {
-                "href": "http://23.253.248.171:8776/v2/bab7d5c60cd041a0a36f7c4b6e1dd978/volumes/6edbc2f4-1507-44f8-ac0d-eed1d2608d38",
-                "rel": "self"
-            },
-            {
-                "href": "http://23.253.248.171:8776/bab7d5c60cd041a0a36f7c4b6e1dd978/volumes/6edbc2f4-1507-44f8-ac0d-eed1d2608d38",
-                "rel": "bookmark"
-            }
-        ],
-        "availability_zone": "nova",
-        "bootable": "false",
-        "encrypted": false,
-        "created_at": "2015-11-29T03:01:44.000000",
-        "description": null,
-        "updated_at": null,
-        "volume_type": "lvmdriver-1",
-        "name": "test-volume-attachments",
-        "replication_status": "disabled",
-        "consistencygroup_id": null,
-        "source_volid": null,
-        "snapshot_id": null,
-        "multiattach": false,
-        "metadata": {},
-        "id": "6edbc2f4-1507-44f8-ac0d-eed1d2608d38",
-        "size": 2
-    }
+  "volume": {
+    "status": "creating",
+    "user_id": "94acd5b4d2bf47dda734e34a113f96ff",
+    "attachments": [],
+    "links": [{
+      "href": "https://kr1-api-volume.cloud.toast.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "rel": "self"
+    }, {
+      "href": "https://kr1-api-volume.cloud.toast.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "rel": "bookmark"
+    }],
+    "availability_zone": "kr-pub-a",
+    "bootable": "false",
+    "encrypted": false,
+    "created_at": "2020-03-03T10:54:33.163206",
+    "description": null,
+    "volume_type": "General HDD",
+    "name": "DATA",
+    "replication_status": "disabled",
+    "consistencygroup_id": null,
+    "source_volid": null,
+    "snapshot_id": null,
+    "multiattach": false,
+    "metadata": {},
+    "id": "87882cf4-ca05-4ef2-b598-b93b2caf041e",
+    "size": 10
+  }
 }
 ```
 
 </p>
 </details>
+
+---
 
 ### 볼륨 삭제하기
 지정한 볼륨을 삭제합니다. 연결되어 있거나 스냅샷이 생성된 볼륨은 삭제할 수 없습니다.
@@ -571,13 +526,14 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
-| volumeId | URI | String | O | 볼륨 ID |
+| projectId | URL | String | O | 테넌트 ID |
+| volumeId | URL | String | O | 볼륨 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
 
+---
 
 ## 스냅숏
 ### 스냅숏 상태
@@ -608,7 +564,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -625,8 +581,7 @@ X-Auth-Token: {tokenId}
 | snapshots.id | Body | UUID | 스냅숏 ID |
 | snapshots.name | Body | String | 스냅숏 이름 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -635,12 +590,12 @@ X-Auth-Token: {tokenId}
     {
       "status": "available",
       "description": "",
-      "created_at": "2019-07-30T02:05:13.000000",
+      "created_at": "2020-03-03T11:03:40.000000",
       "metadata": {},
-      "volume_id": "13461857-3ac4-42f3-b821-3eb9cddf0cbf",
-      "size": 20,
-      "id": "efb57271-2967-4e0f-bfcd-e14fa7c6acd7",
-      "name": "jj-img-hdd-snapshot"
+      "volume_id": "17975e9d-1533-40db-bd02-2072cd2ccb7f",
+      "size": 50,
+      "id": "f63af601-43cd-41ab-8905-e1e93995f366",
+      "name": "SNAPSHOT"
     }
   ]
 }
@@ -648,6 +603,8 @@ X-Auth-Token: {tokenId}
 
 </p>
 </details>
+
+---
 
 ### 스냅숏 목록 상세 보기
 스냅숏 상세 정보 목록을 반환합니다.
@@ -662,12 +619,12 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
 
-| 이름 | 종류 | 속성 | 설명 |
+| 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | snapshots | Body | Array | 스냅숏 상세 정보 객체 목록 |
 | snapshots.status | Body | Enum | 스냅숏 상태 |
@@ -681,8 +638,7 @@ X-Auth-Token: {tokenId}
 | snapshots.id | Body | UUID | 스냅숏 ID |
 | snapshots.name | Body | String | 스냅숏 이름 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -692,13 +648,13 @@ X-Auth-Token: {tokenId}
       "status": "available",
       "os-extended-snapshot-attributes:progress": "100%",
       "description": "",
-      "created_at": "2019-07-30T02:05:13.000000",
+      "created_at": "2020-03-03T11:03:40.000000",
       "metadata": {},
-      "volume_id": "13461857-3ac4-42f3-b821-3eb9cddf0cbf",
-      "os-extended-snapshot-attributes:project_id": "19eeb40d58684543aef29cbb5ebfe8f0",
-      "size": 20,
-      "id": "efb57271-2967-4e0f-bfcd-e14fa7c6acd7",
-      "name": "jj-img-hdd-snapshot"
+      "volume_id": "17975e9d-1533-40db-bd02-2072cd2ccb7f",
+      "os-extended-snapshot-attributes:project_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
+      "size": 50,
+      "id": "f63af601-43cd-41ab-8905-e1e93995f366",
+      "name": "SNAPSHOT"
     }
   ]
 }
@@ -706,6 +662,8 @@ X-Auth-Token: {tokenId}
 
 </p>
 </details>
+
+---
 
 ### 스냅숏 보기
 지정한 스냅숏에 대한 상세 정보를 반환합니다.
@@ -720,13 +678,13 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
-| snapshotId | URI | UUID | O | 스냅숏 ID |
+| projectId | URL | String | O | 테넌트 ID |
+| snapshotId | URL | UUID | O | 스냅숏 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
 
-| 이름 | 종류 | 속성 | 설명 |
+| 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | snapshot | Body | Array | 스냅숏 상세 정보 객체 목록 |
 | snapshot.status | Body | Enum | 스냅숏 상태 |
@@ -740,8 +698,7 @@ X-Auth-Token: {tokenId}
 | snapshot.id | Body | UUID | 스냅숏 ID |
 | snapshot.name | Body | String | 스냅숏 이름 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -750,19 +707,21 @@ X-Auth-Token: {tokenId}
     "status": "available",
     "os-extended-snapshot-attributes:progress": "100%",
     "description": "",
-    "created_at": "2019-07-30T02:05:13.000000",
+    "created_at": "2020-03-03T11:03:40.000000",
     "metadata": {},
-    "volume_id": "13461857-3ac4-42f3-b821-3eb9cddf0cbf",
-    "os-extended-snapshot-attributes:project_id": "19eeb40d58684543aef29cbb5ebfe8f0",
-    "size": 20,
-    "id": "efb57271-2967-4e0f-bfcd-e14fa7c6acd7",
-    "name": "jj-img-hdd-snapshot"
+    "volume_id": "17975e9d-1533-40db-bd02-2072cd2ccb7f",
+    "os-extended-snapshot-attributes:project_id": "6cdebe3eb0094910bc41f1d42ebe4cb7",
+    "size": 50,
+    "id": "f63af601-43cd-41ab-8905-e1e93995f366",
+    "name": "SNAPSHOT"
   }
 }
 ```
 
 </p>
 </details>
+
+---
 
 ### 스냅숏 생성하기
 지정한 볼륨에 대한 스냅숏을 생성합니다.
@@ -776,7 +735,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | snapshot | Body | Object | O | 스냅숏 생성 요청 객체 |
 | snapshot.volume_id | Body | UUID | O | 원본 볼륨 ID |
@@ -784,14 +743,13 @@ X-Auth-Token: {tokenId}
 | snapshot.description | Body | String | - | 스냅숏 설명 |
 | snapshot.name | Body | String | - | 스냅숏 이름 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
 {
     "snapshot": {
-        "name": "snap-001",
+        "name": "SNAPSHOT-001",
         "description": "Daily backup",
         "volume_id": "5aa119a8-d25b-45a7-8d1b-88e127885635",
         "force": true
@@ -804,7 +762,7 @@ X-Auth-Token: {tokenId}
 
 #### 응답
 
-| 이름 | 종류 | 속성 | 설명 |
+| 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | snapshot | Body | Array | 스냅숏 상세 정보 객체 목록 |
 | snapshot.status | Body | Enum | 스냅숏 상태 |
@@ -816,8 +774,7 @@ X-Auth-Token: {tokenId}
 | snapshot.id | Body | UUID | 스냅숏 ID |
 | snapshot.name | Body | String | 스냅숏 이름 |
 
-#### 예제
-<details><summary>펼쳐 보기</summary>
+<details><summary>예시</summary>
 <p>
 
 ```json
@@ -827,16 +784,18 @@ X-Auth-Token: {tokenId}
     "description": null,
     "created_at": "2020-03-02T13:51:33.318695",
     "metadata": {},
-    "volume_id": "13461857-3ac4-42f3-b821-3eb9cddf0cbf",
+    "volume_id": "5aa119a8-d25b-45a7-8d1b-88e127885635",
     "size": 20,
     "id": "f2ae2667-b3b7-47ef-aa31-efab536888b9",
-    "name": "CCCCC"
+    "name": "SNAPSHOT"
   }
 }
 ```
 
 </p>
 </details>
+
+---
 
 ### 스냅숏 삭제하기
 지정한 스냅숏을 삭제합니다.
@@ -851,8 +810,8 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URI | String | O | 테넌트 ID |
-| snapshotId | URI | String | O | 스냅숏 ID |
+| projectId | URL | String | O | 테넌트 ID |
+| snapshotId | URL | String | O | 스냅숏 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
