@@ -1,13 +1,19 @@
 ## Storage > Block Storage > Release Notes
 
-### Nov. 26, 2019
+#### March 24, 2020
 
-#### Features
+#### Feature Updates 
+
+* Increased the maximum size of block storage creation from 1TB to 2TB.  
+
+## Nov.26, 2019.
+
+#### More Features
 
 * Default disk is displayed on the list of block storages.
 
 
-### 2019.01.29
+### Jan.29, 2019
 
 #### 기능 추가
 
@@ -15,7 +21,7 @@
 * 스냅숏으로 블록 스토리지 생성시 가용성 영역과 블록 타입을 선택할 수 있도록 변경
 
 
-### 2017.09.21
+### Sept.21, 2017
 
 #### 기능 추가
 * Public API 추가
@@ -25,7 +31,7 @@
 
 
 
-### 2017.07.20
+### July 20, 2017
 
 #### 버그 수정
 
@@ -33,7 +39,7 @@
 
 
 
-### 2017.01.19
+### Jan.19, 2017
 
 #### 기능 개선/변경
 
