@@ -1,12 +1,12 @@
 ## Storage > Block Storage > Release Notes
 
-#### March 24, 2020
+### Mar.24, 2020
 
-#### Feature Updates 
+#### Feature Updates
 
-* Increased the maximum size of block storage creation from 1TB to 2TB.  
+* Increased the maximum size of block storage creation from 1TB to 2TB.
 
-## Nov.26, 2019.
+### Nov.26, 2019.
 
 #### More Features
 
@@ -31,7 +31,7 @@
 
 
 
-### July 20, 2017
+### Jul.20, 2017
 
 #### 버그 수정
 
