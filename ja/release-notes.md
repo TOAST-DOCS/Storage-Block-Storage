@@ -1,6 +1,6 @@
 ## Storage > Block Storage > Release Notes
 
-#### 2020. 3. 24.
+### 2020. 3. 24.
 
 #### 機能変更
 
