@@ -6,7 +6,7 @@
 
 * Increased the maximum size of block storage creation from 1TB to 2TB.
 
-### Nov.26, 2019.
+### Nov.26, 2019
 
 #### More Features
 
