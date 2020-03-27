@@ -1,55 +1,5 @@
 ## Storage > Block Storage > Public API 가이드
 
-## API 버전
-### 버전 목록 보기
-
-TOAST 기본 인프라 서비스 Volume API에서 지원하는 버전 목록을 확인할 수 있습니다.
-
-```
-GET /
-```
-
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
-
-#### 응답
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-  "versions": [
-    {
-      "status": "SUPPORTED",
-      "updated": "2014-06-28T12:20:21Z",
-      "id": "v1.0",
-      "links": [
-        {
-          "href": "https://kr1-api-volume.cloud.toast.com/v1/",
-          "rel": "self"
-        }
-      ]
-    },
-    {
-      "status": "CURRENT",
-      "updated": "2012-11-21T11:33:21Z",
-      "id": "v2.0",
-      "links": [
-        {
-          "href": "https://kr1-api-volume.cloud.toast.com/v2/",
-          "rel": "self"
-        }
-      ]
-    }
-  ]
-}
-```
-
-</p>
-</details>
-
----
-
 ## 볼륨 타입
 ### 볼륨 타입 목록 보기
 ```
@@ -109,8 +59,7 @@ X-Auth-Token: {tokenId}
 
 ## 볼륨
 ### 볼륨 상태
-볼륨은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다.
-가능한 상태 목록은 다음과 같습니다.
+볼륨은 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
 
 | 상태 명 | 설명 |
 |--|--|
@@ -162,7 +111,7 @@ X-Auth-Token: {tokenId}
 | volumes.id | Body | UUID | 볼륨 ID |
 | volumes.links | Body | Object | 볼륨 리소스 링크 레퍼런스 객체 |
 | volumes.name | Body | String | 볼륨 이름 |
-| volumes_links  | Body | Object | 페이지네이션을 위한 정보 객체<br>`limit`, `offset`를 추가한 경우 반환<br>다음 목록을 가리키는 경로를 포함 |
+| volumes_links  | Body | Object | 페이지네이션을 위한 정보 객체 (다음 목록을 가리키는 경로)<br>`limit`, `offset`를 추가한 경우 반환 |
 
 <details><summary>예시</summary>
 <p>
@@ -237,15 +186,15 @@ X-Auth-Token: {tokenId}
 | volumes.metadata | Body | Object | 볼륨 메타데이터 객체 |
 | volumes.status | Body | Enum | 볼륨 상태 |
 | volumes.description | Body | String | 볼륨 설명 |
-| volumes.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`로 설정하면<br>여러 인스턴스에 동시에 연결할 수 있음 |
+| volumes.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
 | volumes.source_volid | Body | UUID | 볼륨 생성시 지정한 Volume ID |
 | volumes.consistencygroup_id | Body | UUID | 볼륨 Consistency 그룹 ID |
 | volumes.name | Body | UUID | 볼륨 이름 |
 | volumes.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volumes.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volumes.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volumes.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
 | volumes.replication_status | Body | String | 볼륨 복제 상태 |
-| volumes.volumes_links  | Body | Object | 페이지네이션을 위한 정보 객체<br>`limit`, `offset`를 추가한 경우 반환<br>다음 목록을 가리키는 경로를 포함 |
+| volumes.volumes_links  | Body | Object | 페이지네이션을 위한 정보 객체 (다음 목록을 가리키는 경로)<br>`limit`, `offset`를 추가한 경우 반환 |
 
 <details><summary>예시</summary>
 <p>
@@ -336,7 +285,7 @@ X-Auth-Token: {tokenId}
 | volume.metadata | Body | Object | 볼륨 메타데이터 객체 |
 | volume.status | Body | Enum | 볼륨 상태 |
 | volume.description | Body | String | 볼륨 설명 |
-| volume.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`로 설정하면<br>여러 인스턴스에 동시에 연결할 수 있음 |
+| volume.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
 | volume.source_volid | Body | UUID | 볼륨 생성시 지정한 Volume ID |
 | volume.consistencygroup_id | Body | UUID | 볼륨 Consistency 그룹 ID |
 | volume.name | Body | UUID | 볼륨 이름 |
@@ -392,11 +341,12 @@ X-Auth-Token: {tokenId}
 ---
 
 ### 볼륨 생성하기
-새로운 볼륨을 생성합니다. 이미지 또는 스냅숏으로부터 새로운 볼륨을 생성할 수 있습니다.
-볼륨은 생성 직후 즉시 사용할 수 없습니다. 볼륨 상태를 조회해서 `available` 상태로 전이하는 것을 확인한 후 사용할 수 있습니다.
+스냅숏으로부터 새로운 볼륨을 생성하거나 빈 볼륨을 생성합니다.
+
+볼륨은 생성 직후 즉시 사용할 수 없습니다. 볼륨 상태를 조회해서 `available` 상태로 전이하는 것을 확인한 후 사용합니다.
 
 ```
-POST /v2/{projectId}/volumes/detail
+POST /v2/{projectId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
@@ -407,16 +357,13 @@ X-Auth-Token: {tokenId}
 | projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | volume | Body | Object | O | 볼륨 생성 요청 객체 |
-| volume.size | Body | Integer | O | 볼륨 크기 |
+| volume.size | Body | Integer | O | 볼륨 크기 (GB) |
 | volume.description | Body | String | - | 볼륨 설명 |
-| volume.imageRef | Body | String | - | 원본 이미지 ID |
 | volume.multiattach | Body | Boolean | - | 다중 연결 가능 여부<br>`true`로 설정하면<br>여러 인스턴스에 동시에 연결할 수 있음 |
 | volume.availability_zone | Body | String | - | 볼륨 가용성 영역 이름 |
-| volume.source_volid | Body | UUID | - | 원본 볼륨 ID |
 | volume.name | Body | String | - | 볼륨 이름 |
-| volume.consistencygroup_id | Body | UUID | - | 볼륨 Consistency 그룹 ID |
 | volume.volume_type | Body | String | - | 볼륨 타입 이름 |
-| volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID |
+| volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID. 생략하면 빈 볼륨이 생성됨. |
 | volume.metadata | Body | Object | - | 볼륨 메타데이터 객체 |
 
 <details><summary>예시</summary>
@@ -449,11 +396,6 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|
 | volume | Body | Object | 볼륨 상세 정보 객체 |
 | volume.attachments | Body | Object | 볼륨 연결 정보 객체 |
-| volume.attachments.server_id | Body | UUID | 볼륨이 연결된 인스턴스 ID |
-| volume.attachments.attachment_id | Body | UUID | 볼륨 연결 ID |
-| volume.attachments.volume_id | Body | UUID | 볼륨 ID |
-| volume.attachments.device_id | Body | String | 인스턴스내 장치 이름 |
-| volume.attachments.id | Body | String | 볼륨 ID |
 | volume.links | Body | Object | 볼륨 리소스 링크 레퍼런스 객체 |
 | volume.availability_zone | Body | String | 볼륨 가용성 영역 |
 | volume.encrypted | Body | Boolean | 볼륨 암호화 여부 |
@@ -468,11 +410,10 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | 볼륨 상태 |
 | volume.description | Body | String | 볼륨 설명 |
 | volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
-| volume.source_volid | Body | UUID | 볼륨 생성시 지정한 Volume ID |
 | volume.consistencygroup_id | Body | UUID | 볼륨 Consistency 그룹 ID |
 | volume.name | Body | UUID | 볼륨 이름 |
 | volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
 | volume.replication_status | Body | String | 볼륨 복제 상태 |
 
@@ -517,6 +458,7 @@ X-Auth-Token: {tokenId}
 ---
 
 ### 볼륨 삭제하기
+
 지정한 볼륨을 삭제합니다. 연결되어 있거나 스냅샷이 생성된 볼륨은 삭제할 수 없습니다.
 
 ```
@@ -577,7 +519,7 @@ X-Auth-Token: {tokenId}
 | snapshots | Body | Array | 스냅숏 정보 객체 목록 |
 | snapshots.status | Body | Enum | 스냅숏 상태 |
 | snapshots.description | Body | String | 스냅숏 설명 |
-| snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>YYYY-MM-DDThh:mm:ss.SSSSSS |
+| snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshots.metadata | Body | Object | 스냅숏 메타데이터 객체 |
 | snapshots.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
 | snapshots.size | Body | Integer | 스냅숏의 원본 볼륨 크기 (GB) |
@@ -633,7 +575,7 @@ X-Auth-Token: {tokenId}
 | snapshots.status | Body | Enum | 스냅숏 상태 |
 | snapshots.description | Body | String | 스냅숏 설명 |
 | snapshots.os-extended-snapshot-attributes:progress | Body | String | 스냅숏 생성 진행 상태 |
-| snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>YYYY-MM-DDThh:mm:ss.SSSSSS |
+| snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshots.metadata | Body | Object | 스냅숏 메타데이터 객체 |
 | snapshots.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
 | snapshots.os-extended-snapshot-attributes:project_id | Body | String | 테넌트 ID |
@@ -693,7 +635,7 @@ X-Auth-Token: {tokenId}
 | snapshot.status | Body | Enum | 스냅숏 상태 |
 | snapshot.description | Body | String | 스냅숏 설명 |
 | snapshot.os-extended-snapshot-attributes:progress | Body | String | 스냅숏 생성 진행 상태 |
-| snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>YYYY-MM-DDThh:mm:ss.SSSSSS |
+| snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshot.metadata | Body | Object | 스냅숏 메타데이터 객체 |
 | snapshot.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
 | snapshot.os-extended-snapshot-attributes:project_id | Body | String | 테넌트 ID |
@@ -770,7 +712,7 @@ X-Auth-Token: {tokenId}
 | snapshot | Body | Array | 스냅숏 상세 정보 객체 목록 |
 | snapshot.status | Body | Enum | 스냅숏 상태 |
 | snapshot.description | Body | String | 스냅숏 설명 |
-| snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>YYYY-MM-DDThh:mm:ss.SSSSSS |
+| snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshot.metadata | Body | Object | 스냅숏 메타데이터 객체 |
 | snapshot.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
 | snapshot.size | Body | Integer | 스냅숏의 원본 볼륨 크기 (GB) |
