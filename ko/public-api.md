@@ -1,4 +1,13 @@
-## Storage > Block Storage > Public API 가이드
+## Storage > Block Storage > API v2 가이드
+
+API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+
+블록 스토리지 API는 `volumev2` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
+
+| 타입 | 리전 | 엔드포인트 |
+|---|---|---|
+| volumev2 | 한국(판교) 리전<br>한국(평촌) 리전<br>일본 리전 | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://kr2-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
+
 
 ## 볼륨 타입
 ### 볼륨 타입 목록 보기
@@ -22,6 +31,8 @@ X-Auth-Token: {tokenId}
 | volume_types | Body | Array | 볼륨 타입 객체 목록 |
 | volume_types.id | Body | UUID | 볼륨 타입 ID |
 | volume_types.name | Body | String | 볼륨 타입 이름 |
+| volume_types.os-volume-type-access:is_public | Body | Boolean | 볼륨 타입 공개 노출 여부 |
+| volume_types.description | Body | String | 볼륨 타입 설명 |
 | volume_types.extra_specs | Body | Object | 볼륨 타입 관련 추가 사양 정보 객체 |
 
 <details><summary>예시</summary>
@@ -101,7 +112,7 @@ X-Auth-Token: {tokenId}
 | sort | Query | String | - | 정렬 기준이될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨의 갯수<br>기본 값은 1000으로 설정 |
 | offset | Query | Integer | - | 반환될 목록의 시작점<br>전체 목록 중 offset 번째 볼륨부터 반환 |
-| marker | Query | Integer | - | 반환할 볼륨들의 직전 볼륨 ID<br>정렬 순서에 따라 `marker`로 지정된 이미지 이후부터 `limit` 만큼 반환 |
+| marker | Query | UUID | - | 반환할 볼륨들의 직전 볼륨 ID<br>정렬 순서에 따라 `marker`로 지정된 볼 이후부터 `limit` 만큼 반환 |
 
 #### 응답
 
@@ -160,7 +171,7 @@ X-Auth-Token: {tokenId}
 | sort | Query | String | - | 정렬 기준이될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨의 갯수<br>기본 값은 1000으로 설정 |
 | offset | Query | Integer | - | 반환될 목록의 시작점<br>전체 목록 중 offset 번째 볼륨부터 반환 |
-| marker | Query | Integer | - | 반환할 볼륨들의 직전 볼륨 ID<br>정렬 순서에 따라 `marker`로 지정된 이미지 이후부터 `limit` 만큼 반환 |
+| marker | Query | UUID | - | 반환할 볼륨들의 직전 볼륨 ID<br>정렬 순서에 따라 `marker`로 지정된 볼륨 이후부터 `limit` 만큼 반환 |
 
 #### 응답
 
@@ -171,7 +182,7 @@ X-Auth-Token: {tokenId}
 | volumes.attachments.server_id | Body | UUID | 볼륨이 연결된 인스턴스 ID |
 | volumes.attachments.attachment_id | Body | UUID | 볼륨 연결 ID |
 | volumes.attachments.volume_id | Body | UUID | 볼륨 ID |
-| volumes.attachments.device_id | Body | String | 인스턴스내 장치 이름 |
+| volumes.attachments.device | Body | String | 인스턴스내 장치 이름 |
 | volumes.attachments.id | Body | String | 볼륨 ID |
 | volumes.links | Body | Object | 볼륨 리소스 링크 레퍼런스 객체 |
 | volumes.availability_zone | Body | String | 볼륨 가용성 영역 |
@@ -180,7 +191,7 @@ X-Auth-Token: {tokenId}
 | volumes.volume_type | Body | String | 볼륨 타입 이름 |
 | volumes.snapshot_id | Body | UUID | 볼륨 생성시 지정한 Snapshot ID |
 | volumes.id | Body | UUID | 볼륨 ID |
-| volumes.size | Body | Integer | 볼륨 크기 |
+| volumes.size | Body | Integer | 볼륨 크기 (GB)|
 | volumes.user_id | Body | String | 볼륨 소유주 ID |
 | volumes.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
 | volumes.metadata | Body | Object | 볼륨 메타데이터 객체 |
@@ -189,7 +200,7 @@ X-Auth-Token: {tokenId}
 | volumes.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
 | volumes.source_volid | Body | UUID | 볼륨 생성시 지정한 Volume ID |
 | volumes.consistencygroup_id | Body | UUID | 볼륨 Consistency 그룹 ID |
-| volumes.name | Body | UUID | 볼륨 이름 |
+| volumes.name | Body | String | 볼륨 이름 |
 | volumes.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
 | volumes.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volumes.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
@@ -270,7 +281,7 @@ X-Auth-Token: {tokenId}
 | volume.attachments.server_id | Body | UUID | 볼륨이 연결된 인스턴스 ID |
 | volume.attachments.attachment_id | Body | UUID | 볼륨 연결 ID |
 | volume.attachments.volume_id | Body | UUID | 볼륨 ID |
-| volume.attachments.device_id | Body | String | 인스턴스내 장치 이름 |
+| volume.attachments.device | Body | String | 인스턴스내 장치 이름 |
 | volume.attachments.id | Body | String | 볼륨 ID |
 | volume.links | Body | Object | 볼륨 리소스 링크 레퍼런스 객체 |
 | volume.availability_zone | Body | String | 볼륨 가용성 영역 |
@@ -279,7 +290,7 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | 볼륨 타입 이름 |
 | volume.snapshot_id | Body | UUID | 볼륨 생성시 지정한 Snapshot ID |
 | volume.id | Body | UUID | 볼륨 ID |
-| volume.size | Body | Integer | 볼륨 크기 |
+| volume.size | Body | Integer | 볼륨 크기 (GB) |
 | volume.user_id | Body | String | 볼륨 소유주 ID |
 | volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
 | volume.metadata | Body | Object | 볼륨 메타데이터 객체 |
@@ -288,7 +299,7 @@ X-Auth-Token: {tokenId}
 | volume.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
 | volume.source_volid | Body | UUID | 볼륨 생성시 지정한 Volume ID |
 | volume.consistencygroup_id | Body | UUID | 볼륨 Consistency 그룹 ID |
-| volume.name | Body | UUID | 볼륨 이름 |
+| volume.name | Body | String | 볼륨 이름 |
 | volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
 | volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
 | volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
@@ -403,7 +414,7 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | 볼륨 타입 이름 |
 | volume.snapshot_id | Body | UUID | 볼륨 생성시 지정한 Snapshot ID |
 | volumes.id | Body | UUID | 볼륨 ID |
-| volume.size | Body | Integer | 볼륨 크기 |
+| volume.size | Body | Integer | 볼륨 크기 (GB) |
 | volume.user_id | Body | String | 볼륨 소유주 ID |
 | volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
 | volume.metadata | Body | Object | 볼륨 메타데이터 객체 |
@@ -411,7 +422,7 @@ X-Auth-Token: {tokenId}
 | volume.description | Body | String | 볼륨 설명 |
 | volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
 | volume.consistencygroup_id | Body | UUID | 볼륨 Consistency 그룹 ID |
-| volume.name | Body | UUID | 볼륨 이름 |
+| volume.name | Body | String | 볼륨 이름 |
 | volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
 | volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
@@ -462,7 +473,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨을 삭제합니다. 연결되어 있거나 스냅샷이 생성된 볼륨은 삭제할 수 없습니다.
 
 ```
-GET /v2/{projectId}/volumes/{volumeId}
+DELETE /v2/{projectId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -631,7 +642,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
-| snapshot | Body | Array | 스냅숏 상세 정보 객체 목록 |
+| snapshot | Body | Object | 스냅숏 상세 정보 객체 |
 | snapshot.status | Body | Enum | 스냅숏 상태 |
 | snapshot.description | Body | String | 스냅숏 설명 |
 | snapshot.os-extended-snapshot-attributes:progress | Body | String | 스냅숏 생성 진행 상태 |
@@ -709,7 +720,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
-| snapshot | Body | Array | 스냅숏 상세 정보 객체 목록 |
+| snapshot | Body | Object | 스냅숏 상세 정보 객체 |
 | snapshot.status | Body | Enum | 스냅숏 상태 |
 | snapshot.description | Body | String | 스냅숏 설명 |
 | snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
@@ -746,7 +757,7 @@ X-Auth-Token: {tokenId}
 지정한 스냅숏을 삭제합니다.
 
 ```
-GET /v2/{projectId}/snapshots/{snapshotId}
+DELETE /v2/{projectId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
