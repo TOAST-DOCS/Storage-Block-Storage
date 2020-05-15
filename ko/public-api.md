@@ -684,7 +684,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨에 대한 스냅숏을 생성합니다.
 
 ```
-POST /v2/{projectId}/snapshots/{snapshotId}
+POST /v2/{projectId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
