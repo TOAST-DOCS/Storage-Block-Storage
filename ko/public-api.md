@@ -22,7 +22,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -99,7 +99,7 @@ X-Auth-Token: {tokenId}
 현재 테넌트에 속한 볼륨 목록을 반환합니다.
 
 ```
-GET /v2/{projectId}/volumes
+GET /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
@@ -108,7 +108,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | sort | Query | String | - | 정렬 기준이될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨의 갯수<br>기본 값은 1000으로 설정 |
@@ -158,7 +158,7 @@ X-Auth-Token: {tokenId}
 현재 테넌트에 속한 볼륨 목록을 반환합니다.
 
 ```
-GET /v2/{projectId}/volumes/detail
+GET /v2/{tenantId}/volumes/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -167,7 +167,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | sort | Query | String | - | 정렬 기준이될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨의 갯수<br>기본 값은 1000으로 설정 |
@@ -260,7 +260,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨에 대한 상세 정보를 반환합니다.
 
 ```
-GET /v2/{projectId}/volumes/{volumeId}
+GET /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -269,7 +269,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | volumeId | URL | UUID | O | 볼륨 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -358,7 +358,7 @@ X-Auth-Token: {tokenId}
 볼륨은 생성 직후 즉시 사용할 수 없습니다. 볼륨 상태를 조회해서 `available` 상태로 전이하는 것을 확인한 후 사용합니다.
 
 ```
-POST /v2/{projectId}/volumes
+POST /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
@@ -366,7 +366,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | volume | Body | Object | O | 볼륨 생성 요청 객체 |
 | volume.size | Body | Integer | O | 볼륨 크기 (GB) |
@@ -474,7 +474,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨을 삭제합니다. 연결되어 있거나 스냅샷이 생성된 볼륨은 삭제할 수 없습니다.
 
 ```
-DELETE /v2/{projectId}/volumes/{volumeId}
+DELETE /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -483,7 +483,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | volumeId | URL | String | O | 볼륨 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -512,7 +512,7 @@ X-Auth-Token: {tokenId}
 스냅숏 목록을 반환합니다.
 
 ```
-GET /v2/{projectId}/snapshots
+GET /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
@@ -521,7 +521,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -567,7 +567,7 @@ X-Auth-Token: {tokenId}
 스냅숏 상세 정보 목록을 반환합니다.
 
 ```
-GET /v2/{projectId}/snapshots/detail
+GET /v2/{tenantId}/snapshots/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -576,7 +576,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -626,7 +626,7 @@ X-Auth-Token: {tokenId}
 지정한 스냅숏에 대한 상세 정보를 반환합니다.
 
 ```
-GET /v2/{projectId}/snapshots/{snapshotId}
+GET /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -635,7 +635,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | snapshotId | URL | UUID | O | 스냅숏 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -684,7 +684,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨에 대한 스냅숏을 생성합니다.
 
 ```
-POST /v2/{projectId}/snapshots
+POST /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
@@ -692,7 +692,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | snapshot | Body | Object | O | 스냅숏 생성 요청 객체 |
 | snapshot.volume_id | Body | UUID | O | 원본 볼륨 ID |
@@ -758,7 +758,7 @@ X-Auth-Token: {tokenId}
 지정한 스냅숏을 삭제합니다.
 
 ```
-DELETE /v2/{projectId}/snapshots/{snapshotId}
+DELETE /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -767,7 +767,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| projectId | URL | String | O | 테넌트 ID |
+| tenantId | URL | String | O | 테넌트 ID |
 | snapshotId | URL | String | O | 스냅숏 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
