@@ -492,6 +492,117 @@ X-Auth-Token: {tokenId}
 
 ---
 
+### 볼륨으로 이미지 생성하기
+볼륨으로부터 이미지를 생성합니다. 
+
+이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다.
+
+남은 공간이 이보다 작을 경우 초기화 작업에 실패할 수 있습니다.
+
+
+```
+POST /v2/{tenantId}/volumes/{volumeId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### 요청
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+|---|---|---|---|---|
+| tenantId | URL | String | O | 테넌트 ID |
+| volumeId | URL | UUID | O | 볼륨 ID |
+| tokenId | Header | String | O | 토큰 ID |
+| os-volume_upload_image | Body | Object | O | 볼륨 이미지 생성 요청 객체 |
+| os-volume_upload_image.image_name | Body | String | O | 이미지 이름 |
+| os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 볼륨일때 이미지 생성 허용 여부<br>기본값은 false |
+| os-volume_upload_image.disk_format | Body | String | - | 이미지 디스크 포맷 |
+| os-volume_upload_image.container_format | Body | String | - | 이미지 컨테이너 포맷 |
+| os-volume_upload_image.visibility | Body | String | - | 이미지 가시성<br>`public`, `private`, `shared` 중 하나 |
+| os-volume_upload_image.protected | Body | Boolean | - | 이미지 보호 여부</br>protected=true인 경우 수정 및 삭제가 불가 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+	"os-volume_upload_image":{
+        "image_name": "VOLUME IMAGE",
+        "force": true,
+        "disk_format": "qcow2",
+        "container_format": "bare",
+        "visibility": "private",
+        "protected": false
+    }
+}
+```
+
+</p>
+</details>
+
+#### 응답
+
+| 이름 | 종류 | 속성 | 설명 |
+|---|---|---|---|
+| os-volume_upload_image | Body | Object | 볼륨 이미지 생성 응답 객체 |
+| os-volume_upload_image.status | Body | String | 볼륨 상태 |
+| os-volume_upload_image.image_name | Body | String | 이미지 이름 |
+| os-volume_upload_image.disk_format | Body | String | 이미지 디스크 포맷 |
+| os-volume_upload_image.container_format | Body | String | 이미지 컨테이너 포맷 |
+| os-volume_upload_image.visibility | Body | String | 이미지 가시성<br>`public`, `private`, `shared` 중 하나 |
+| os-volume_upload_image.protected | Body | Boolean | 이미지 보호 여부</br>protected=true인 경우 수정 및 삭제가 불가 |
+| os-volume_upload_image.updated_at | Body | Datetime | 이미지 수정 시각 |
+| os-volume_upload_image.image_id | Body | UUID | 이미지 ID |
+| os-volume_upload_image.display_description | Body | String | 볼륨 설명 |
+| os-volume_upload_image.id | Body | UUID | 볼륨 ID |
+| os-volume_upload_image.size | Body | Integer | 볼륨 크기 (GB) |
+| os-volume_upload_image.volume_type | Body | Object | 볼륨 타입 정보 객체 |
+
+<details><summary>예시</summary>
+<p>
+
+```json
+{
+    "os-volume_upload_image": {
+        "status": "uploading",
+        "size": 20,
+        "id": "d16d64e8-a5c9-47fe-a559-1119778c739c",
+        "container_format": "bare",
+        "image_name": "public api test2",
+        "disk_format": "qcow2",
+        "image_id": "01956bf6-5609-4b43-88ea-1be866114368",
+        "updated_at": "2020-05-18T04:21:15.000000",
+        "volume_type": {
+            "name": "General HDD",
+            "qos_specs_id": "ec4ef37d-9273-4e6f-a495-bd43b0f2d0f2",
+            "deleted": false,
+            "deleted_at": "null",
+            "created_at": "2019-10-10T06:34:33.000000",
+            "updated_at": "2019-10-10T06:37:52.000000",
+            "extra_specs": [
+                {
+                    "volume_type_id": "964a6c6b-7190-4e27-9311-cce8d6f860f3",
+                    "deleted": false,
+                    "created_at": "2019-10-10T06:39:35.000000",
+                    "updated_at": "null",
+                    "deleted_at": "null",
+                    "value": "hdd_general",
+                    "key": "volume_backend_name",
+                    "id": 1
+                }
+            ],
+            "is_public": true,
+            "id": "964a6c6b-7190-4e27-9311-cce8d6f860f3",
+            "description": "null"
+        }
+    }
+}
+```
+
+</p>
+</details>
+
+---
+
 ## 스냅숏
 ### 스냅숏 상태
 스냅숏은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
