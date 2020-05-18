@@ -495,10 +495,7 @@ X-Auth-Token: {tokenId}
 ### 볼륨으로 이미지 생성하기
 볼륨으로부터 이미지를 생성합니다. 
 
-이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다.
-
-남은 공간이 이보다 작을 경우 초기화 작업에 실패할 수 있습니다.
-
+이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다. 남은 공간이 이보다 작을 경우 초기화 작업 실패할 수 있습니다.
 
 ```
 POST /v2/{tenantId}/volumes/{volumeId}/action
@@ -517,7 +514,7 @@ X-Auth-Token: {tokenId}
 | os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 볼륨일때 이미지 생성 허용 여부<br>기본값은 false |
 | os-volume_upload_image.disk_format | Body | String | - | 이미지 디스크 포맷 |
 | os-volume_upload_image.container_format | Body | String | - | 이미지 컨테이너 포맷 |
-| os-volume_upload_image.visibility | Body | String | - | 이미지 가시성<br>`public`, `private`, `shared` 중 하나 |
+| os-volume_upload_image.visibility | Body | String | - | 이미지 가시성<br>`private`, `shared` 중 하나 |
 | os-volume_upload_image.protected | Body | Boolean | - | 이미지 보호 여부</br>protected=true인 경우 수정 및 삭제가 불가 |
 
 <details><summary>예시</summary>
@@ -548,8 +545,6 @@ X-Auth-Token: {tokenId}
 | os-volume_upload_image.image_name | Body | String | 이미지 이름 |
 | os-volume_upload_image.disk_format | Body | String | 이미지 디스크 포맷 |
 | os-volume_upload_image.container_format | Body | String | 이미지 컨테이너 포맷 |
-| os-volume_upload_image.visibility | Body | String | 이미지 가시성<br>`public`, `private`, `shared` 중 하나 |
-| os-volume_upload_image.protected | Body | Boolean | 이미지 보호 여부</br>protected=true인 경우 수정 및 삭제가 불가 |
 | os-volume_upload_image.updated_at | Body | Datetime | 이미지 수정 시각 |
 | os-volume_upload_image.image_id | Body | UUID | 이미지 ID |
 | os-volume_upload_image.display_description | Body | String | 볼륨 설명 |
@@ -564,13 +559,13 @@ X-Auth-Token: {tokenId}
 {
     "os-volume_upload_image": {
         "status": "uploading",
-        "size": 20,
-        "id": "d16d64e8-a5c9-47fe-a559-1119778c739c",
-        "container_format": "bare",
         "image_name": "public api test2",
         "disk_format": "qcow2",
-        "image_id": "01956bf6-5609-4b43-88ea-1be866114368",
+        "container_format": "bare",
         "updated_at": "2020-05-18T04:21:15.000000",
+        "image_id": "01956bf6-5609-4b43-88ea-1be866114368",
+        "id": "d16d64e8-a5c9-47fe-a559-1119778c739c",
+        "size": 20,
         "volume_type": {
             "name": "General HDD",
             "qos_specs_id": "ec4ef37d-9273-4e6f-a495-bd43b0f2d0f2",
