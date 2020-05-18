@@ -13,7 +13,7 @@ API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니
 ## 볼륨 타입
 ### 볼륨 타입 목록 보기
 ```
-GET /v2/{projectid}/types
+GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
 ```
 
