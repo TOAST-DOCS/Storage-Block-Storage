@@ -40,7 +40,10 @@ Detaching block storage is available even when an instance is running. To detach
 
 **Linux Instance**
 
-	# umount <Mount-points>
+It is available to detach block storage even while instance is under execution. To do so, however, the block storage mount must be detached from instance first. Detaching while block storage is mounted may cause the following:   	
+
+1.Data may be lost due to damage incurred to block storage data. 
+2.Block storage name shows differently on console from instance, with a new block storage added. To show a same block storage name, instance must be restarted.   
 
 **Windows Instance**
 
