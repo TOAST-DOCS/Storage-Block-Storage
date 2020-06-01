@@ -1,4 +1,4 @@
-﻿## Storage > Block Storage > Public APIガイド
+## Storage > Block Storage > Public APIガイド
 
 ## ボリュームタイプ
 ### ボリュームタイプリスト表示
