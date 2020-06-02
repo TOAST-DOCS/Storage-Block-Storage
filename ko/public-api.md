@@ -1,19 +1,9 @@
-## Storage > Block Storage > API v2 가이드
-
-API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
-
-블록 스토리지 API는 `volumev2` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
-
-| 타입 | 리전 | 엔드포인트 |
-|---|---|---|
-| volumev2 | 한국(판교) 리전<br>일본 리전 | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
-
-API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
+## Storage > Block Storage > Public API 가이드
 
 ## 볼륨 타입
 ### 볼륨 타입 목록 보기
 ```
-GET /v2/{tenantId}/types
+GET /v2/{projectid}/types
 X-Auth-Token: {tokenId}
 ```
 
@@ -22,7 +12,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -99,7 +89,7 @@ X-Auth-Token: {tokenId}
 현재 테넌트에 속한 볼륨 목록을 반환합니다.
 
 ```
-GET /v2/{tenantId}/volumes
+GET /v2/{projectId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
@@ -108,7 +98,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | sort | Query | String | - | 정렬 기준이 될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨 개수<br>기본값은 1000으로 설정 |
@@ -158,7 +148,7 @@ X-Auth-Token: {tokenId}
 현재 테넌트에 속한 볼륨 목록을 반환합니다.
 
 ```
-GET /v2/{tenantId}/volumes/detail
+GET /v2/{projectId}/volumes/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -167,7 +157,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | sort | Query | String | - | 정렬 기준이 될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 반환할 볼륨 개수<br>기본값은 1000으로 설정 |
@@ -260,7 +250,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨의 상세 정보를 반환합니다.
 
 ```
-GET /v2/{tenantId}/volumes/{volumeId}
+GET /v2/{projectId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -269,7 +259,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | volumeId | URL | UUID | O | 볼륨 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -358,7 +348,7 @@ X-Auth-Token: {tokenId}
 볼륨은 생성 직후 즉시 사용할 수 없습니다. 볼륨 상태를 조회해서 `available` 상태인 것을 확인한 후 사용합니다.
 
 ```
-POST /v2/{tenantId}/volumes
+POST /v2/{projectId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
@@ -366,7 +356,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | volume | Body | Object | O | 볼륨 생성 요청 객체 |
 | volume.size | Body | Integer | O | 볼륨 크기(GB) |
@@ -474,7 +464,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨을 삭제합니다. 연결되어 있거나 스냅숏이 생성된 볼륨은 삭제할 수 없습니다.
 
 ```
-DELETE /v2/{tenantId}/volumes/{volumeId}
+DELETE /v2/{projectId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -483,118 +473,12 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | volumeId | URL | String | O | 볼륨 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
-
----
-
-### 볼륨으로 이미지 생성하기
-볼륨으로부터 이미지를 생성합니다. 
-
-이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다. 남은 공간이 이보다 작을 경우 초기화 작업이 실패할 수 있습니다.
-
-```
-POST /v2/{tenantId}/volumes/{volumeId}/action
-X-Auth-Token: {tokenId}
-```
-
-#### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| volumeId | URL | UUID | O | 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| os-volume_upload_image | Body | Object | O | 볼륨 이미지 생성 요청 객체 |
-| os-volume_upload_image.image_name | Body | String | O | 이미지 이름 |
-| os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 볼륨일때 이미지 생성 허용 여부<br>기본값은 false |
-| os-volume_upload_image.disk_format | Body | String | - | 이미지 디스크 포맷 |
-| os-volume_upload_image.container_format | Body | String | - | 이미지 컨테이너 포맷 |
-| os-volume_upload_image.visibility | Body | String | - | 이미지 가시성<br>`private`, `shared` 중 하나 |
-| os-volume_upload_image.protected | Body | Boolean | - | 이미지 보호 여부</br>protected=true인 경우 수정 및 삭제가 불가 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-	"os-volume_upload_image":{
-        "image_name": "VOLUME IMAGE",
-        "force": true,
-        "disk_format": "qcow2",
-        "container_format": "bare",
-        "visibility": "private",
-        "protected": false
-    }
-}
-```
-
-</p>
-</details>
-
-#### 응답
-
-| 이름 | 종류 | 속성 | 설명 |
-|---|---|---|---|
-| os-volume_upload_image | Body | Object | 볼륨 이미지 생성 응답 객체 |
-| os-volume_upload_image.status | Body | String | 볼륨 상태 |
-| os-volume_upload_image.image_name | Body | String | 이미지 이름 |
-| os-volume_upload_image.disk_format | Body | String | 이미지 디스크 포맷 |
-| os-volume_upload_image.container_format | Body | String | 이미지 컨테이너 포맷 |
-| os-volume_upload_image.updated_at | Body | Datetime | 이미지 수정 시각 |
-| os-volume_upload_image.image_id | Body | UUID | 이미지 ID |
-| os-volume_upload_image.display_description | Body | String | 볼륨 설명 |
-| os-volume_upload_image.id | Body | UUID | 볼륨 ID |
-| os-volume_upload_image.size | Body | Integer | 볼륨 크기 (GB) |
-| os-volume_upload_image.volume_type | Body | Object | 볼륨 타입 정보 객체 |
-
-<details><summary>예시</summary>
-<p>
-
-```json
-{
-    "os-volume_upload_image": {
-        "status": "uploading",
-        "image_name": "public api test2",
-        "disk_format": "qcow2",
-        "container_format": "bare",
-        "updated_at": "2020-05-18T04:21:15.000000",
-        "image_id": "01956bf6-5609-4b43-88ea-1be866114368",
-        "id": "d16d64e8-a5c9-47fe-a559-1119778c739c",
-        "size": 20,
-        "volume_type": {
-            "name": "General HDD",
-            "qos_specs_id": "ec4ef37d-9273-4e6f-a495-bd43b0f2d0f2",
-            "deleted": false,
-            "deleted_at": "null",
-            "created_at": "2019-10-10T06:34:33.000000",
-            "updated_at": "2019-10-10T06:37:52.000000",
-            "extra_specs": [
-                {
-                    "volume_type_id": "964a6c6b-7190-4e27-9311-cce8d6f860f3",
-                    "deleted": false,
-                    "created_at": "2019-10-10T06:39:35.000000",
-                    "updated_at": "null",
-                    "deleted_at": "null",
-                    "value": "hdd_general",
-                    "key": "volume_backend_name",
-                    "id": 1
-                }
-            ],
-            "is_public": true,
-            "id": "964a6c6b-7190-4e27-9311-cce8d6f860f3",
-            "description": "null"
-        }
-    }
-}
-```
-
-</p>
-</details>
 
 ---
 
@@ -618,7 +502,7 @@ X-Auth-Token: {tokenId}
 스냅숏 목록을 반환합니다.
 
 ```
-GET /v2/{tenantId}/snapshots
+GET /v2/{projectId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
@@ -627,7 +511,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -673,7 +557,7 @@ X-Auth-Token: {tokenId}
 스냅숏 상세 정보 목록을 반환합니다.
 
 ```
-GET /v2/{tenantId}/snapshots/detail
+GET /v2/{projectId}/snapshots/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -682,7 +566,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -732,7 +616,7 @@ X-Auth-Token: {tokenId}
 지정한 스냅숏의 상세 정보를 반환합니다.
 
 ```
-GET /v2/{tenantId}/snapshots/{snapshotId}
+GET /v2/{projectId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -741,7 +625,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | snapshotId | URL | UUID | O | 스냅숏 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
@@ -790,7 +674,7 @@ X-Auth-Token: {tokenId}
 지정한 볼륨의 스냅숏을 생성합니다.
 
 ```
-POST /v2/{tenantId}/snapshots
+POST /v2/{projectId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -798,7 +682,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
 | snapshot | Body | Object | O | 스냅숏 생성 요청 객체 |
 | snapshot.volume_id | Body | UUID | O | 원본 볼륨 ID |
@@ -864,7 +748,7 @@ X-Auth-Token: {tokenId}
 지정한 스냅숏을 삭제합니다.
 
 ```
-DELETE /v2/{tenantId}/snapshots/{snapshotId}
+DELETE /v2/{projectId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -873,7 +757,7 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
+| projectId | URL | String | O | 테넌트 ID |
 | snapshotId | URL | String | O | 스냅숏 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
