@@ -1,5 +1,9 @@
 ## Storage > Block Storage > 릴리스 노트
 
+### 2020.05.26.
+
+* Public API v2가 출시됩니다. Public API v2는 오픈스택 API와 호환됩니다.
+
 ### 2020. 3. 24.
 
 #### 기능 변경
