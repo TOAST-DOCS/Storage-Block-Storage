@@ -391,10 +391,8 @@ X-Auth-Token: {tokenId}
         "multiattach": false,
         "snapshot_id": null,
         "name": null,
-        "imageRef": null,
         "volume_type": null,
-        "metadata": {},
-        "consistencygroup_id": null
+        "metadata": {}
     }
 }
 ```
@@ -422,7 +420,6 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | 볼륨 상태 |
 | volume.description | Body | String | 볼륨 설명 |
 | volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
-| volume.consistencygroup_id | Body | UUID | 볼륨 컨시스턴시 그룹 ID |
 | volume.name | Body | String | 볼륨 이름 |
 | volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
 | volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |

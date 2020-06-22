@@ -391,10 +391,8 @@ X-Auth-Token: {tokenId}
         "multiattach": false,
         "snapshot_id": null,
         "name": null,
-        "imageRef": null,
         "volume_type": null,
-        "metadata": {},
-        "consistencygroup_id": null
+        "metadata": {}
     }
 }
 ```
@@ -422,7 +420,6 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | ボリュームの状態 |
 | volume.description | Body | String | ボリュームの説明 |
 | volume.multiattach | Body | Boolean | 複数のインスタンスへの接続可否 |
-| volume.consistencygroup_id | Body | UUID | ボリュームConsistencyグループID |
 | volume.name | Body | String | ボリューム名 |
 | volume.bootable | Body | Boolean | ボリューム起動可否 |
 | volume.created_at | Body | Datetime | ボリューム作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
