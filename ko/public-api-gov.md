@@ -8,7 +8,7 @@ API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [AP
 |---|---|---|
 | volumev2 | 한국(판교) 리전 | https://gov-api-block-storage.infrastructure.cloud.toast.com |
 
-API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
+API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 TOAST 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
 
 ## 볼륨 타입
 ### 볼륨 타입 목록 보기
@@ -511,7 +511,7 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | O | 토큰 ID |
 | os-volume_upload_image | Body | Object | O | 볼륨 이미지 생성 요청 객체 |
 | os-volume_upload_image.image_name | Body | String | O | 이미지 이름 |
-| os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 볼륨일때 이미지 생성 허용 여부<br>기본값은 false |
+| os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 볼륨일 때 이미지 생성 허용 여부<br>기본값은 false |
 | os-volume_upload_image.disk_format | Body | String | - | 이미지 디스크 포맷 |
 | os-volume_upload_image.container_format | Body | String | - | 이미지 컨테이너 포맷 |
 | os-volume_upload_image.visibility | Body | String | - | 이미지 가시성<br>`private`, `shared` 중 하나 |
@@ -549,7 +549,7 @@ X-Auth-Token: {tokenId}
 | os-volume_upload_image.image_id | Body | UUID | 이미지 ID |
 | os-volume_upload_image.display_description | Body | String | 볼륨 설명 |
 | os-volume_upload_image.id | Body | UUID | 볼륨 ID |
-| os-volume_upload_image.size | Body | Integer | 볼륨 크기 (GB) |
+| os-volume_upload_image.size | Body | Integer | 볼륨 크기(GB) |
 | os-volume_upload_image.volume_type | Body | Object | 볼륨 타입 정보 객체 |
 
 <details><summary>예시</summary>
