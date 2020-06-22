@@ -1,9 +1,19 @@
-## Storage > Block Storage > Public APIガイド
+## Storage > Block Storage > API v2ガイド
+
+APIを使用するにはAPIエンドポイントとトークンなどが必要です。 [API使用準備](/Compute/Compute/ko/identity-api/)を参照してAPIを使用するのに必要な情報を準備します。
+
+ブロックストレージAPIは`volumev2`タイプエンドポイントを利用します。正確なエンドポイントはトークン発行レスポンスの`serviceCatalog`を参照します。
+
+| タイプ | リージョン | エンドポイント |
+|---|---|---|
+| volumev2 | 韓国(パンギョ)リージョン<br>日本リージョン | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
+
+APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、TOAST内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
 
 ## ボリュームタイプ
 ### ボリュームタイプリスト表示
 ```
-GET /v2/{projectid}/types
+GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
 ```
 
@@ -12,7 +22,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
 #### レスポンス
@@ -89,7 +99,7 @@ X-Auth-Token: {tokenId}
 現在テナントに属しているボリュームリストを返します。
 
 ```
-GET /v2/{projectId}/volumes
+GET /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
@@ -98,7 +108,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | sort | Query | String | - | ソートの基準になるボリュームフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 返すボリュームの個数<br>基本値は1000に設定 |
@@ -148,7 +158,7 @@ X-Auth-Token: {tokenId}
 現在テナントに属しているボリュームリストを返します。
 
 ```
-GET /v2/{projectId}/volumes/detail
+GET /v2/{tenantId}/volumes/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -157,7 +167,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | sort | Query | String | - | ソートの基準になるボリュームフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
 | limit | Query | Integer | - | 返すボリュームの個数<br>基本値は1000に設定 |
@@ -250,7 +260,7 @@ X-Auth-Token: {tokenId}
 指定したボリュームの詳細情報を返します。
 
 ```
-GET /v2/{projectId}/volumes/{volumeId}
+GET /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -259,7 +269,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | volumeId | URL | UUID | O | ボリュームID |
 | tokenId | Header | String | O | トークンID |
 
@@ -348,7 +358,7 @@ X-Auth-Token: {tokenId}
 ボリュームは、作成直後は使用できません。ボリューム状態を照会して`available`状態に変わったことを確認してから使用します。
 
 ```
-POST /v2/{projectId}/volumes
+POST /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
@@ -356,7 +366,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | volume | Body | Object | O | ボリューム作成リクエストオブジェクト |
 | volume.size | Body | Integer | O | ボリュームサイズ(GB) |
@@ -464,7 +474,7 @@ X-Auth-Token: {tokenId}
 指定したボリュームを削除します。接続されていたり、スナップショットが作成されたボリュームは削除できません。
 
 ```
-DELETE /v2/{projectId}/volumes/{volumeId}
+DELETE /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -473,12 +483,118 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | volumeId | URL | String | O | ボリュームID |
 | tokenId | Header | String | O | トークンID |
 
 #### レスポンス
 このAPIはレスポンス本文を返しません。
+
+---
+
+### ボリュームでイメージを作成する
+ボリュームからイメージを作成します。 
+
+イメージ作成後、基本的な初期化作業のために100KBの空き容量が必要です。空き容量がそれ以下の場合、初期化作業に失敗する場合があります。
+
+```
+POST /v2/{tenantId}/volumes/{volumeId}/action
+X-Auth-Token: {tokenId}
+```
+
+#### リクエスト
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+|---|---|---|---|---|
+| tenantId | URL | String | O | テナントID |
+| volumeId | URL | UUID | O | ボリュームID |
+| tokenId | Header | String | O | トークンID |
+| os-volume_upload_image | Body | Object | O | ボリュームイメージ作成リクエストオブジェクト |
+| os-volume_upload_image.image_name | Body | String | O | イメージ名 |
+| os-volume_upload_image.force | Body | Boolean | - | インスタンスに接続されたボリュームの場合、イメージ作成を許可するかどうか<br>デフォルト値はfalse |
+| os-volume_upload_image.disk_format | Body | String | - | イメージディスクフォーマット |
+| os-volume_upload_image.container_format | Body | String | - | イメージコンテナフォーマット |
+| os-volume_upload_image.visibility | Body | String | - | イメージの可視性<br>`private`または`shared` |
+| os-volume_upload_image.protected | Body | Boolean | - | イメージ保護</br>protected=trueの場合、修正および削除不可 |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+	"os-volume_upload_image":{
+        "image_name": "VOLUME IMAGE",
+        "force": true,
+        "disk_format": "qcow2",
+        "container_format": "bare",
+        "visibility": "private",
+        "protected": false
+    }
+}
+```
+
+</p>
+</details>
+
+#### レスポンス
+
+| 名前 | 種類 | プロパティ | 説明 |
+|---|---|---|---|
+| os-volume_upload_image | Body | Object | ボリュームイメージ作成レスポンスオブジェクト |
+| os-volume_upload_image.status | Body | String | ボリュームの状態 |
+| os-volume_upload_image.image_name | Body | String | イメージ名 |
+| os-volume_upload_image.disk_format | Body | String | イメージディスクフォーマット |
+| os-volume_upload_image.container_format | Body | String | イメージコンテナフォーマット |
+| os-volume_upload_image.updated_at | Body | Datetime | イメージ修正時刻 |
+| os-volume_upload_image.image_id | Body | UUID | イメージID |
+| os-volume_upload_image.display_description | Body | String | ボリュームの説明 |
+| os-volume_upload_image.id | Body | UUID | ボリュームID |
+| os-volume_upload_image.size | Body | Integer | ボリュームサイズ(GB) |
+| os-volume_upload_image.volume_type | Body | Object | ボリュームタイプ情報オブジェクト |
+
+<details><summary>例</summary>
+<p>
+
+```json
+{
+    "os-volume_upload_image": {
+        "status": "uploading",
+        "image_name": "public api test2",
+        "disk_format": "qcow2",
+        "container_format": "bare",
+        "updated_at": "2020-05-18T04:21:15.000000",
+        "image_id": "01956bf6-5609-4b43-88ea-1be866114368",
+        "id": "d16d64e8-a5c9-47fe-a559-1119778c739c",
+        "size": 20,
+        "volume_type": {
+            "name": "General HDD",
+            "qos_specs_id": "ec4ef37d-9273-4e6f-a495-bd43b0f2d0f2",
+            "deleted": false,
+            "deleted_at": "null",
+            "created_at": "2019-10-10T06:34:33.000000",
+            "updated_at": "2019-10-10T06:37:52.000000",
+            "extra_specs": [
+                {
+                    "volume_type_id": "964a6c6b-7190-4e27-9311-cce8d6f860f3",
+                    "deleted": false,
+                    "created_at": "2019-10-10T06:39:35.000000",
+                    "updated_at": "null",
+                    "deleted_at": "null",
+                    "value": "hdd_general",
+                    "key": "volume_backend_name",
+                    "id": 1
+                }
+            ],
+            "is_public": true,
+            "id": "964a6c6b-7190-4e27-9311-cce8d6f860f3",
+            "description": "null"
+        }
+    }
+}
+```
+
+</p>
+</details>
 
 ---
 
@@ -502,7 +618,7 @@ X-Auth-Token: {tokenId}
 スナップショットのリストを返します。
 
 ```
-GET /v2/{projectId}/snapshots
+GET /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
@@ -511,7 +627,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
 #### レスポンス
@@ -557,7 +673,7 @@ X-Auth-Token: {tokenId}
 スナップショット詳細情報リストを返します。
 
 ```
-GET /v2/{projectId}/snapshots/detail
+GET /v2/{tenantId}/snapshots/detail
 X-Auth-Token: {tokenId}
 ```
 
@@ -566,7 +682,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 
 #### レスポンス
@@ -616,7 +732,7 @@ X-Auth-Token: {tokenId}
 指定したスナップショットの詳細情報を返します。
 
 ```
-GET /v2/{projectId}/snapshots/{snapshotId}
+GET /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -625,7 +741,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | snapshotId | URL | UUID | O | スナップショットID |
 | tokenId | Header | String | O | トークンID |
 
@@ -674,7 +790,7 @@ X-Auth-Token: {tokenId}
 指定したボリュームのスナップショットを作成します。
 
 ```
-POST /v2/{projectId}/snapshots/{snapshotId}
+POST /v2/{tenantId}/snapshots/
 X-Auth-Token: {tokenId}
 ```
 
@@ -682,7 +798,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
 | snapshot | Body | Object | O | スナップショット作成リクエストオブジェクト |
 | snapshot.volume_id | Body | UUID | O | 原本ボリュームID |
@@ -748,7 +864,7 @@ X-Auth-Token: {tokenId}
 指定したスナップショットを削除します。
 
 ```
-DELETE /v2/{projectId}/snapshots/{snapshotId}
+DELETE /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
@@ -757,7 +873,7 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
-| projectId | URL | String | O | テナントID |
+| tenantId | URL | String | O | テナントID |
 | snapshotId | URL | String | O | スナップショットID |
 | tokenId | Header | String | O | トークンID |
 

@@ -1,5 +1,9 @@
 ## Storage > Block Storage > Release Notes
 
+### 2020.05.26.
+
+* Public API v2をリリースします。Public API v2はOpenstack APIと互換性があります。
+
 ### 2020. 3. 24.
 
 #### 機能変更
