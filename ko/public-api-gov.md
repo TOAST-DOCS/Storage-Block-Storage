@@ -391,10 +391,8 @@ X-Auth-Token: {tokenId}
         "multiattach": false,
         "snapshot_id": null,
         "name": null,
-        "imageRef": null,
         "volume_type": null,
-        "metadata": {},
-        "consistencygroup_id": null
+        "metadata": {}
     }
 }
 ```
