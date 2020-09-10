@@ -1,19 +1,24 @@
 ## Storage > Block Storage > Release Notes
 
-### Mar.24, 2020
+## May 26, 2020
+
+* Released Public API v2, which is compatible with Openstack API. 
+
+
+### March 24, 2020
 
 #### Feature Updates
 
 * Increased the maximum size of block storage creation from 1TB to 2TB.
 
-### Nov.26, 2019
+### November 26, 2019
 
 #### More Features
 
 * Default disk is displayed on the list of block storages.
 
 
-### Jan.29, 2019
+### January 29, 2019
 
 #### 기능 추가
 
@@ -21,7 +26,7 @@
 * 스냅숏으로 블록 스토리지 생성시 가용성 영역과 블록 타입을 선택할 수 있도록 변경
 
 
-### Sept.21, 2017
+### September 21, 2017
 
 #### 기능 추가
 * Public API 추가
@@ -31,7 +36,7 @@
 
 
 
-### Jul.20, 2017
+### July 20, 2017
 
 #### 버그 수정
 
@@ -39,7 +44,7 @@
 
 
 
-### Jan.19, 2017
+### January 19, 2017
 
 #### 기능 개선/변경
 
