@@ -8,7 +8,7 @@ Use `volumev2`-type endpoint for Block Storage API. For more details, see `servi
 |---|---|---|
 | volumev2 | Korea (Pangyo) <br>Japan | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
 
-In API response, you may find fields that are not specified in the guide. Refrain from using them because such fields are only for the TOAST internal usage and might be changed without previous notice. 
+In API response, you may find fields that are not specified in the guide. Refrain from using them because such fields are only for the NHN Cloud internal usage and might be changed without previous notice. 
 
 ## Volume Type
 ### List Volume Types 
