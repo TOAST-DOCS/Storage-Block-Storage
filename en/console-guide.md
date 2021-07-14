@@ -2,7 +2,7 @@
 
 ## Create Block Storage
 
-Create block storage to be attached to an instance. The size ranges from 10GB, up to 1,000GB. 
+Create block storage to be attached to an instance.
 
 Block storage can be created with empty storage containing no data, or by snapshots of existing block storage.  
 
