@@ -1,5 +1,11 @@
 ## Storage > Block Storage > Release Notes
 
+### 2022. 03. 29.
+
+#### 機能追加
+
+* リージョン間の複製機能が追加されます。
+
 ### 2020.05.26.
 
 * Public API v2をリリースします。Public API v2はOpenstack APIと互換性があります。
