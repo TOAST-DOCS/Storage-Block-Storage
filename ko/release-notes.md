@@ -1,5 +1,11 @@
 ## Storage > Block Storage > 릴리스 노트
 
+### 2022. 03. 29.
+
+#### 기능 추가
+
+* 리전 간 복제 기능이 추가됩니다.
+
 ### 2020.05.26.
 
 * Public API v2가 출시됩니다. Public API v2는 Openstack API와 호환됩니다.
