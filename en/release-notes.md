@@ -1,9 +1,14 @@
 ## Storage > Block Storage > Release Notes
 
+### March 29, 2022
+
+#### Added Features
+
+* Added the inter-region replication feature.
+
 ## May 26, 2020
 
 * Released Public API v2, which is compatible with Openstack API. 
-
 
 ### March 24, 2020
 
@@ -13,14 +18,14 @@
 
 ### November 26, 2019
 
-#### More Features
+#### Added Features
 
 * Default disk is displayed on the list of block storages.
 
 
 ### January 29, 2019
 
-#### More Features 
+#### Added Features 
 
 * Updated not to select snapshots as the origin, when a block storage is created
 * Updated to choose availability zone and block type, when a block storage is created with snapshots
@@ -28,7 +33,8 @@
 
 ### September 21, 2017
 
-#### More Features
+#### Added Features
+
 * Added Public APIs 
     * Block Storage, as well as Object Storage, could be enabled via APIs.  
     * Only limited features are available at the moment, but more features are to be included by adding more APIs in the near future.  
