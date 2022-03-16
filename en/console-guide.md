@@ -6,7 +6,7 @@ Create block storage to be attached to an instance.
 
 Block storage can be created with empty storage containing no data, or by snapshots of existing block storage.
 
-To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#_1) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For volume type, choose either **HDD** or **SSD**, based on the required I/O performance.
+To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For volume type, choose either **HDD** or **SSD**, based on the required I/O performance.
 
 You can also create block storage from snapshots. In this case, the size of block storage must be the same as or larger than that of a snapshot. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
 
