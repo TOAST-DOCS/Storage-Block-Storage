@@ -1,44 +1,44 @@
-## Storage > Block Storage > API指南
+## Storage > Block Storage > API Guide 
 
-API目前仅限韩国地区使用。
+API is currently available only in the Korea region.
 
-## 事前准备
+## Prerequisites 
 
-如果要使用块存储（block storage ）API，则需要App key与令牌（token）。利用[API Endpoint URL](/Compute/Instance/zh/api-guide/#api-endpoint-url)和 [令牌 API](/Compute/Instance/zh/api-guide/#api)来准备App key和令牌。API Endpoint URL中包含App key， Request Body中包含令牌。
+To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Instance/en/api-guide/#api-endpoint-url) and [Token API](/Compute/Instance/en/api-guide/#api). Include Appkey to API Endpoint URL and token to the Request Header.
 
-例如，想查询块存储信息，应通过以下URL来进行查询。
+For instance, retrieving block storage must be requested to the following URL:  
 
 	GET https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/volumes?id={volumeId}
 
 
-## 块存储API
+## Block Storage API
 
-提供块存储的创建、删除、查询功能。同时，通过 [实例添加功能 API](/Compute/Instance/zh/api-guide/#_8)，提供将块存储设备挂载到实例和从实例上卸载的功能。
+Block storage can be created, deleted, and retrieved. Attaching/detaching block storage are available via [Additional Instance Functions API](/Compute/Instance/en/api-guide/#_8). 
 
-### 块存储状态
+### Status of Block Storage 
 
-块存储具备如下状态值。
+Block storage has following status values: 
 
 | Status | Description |
 | --- | --- |
-| creating | 创建中 | 
-| available | 可用的状态 |
-| attaching | 挂载中 |
-| detaching | 卸载中 | 
-| in-use | 使用中 |
-| deleting | 删除中 |
-| error | 创建过程中出现错误 |
-| error_deleting | 删除过程中出现错误 |
-| backing-up | 备份中 |
-| restoring-backup | 备份恢复中 |
-| error_backing-up | 备份过程中出现错误 |
-| error_restoring | 备份恢复过程中出现错误 |
-| downloading | 镜像下载中 |
-| uploading | 镜像上传中 |
+| creating | Creating |
+| available | Can be attached to an instance |
+| attaching | Attaching to an instance |
+| detaching | Detaching from an instance |
+| in-use | Attached to an instance and now in use |
+| deleting | Deleting |
+| error | Error occurred while creating |
+| error_deleting | Error occurred while deleting |
+| backing-up | Backup is underway |
+| restoring-backup | Restoring backup |
+| error_backing-up | Error occurred while backup is underway |
+| error_restoring | Error occurred while restoring a backup |
+| downloading | Downloading an image |
+| uploading | Uploading an image |
 
-### 块存储信息查询
+### Retrieve Block Storage
 
-查询块存储信息。
+Retrieve information of block storage. 
 
 #### Method, URL
 ```
@@ -48,11 +48,11 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 令牌ID |
-| volumeId | Query | String | O | 要查询的块存储ID.如果没有将查询所有块存储信息。|
+| tokenId | Header | String | - | Token ID |
+| volumeId | Query | String | O | Block storage ID to retrieve: if unavailable, retrieve information of all block storages. |
 
 #### Request Body
-该 API无需Request Body。
+This API does not require the request body. 
 
 #### Response Body
 ```json
@@ -80,7 +80,8 @@ X-Auth-Token: {tokenId}
             },
             "name": "{Block Storage Name}",
             "size": "{Size}",
-            "status": "{Status}"
+            "status": "{Status}",
+            "volumeType": "{Volume Type}"
         }
     ]
 }
@@ -88,21 +89,21 @@ X-Auth-Token: {tokenId}
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Device Name | Body | String  | 使用中的情况，实例上挂载的设备名称. ex) "/dev/vdb" | 
-| Attached Instance ID | Body | String | 使用中的情况，已挂载的实例ID | 
-| Attachment ID | Body | String | 使用中的情况，连接ID |
-| Availability Zone Name | Body | String | 块存储所在可用区的名称 |
-| Created At | Body | String | 块存储创建时间. yyyy-mm-ddTHH:MM:ssZ的格式. 例) 2017-05-16T02:17:50.166563 |
-| Description | Body | String | 块存储描述 |
-| Block Storage ID | Body | String | 块存储ID |
-| Metadata Key / Value | Body | Boolean | 块存储中的元数据 |
-| Block Storage Name | Body | String | 块存储名称 |
-| Size | Body | Integer | 块存储大小(GB) |
-| Status | Body | String | 块存储状态 |
-| Volume Type | Body | String | 块存储类型。"General HDD"或"General SSD"之一。|
+| Device Name | Body | String  | Refers to device name at an instance, if attached to an instance e.g) "/dev/vdb" |
+| Attached Instance ID | Body | String | ID of attached instance, if there is one |
+| Attachment ID | Body | String | Attachment ID, if attached to an instance |
+| Availability Zone Name | Body | String | Name of availability zone where block storage is located |
+| Created At | Body | String | Time when block storage is created, in the format of yyyy-mm-ddTHH:MM:ssZ.  e.g) 2017-05-16T02:17:50.166563 |
+| Description | Body | String | Description of block storage |
+| Block Storage ID | Body | String | Block storage ID |
+| Metadata Key / Value | Body | Boolean | Metadata written for block storage |
+| Block Storage Name | Body | String | Name of block storage |
+| Size | Body | Integer | Size of block storage (GB) |
+| Status | Body | String | Status of block storage |
+| Volume Type | Body | String | Type of block storage; one of "General HDD" or "General SSD" |
 
-### 创建块存储
-创建新的块存储。
+### Create Block Storage 
+Create new block storage. 
 
 #### Method, URL
 ```
@@ -113,7 +114,7 @@ Content-Type: application/json;charset=UTF-8
 
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 令牌ID |
+| tokenId | Header | String | - | Token ID |
 
 #### Request Body
 ```json
@@ -133,12 +134,12 @@ Content-Type: application/json;charset=UTF-8
 
 | Name | In | Type | Optional | Description |
 | --- | --- | --- | --- | --- |
-| Description | Body | String | O | 块存储描述 |
-| Availability Zone Name | Body | String | - | 块存储所在可用区的名称 |
-| Size | Body | Integer | - | 块存储大小(GB). 10~1000 范围, 以10整数倍为单位的方式输入 |
-| Volume Type | Body | String | O | 块存储类型。"General HDD"或"General SSD"之一。|
-| Metadata Key / Metadata Value | Body | String | O | 要写入块存储的元数据信息 |
-| Block Storage Name | Body | String | - | 块存储名称 |
+| Description | Body | String | O | Description of block storage |
+| Availability Zone Name | Body | String | - | Name of availability zone to create block storage |
+| Size | Body | Integer | - | Size of block storage (GB): enter by 10, between 10 and 1000. |
+| Volume Type | Body | String | O | Type of block storage; one of "General HDD" or "General SSD" |
+| Metadata Key / Metadata Value | Body | String | O | Metadata information wanted for block storage |
+| Block Storage Name | Body | String | - | Name of block storage |
 
 #### Response Body
 ```json
@@ -159,25 +160,24 @@ Content-Type: application/json;charset=UTF-8
         },
         "name": "{Block Storage Name}",
         "size": "{Size}",
-        "status": "{Status}",
-        "volumeType": "{Volume Type}"
+        "status": "{Status}"
     }
 }
 ```
 
 |  Name | In | Type | Description |
 |--|--|--|--|
-| Availability Zone Name | Body | String | 块存储所在可用区的名称 |
-| Created At | Body | String | 块存储创建时间. yyyy-mm-ddTHH:MM:ssZ的格式. 例) 2017-05-16T02:17:50.166563 |
-| Description | Body | String | 块存储描述 |
-| Block Storage ID | Body | String | 块存储ID |
-| Metadata Key / Value | Body | Boolean | 块存储中的元数据 |
-| Block Storage Name | Body | String | 块存储名称 |
-| Size | Body | Integer | 块存储大小(GB) |
-| Status | Body | String | 块存储状态 |
+| Availability Zone Name | Body | String | Name of availability zone where block storage is located |
+| Created At | Body | String | Time when block storage is created: in the format of yyyy-mm-ddTHH:MM:ssZ. e.g) 2017-05-16T02:17:50.166563 |
+| Description | Body | String | Description of block storage |
+| Block Storage ID | Body | String | ID of block storage |
+| Metadata Key / Value | Body | Boolean | Metadata information written for block storage |
+| Block Storage Name | Body | String | Name of block storage |
+| Size | Body | Integer | Size of block storage (GB) |
+| Status | Body | String | Status of block storage |
 
-### 删除块存储
-删除块存储。只有Status为 "available" "in-use" "error" "error_restoring"的块存储才可以删除。
+### Delete Block Storage 
+Delete block storage: the status, however, must be either "available", "in-use", "error", or "error-restoring". 
 
 #### Method, URL
 ```
@@ -186,11 +186,11 @@ X-Auth-Token: {tokenId}
 ```
 |  Name | In | Type | Optional | Description |
 |--|--|--|--|--|
-| tokenId | Header | String | - | 令牌ID |
-| volumeId | Query | String | - | 要删除的块存储ID |
+| tokenId | Header | String | - | Token ID |
+| volumeId | Query | String | - | Block storage ID to delete |
 
 #### Request Body
-该 API无需 Request Body。
+This API does not require the request body. 
 
 #### Response Body
 ```json
@@ -202,4 +202,3 @@ X-Auth-Token: {tokenId}
     }
 }
 ```
-
