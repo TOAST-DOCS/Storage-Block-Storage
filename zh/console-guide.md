@@ -1,53 +1,75 @@
-## Storage > Block Storage > 控制台使用指南
+## Storage > Block Storage > Console Guide
 
-## 创建块存储
+## Create Block Storage
 
-创建要挂载到实例（instance）上的块存储。
+Create block storage to be attached to an instance.
 
-块存储，可以创建成无任何数据的空盘，也可以从快照创建成有数据的数据盘。
+Block storage can be created with empty storage containing no data, or by snapshots of existing block storage.
 
-如果想创建空块存储，则将**Block Storage源**选择为**无源，空Block Storage**。空块存储挂载到实例之后，应进行分区、格式化之后，再进行使用。块存储使用方法，请参考[块存储概要>空块存储使用](/Storage/Block%20Storage/zh/overview/#_1)。块存储和实例需要在同一个可用区(availability zone)，才可以进行挂载操作。卷类型可根据所需的I/O性能，可以在** HDD **或** SSD **中选择一个。
+To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For volume type, choose either **HDD** or **SSD**, based on the required I/O performance.
 
-您还可从快照创建块存储。从快照创建块存储时，块存储的大小应等于或大于快照的大小。如果大于快照的话，则您必须手动调整当前块存储分区，或添加新的分区来使用增加的存储空间。
+You can also create block storage from snapshots. In this case, the size of block storage must be the same as or larger than that of a snapshot. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
 
-从快拍创建块存储时，块存储的可用区将被固定到存储快照的可用区。无法通过不同可用区的快照创建块存储。
+To create block storage with snapshots, the availability zone of block storage will be fixed to the zone where the snapshot is stored. A block storage cannot be created in any different availability zone.
 
-## 删除块存储
+## Delete Block Storage
 
-在删除块存储之前，请确认以下事项。
+Check the following before deleting block storage:
 
-* 已挂载到实例上的块存储，需要先卸载才能删除。
-* 已创建快照的块存储，需要先将快照全部删除后，才能删除。
- 
-块存储一旦被删除，将无法再恢复。
+* You cannot delete block storage attached to an instance. Detach it from the instance first.
+* You cannot delete block storage which has snapshots. Delete all snapshots of the block storage.
 
-## 挂载管理
+Once deleted, block storage cannot be restored.
 
-### 挂载块存储
+## Manage Attachment
 
-即使实例正在运行中，也可将块存储挂载到实例。块存储，只能挂在到同一可用区中的实例。当创建块存储时，请确认与您想要挂载到的实例在同一个可用区。 
+### Attach Block Storage
 
-挂载空块存储，则应在实例操作系统中进行分区、格式化操作后使用。从快照创建的块存储，也需要您在实例操作系统中挂载（mount）之后，才可以使用。 
+Attach block storage to an instance. You can attach block storage while the instance is running. Block storage can only be attached to an instance in the same availability zone. When creating block storage, make sure that you create the block storage in the same availability zone as the instance to attach to.
 
-> [参考]
-> 或可根据操作系统的功能，自动挂载，无需额外的挂载操作。 
+If you attach empty block storage, it must be partitioned and formatted in the instance before use. A formatted block storage must be mounted before use. For block storage created with snapshots, you must mount it manually within the instance to use it.
 
+> [Note]
+> Depending on the operating system, mounting may be automatically applied, requiring no further mounting process.
 
-### 卸载块存储
+### Detach Block Storage
 
-断开连接实例不需要的块存储。但，默认磁盘不能断开与实例的连接。
+Detach unnecessary block storage from an instance. Note, however, that default disk cannot be detached.
 
-实例和块存储都在运行中的状态下，也可以控制台页面卸载块存储。但是如果想完全不影响块存储中数据的情况下，则应在实例操作系统内，先对块存储进行卸载（umount）操作。
+You can detach block storage even while the instance is running. However, you must first unmount the block storage from the instance and detach the block storage in the console. Detaching while the block storage is mounted causes the following issues:
 
-**Linux 实例**
+1. Block storage data may be corrupted, resulting in data loss.
+2. When you add new block storage, the block storage name on the console and the block storage name on the instance appear different. You will need to restart the instance for the same block storage name to appear on the console and on the instance.
 
-	# umount <挂载目录（mount  point）>
+**Linux Instance**
 
-**Windows 实例**
+	# umount <mount point>
 
-在**服务器管理器**中，将相关磁盘设置**脱机**之后，再进行卸载。
+**Windows Instance**
 
-## 创建快照
+Make the disk **Offline** in **Disk Management** and then detach it.
 
-创建块存储的只读副本。在块存储已挂载到实例的状态下，也可以创建快照，但为了更好的确保数据的可用性和安全性，建议在控制台中先卸载块存储后，再创建快照。
+## Create Snapshots
 
+Create a read-only copy of the block storage. Although block storage snapshots can be created while the block storage is attached to an instance, it is recommended to detach it from the instance and create block storage snapshots to ensure data consistency and reliability.
+
+## Replicate Block Storage
+
+You can use block storage by replicating it to another region. Although block storage can be replicated while being attached to an instance, it is recommended that you stop the instance or detach the block storage from the instance and proceed with replication to ensure data consistency and reliability.
+
+After requesting replication, you can check the replication status and whether the replication is successful or not in **Replication Status**.
+
+> [Note]
+> The replication function is a one-time operation, and changes to the original block storage after the replication are not reflected.
+
+### Region
+
+Select a region to replicate to other than the region you are currently using.
+
+### Block Storage Type
+
+Select the type of block storage to use in the region to which to replicate. You can select a type that is different from the block storage type being used in the current region.
+
+### Availability Zone
+
+Select the availability zone to use in the region to which to replicate. You can select an availability zone that is different from the availability zone being used in the current region.
