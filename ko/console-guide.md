@@ -81,9 +81,11 @@
 
 ## 문제 해결 가이드
 
-인스턴스의 OS 이미지로 생성된 블록 스토리지를 다른 인스턴스의 추가 볼륨으로 연결하면 문제가 발생할 수 있습니다. OS 이미지로부터 생성한 두 블록 스토리지를 한 인스턴스에 같이 연결할 경우, 인스턴스에 연결된 볼륨을 인식할 수 있는 UUID 값이 동일하여 부팅 시에 의도하지 않은 볼륨이 `/`에 마운트될 수 있습니다.
+### 의도하지 않은 볼륨이 루트 볼륨에 마운트 되는 문제
 
-Linux는 부팅 시에 `/etc/fstab`의 내용을 통해 `/`에 마운트할 루트 볼륨을 결정합니다. 현재 OS 이미지에서는 이를 UUID를 기준으로 확인하는데, OS 이미지로 생성된 두 볼륨은 UUID 값이 같아 의도하지 않은 볼륨이 `/`에 마운트될 수 있습니다.
+인스턴스에 추가 볼륨으로 연결한 볼륨이 `/`에 마운트 되어 부팅될 수 있습니다.
+
+Linux는 부팅 시에 `/etc/fstab`를 통해 `/`에 마운트 할 루트 볼륨을 결정합니다. NHN Cloud에서 사용하는 OS 이미지는 파일 시스템 UUID를 기준으로 이를 결정하는데, 파일 시스템 UUID 값이 같은 블록 스토리지가 연결되면 의도하지 않은 볼륨이 `/`에 마운트될 수 있습니다.
 
 ```console
 # cat /etc/fstab
@@ -91,13 +93,17 @@ Linux는 부팅 시에 `/etc/fstab`의 내용을 통해 `/`에 마운트할 루�
 UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaults        0 0
 ```
 
+`blkid` 명령어를 통해 블록 스토리지의 파일 시스템 UUID를 확인할 수 있습니다.
+
 ```console
 # blkid
 /dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
 /dev/vdb1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
 ```
 
-다음 절차를 따라 두 볼륨의 UUID를 다르게 하여 문제를 해결할 수 있습니다.
+보통 인스턴스의 OS 이미지로 생성된 블록 스토리지를 다른 인스턴스의 추가 볼륨으로 연결할 때 위 문제가 발생합니다.
+
+다음 절차를 따라 두 볼륨의 파일 시스템 UUID를 다르게 하여 문제를 해결합니다.
 
 1. 인스턴스를 중지한 후 잘못 부팅되던 [블록 스토리지의 연결을 해제](console-guide/#_5)합니다.
 
@@ -105,17 +111,25 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 
 3. 부팅이 완료되면 잘못 부팅되던 [블록 스토리지를 다시 연결](console-guide/#_4)합니다.
 
-4. 아래 명령어를 통해 잘못 부팅되던 블록 스토리지의 UUID를 교체합니다.
+4. 아래 명령어를 통해 잘못 부팅되던 블록 스토리지의 파일 시스템 UUID를 교체합니다. 잘못 부팅되던 블록 스토리지의 타입에 따라 아래 명령어를 실행합니다. 블록 스토리지의 타입은 `blkid` 명령어를 통해 확인할 수 있습니다.
 
-```console
-# xfs_admin -U generate /dev/vdb1
-Clearing log and setting UUID
-writing all SBs
-new UUID = 0037c590-0545-4736-bcdc-d052681eb5f5
-```
+	잘못 부팅되던 블록 스토리지가 ext4일 경우,
 
-```console
-# blkid
-/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
-/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
-```
+		# tune2fs -U random /dev/vdb1
+		tune2fs 1.42.9 (28-Dec-2013)
+		Setting the UUID on this filesystem could take some time.
+		Proceed anyway (or wait 5 seconds to proceed) ? (y,N) y
+
+	잘못 부팅되던 블록 스토리지가 xfs일 경우,
+
+		# xfs_admin -U generate /dev/vdb1
+		Clearing log and setting UUID
+		writing all SBs
+		new UUID = 0037c590-0545-4736-bcdc-d052681eb5f5
+
+5. 파일 시스템 UUID가 바뀐 것을 확인합니다.
+
+		# blkid
+		/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+		/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
+
