@@ -115,21 +115,23 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 
 	잘못 부팅되던 블록 스토리지가 ext4일 경우,
 
-		# tune2fs -U random /dev/vdb1
-		tune2fs 1.42.9 (28-Dec-2013)
-		Setting the UUID on this filesystem could take some time.
-		Proceed anyway (or wait 5 seconds to proceed) ? (y,N) y
+	<pre><code class="language-console"># tune2fs -U random /dev/vdb1
+	tune2fs 1.42.9 (28-Dec-2013)
+	Setting the UUID on this filesystem could take some time.
+	Proceed anyway (or wait 5 seconds to proceed) ? (y,N) y
+	</code></pre>
 
 	잘못 부팅되던 블록 스토리지가 xfs일 경우,
 
-		# xfs_admin -U generate /dev/vdb1
-		Clearing log and setting UUID
-		writing all SBs
-		new UUID = 0037c590-0545-4736-bcdc-d052681eb5f5
+	<pre><code class="language-console"># xfs_admin -U generate /dev/vdb1
+	Clearing log and setting UUID
+	writing all SBs
+	new UUID = 0037c590-0545-4736-bcdc-d052681eb5f5
+	</code></pre>
 
 5. 파일 시스템 UUID가 바뀐 것을 확인합니다.
 
-		# blkid
-		/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
-		/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
-
+	<pre><code class="language-console"># blkid
+	/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
+	</code></pre>
