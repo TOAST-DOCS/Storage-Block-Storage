@@ -83,7 +83,7 @@
 
 ### 의도하지 않은 볼륨이 루트 볼륨에 마운트 되는 문제
 
-인스턴스에 추가 볼륨으로 연결한 볼륨이 `/`에 마운트 되어 부팅될 수 있습니다.
+인스턴스에 추가 볼륨으로 연결한 볼륨이 `/`에 마운트 되어 부팅될 수 있습니다. 이 현상은 주로 인스턴스의 OS 이미지로 생성된 블록 스토리지를 다른 인스턴스의 추가 볼륨으로 연결할 때 발생합니다.
 
 Linux는 부팅 시에 `/etc/fstab`를 통해 `/`에 마운트 할 루트 볼륨을 결정합니다. NHN Cloud에서 사용하는 OS 이미지는 파일 시스템 UUID를 기준으로 이를 결정하는데, 파일 시스템 UUID 값이 같은 블록 스토리지가 연결되면 의도하지 않은 볼륨이 `/`에 마운트될 수 있습니다.
 
@@ -101,7 +101,7 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 /dev/vdb1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
 ```
 
-보통 인스턴스의 OS 이미지로 생성된 블록 스토리지를 다른 인스턴스의 추가 볼륨으로 연결할 때 위 문제가 발생합니다.
+위와 같이 추가 볼륨으로 연결된 블록 스토리지의 파일 시스템 UUID가 동일하면, Linux 부팅 정책에 따라 추가 볼륨이 `/`에 마운트 될 수 있습니다.
 
 다음 절차를 따라 두 볼륨의 파일 시스템 UUID를 다르게 하여 문제를 해결합니다.
 
@@ -113,7 +113,7 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 
 4. 아래 명령어를 통해 잘못 부팅되던 블록 스토리지의 파일 시스템 UUID를 교체합니다. 잘못 부팅되던 블록 스토리지의 타입에 따라 아래 명령어를 실행합니다. 블록 스토리지의 타입은 `blkid` 명령어를 통해 확인할 수 있습니다.
 
-	잘못 부팅되던 블록 스토리지가 ext4일 경우,
+	잘못 부팅되던 블록 스토리지의 파일 시스템이 ext4일 경우,
 
 	<pre><code class="language-console"># tune2fs -U random /dev/vdb1
 	tune2fs 1.42.9 (28-Dec-2013)
@@ -121,7 +121,7 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 	Proceed anyway (or wait 5 seconds to proceed) ? (y,N) y
 	</code></pre>
 
-	잘못 부팅되던 블록 스토리지가 xfs일 경우,
+	잘못 부팅되던 블록 스토리지의 파일 시스템이 xfs일 경우,
 
 	<pre><code class="language-console"># xfs_admin -U generate /dev/vdb1
 	Clearing log and setting UUID
