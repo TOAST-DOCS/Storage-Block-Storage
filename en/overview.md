@@ -63,7 +63,7 @@ Once the type of partition is decided, you need to enter the number of partition
 ```
 Partition number (1-4, default 1): 1
 ```
-Now it's time to determine the size. The range varies depending on the size of created block storage. In this example, we will create a partition that uses the entire disk, so we will use the default value.
+Now, determine the size of the partition. The available range varies depending on the size of created block storage. In this example, we will create a partition that uses the entire disk, so select the default value.
 ```
 First sector (2048-20971519, default 2048):
 Using default value 2048
@@ -91,7 +91,7 @@ vdb    253:16   0  10G  0 disk
 ```
 In the example above, you can see that a partition named `vdb1` has been created on the `vdb` disk. In Linux, partition names are usually in the form of 'device name + number'.
 
-Now let's format the `vdb1` partition. On Linux, use the `mkfs` command. When formatting a partition, you must specify the file system to use. In this example, we will format it using `xfs`, one of the popular Linux file systems. For file systems available on Linux, see [File system](https://en.wikipedia.org/wiki/File_system).
+Now, format the `vdb1` partition. On Linux, use the `mkfs` command. When formatting a partition, you must specify the file system to use. In this example, we will format the partition using `xfs`, one of the popular Linux file systems. For file systems available on Linux, see [File system](https://en.wikipedia.org/wiki/File_system).
 ```
 # mkfs -t xfs /dev/vdb1
 ```
