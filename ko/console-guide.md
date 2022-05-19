@@ -62,6 +62,11 @@
 > [참고]
 > 복제 기능은 일회성이며 그 이후 원본 블록 스토리지의 변동 사항은 반영되지 않습니다.
 
+<!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
+
+> [주의]
+> 복제를 진행하려면 블록 스토리지 내 최소 100KB 이상의 여유 공간이 필요합니다.
+
 ### 리전
 
 현재 이용 중인 리전 외에 복제할 대상 리전을 선택합니다.
@@ -73,3 +78,60 @@
 ### 가용성 영역
 
 복제할 리전에서 이용할 가용성 영역을 선택합니다. 현재 리전에서 이용 중인 가용성 영역과 다른 가용성 영역을 선택할 수 있습니다.
+
+## 문제 해결 가이드
+
+### 의도하지 않은 블록 스토리지로 부팅되는 문제
+
+인스턴스에 추가로 연결한 블록 스토리지가 `/`에 마운트된 상태로 인스턴스가 부팅될 수 있습니다. 이 현상은 주로 인스턴스의 OS 이미지로 생성된 블록 스토리지를 다른 인스턴스에 추가로 연결할 때 발생합니다.
+
+Linux는 부팅 시에 `/etc/fstab`을 통해 `/`에 마운트할 디스크를 결정합니다. NHN Cloud에서 사용하는 OS 이미지의 경우 파일 시스템 UUID를 기준으로 마운트할 디스크를 결정하는데, 파일 시스템 UUID 값이 같은 블록 스토리지가 연결되면 의도하지 않은 블록 스토리지가 `/`에 마운트될 수 있습니다.
+
+```console
+# cat /etc/fstab
+...
+UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaults        0 0
+```
+
+`blkid` 명령어를 통해 블록 스토리지의 파일 시스템 UUID를 확인할 수 있습니다.
+
+```console
+# blkid
+/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+/dev/vdb1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+```
+
+위와 같이 추가로 연결된 블록 스토리지의 파일 시스템 UUID가 동일하면, Linux 배포판 동작 방식에 따라 추가로 연결한 블록 스토리지가 `/`에 마운트 될 수 있습니다.
+
+다음 절차를 따라 두 블록 스토리지의 파일 시스템 UUID를 다르게 하여 문제를 해결합니다.
+
+1. 인스턴스를 중지한 후, 문제를 일으키는(즉, `/`로 잘못 마운트되던) [블록 스토리지의 연결을 해제](console-guide/#_5)합니다.
+
+2. 인스턴스를 시작합니다.
+
+3. 부팅이 완료되면 문제를 일으키는 [블록 스토리지를 다시 연결](console-guide/#_4)합니다.
+
+4. 아래 명령어를 통해 문제를 일으키는 블록 스토리지의 파일 시스템 UUID를 교체합니다. 문제를 일으키는 블록 스토리지의 타입에 따라 아래 명령어를 실행합니다. 블록 스토리지의 타입은 `blkid` 명령어를 통해 확인할 수 있습니다.
+
+	문제를 일으키는 블록 스토리지의 파일 시스템이 ext4일 경우,
+
+	<pre><code class="language-console"># tune2fs -U random /dev/vdb1
+	tune2fs 1.42.9 (28-Dec-2013)
+	Setting the UUID on this filesystem could take some time.
+	Proceed anyway (or wait 5 seconds to proceed) ? (y,N) y
+	</code></pre>
+
+	문제를 일으키는 블록 스토리지의 파일 시스템이 xfs일 경우,
+
+	<pre><code class="language-console"># xfs_admin -U generate /dev/vdb1
+	Clearing log and setting UUID
+	writing all SBs
+	new UUID = 0037c590-0545-4736-bcdc-d052681eb5f5
+	</code></pre>
+
+5. 파일 시스템 UUID가 바뀐 것을 확인합니다.
+
+	<pre><code class="language-console"># blkid
+	/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
+	</code></pre>
