@@ -30,7 +30,7 @@ Attach block storage to an instance. You can attach block storage while the inst
 If you attach empty block storage, it must be partitioned and formatted in the instance before use. A formatted block storage must be mounted before use. For block storage created with snapshots, you must mount it manually within the instance to use it.
 
 > [Note]
-> Depending on the operating system, mounting may be automatically applied, requiring no further mounting process. 
+> Depending on the operating system, mounting may be automatically applied, requiring no further mounting process.
 
 ### Detach Block Storage
 
@@ -51,7 +51,7 @@ Make the disk **Offline** in **Disk Management** and then detach it.
 
 ## Create Snapshots
 
-Create a read-only copy of the block storage. Although block storage snapshots can be created while the block storage is attached to an instance, it is recommended to detach it from the instance and create block storage snapshots to ensure data consistency and reliability. 
+Create a read-only copy of the block storage. Although block storage snapshots can be created while the block storage is attached to an instance, it is recommended to detach it from the instance and create block storage snapshots to ensure data consistency and reliability.
 
 ## Replicate Block Storage
 
