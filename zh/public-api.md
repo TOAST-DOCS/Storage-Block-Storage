@@ -1,42 +1,42 @@
-## Storage > Block Storage > API v2 가이드
+## Storage > Block Storage > API v2 Guide
 
-API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+To enable APIs, API endpoint and token are required. Prepare information required to enable an API, in reference of  [Preparing for APIs](/Compute/Compute/ko/identity-api/)
 
-블록 스토리지 API는 `volumev2` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
+Use `volumev2`-type endpoint for Block Storage API. For more details, see `serviceCatalog` from response of token issuance. 
 
-| 타입 | 리전 | 엔드포인트 |
+| Type | Region | Endpoint |
 |---|---|---|
-| volumev2 | 한국(판교) 리전<br>일본 리전 | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
+| volumev2 | Korea (Pangyo) <br>Japan | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
 
-API 응답에 가이드에 명시되지 않은 필드가 노출될 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지없이 변경될 수 있으므로 사용하지 않습니다.
+In API response, you may find fields that are not specified in the guide. Refrain from using them because such fields are only for the NHN Cloud internal usage and might be changed without previous notice. 
 
-## 볼륨 타입
-### 볼륨 타입 목록 보기
+## Volume Type
+### List Volume Types 
 ```
 GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 속성 | 설명 |
+| Name | Type | Attribute | Description |
 |---|---|---|---|
-| volume_types | Body | Array | 볼륨 타입 객체 목록 |
-| volume_types.id | Body | UUID | 볼륨 타입 ID |
-| volume_types.name | Body | String | 볼륨 타입 이름 |
-| volume_types.os-volume-type-access:is_public | Body | Boolean | 볼륨 타입 공개 여부 |
-| volume_types.description | Body | String | 볼륨 타입 설명 |
-| volume_types.extra_specs | Body | Object | 볼륨 타입 관련 추가 사양 정보 객체 |
+| volume_types | Body | Array | List of volume type objects |
+| volume_types.id | Body | UUID | ID of volume type |
+| volume_types.name | Body | String | Name of volume type |
+| volume_types.os-volume-type-access:is_public | Body | Boolean | Publicize volume type or not |
+| volume_types.description | Body | String | Description of volume type |
+| volume_types.extra_specs | Body | Object | Information object of extra specifications related with volume type |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
 
 ```json
@@ -69,64 +69,65 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 볼륨
-### 볼륨 상태
-볼륨은 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
+## Volume
+### Volume Status
+Volumes are available in many statuses with operations defined for each status. See the following list of available statuses:  
 
-| 상태 명 | 설명 |
+| Status Name | Description |
 |--|--|
-| `creating` | 생성 중인 상태 |
-| `available` | 볼륨이 생성되어 연결할 준비가 된 상태 |
-| `attaching`| 볼륨이 인스턴스에 연결 중인 상태 |
-| `detaching`| 볼륨이 연결 해제 중인 상태 |
-| `in-use`| 볼륨이 인스턴스에 연결된 상태 |
-| `maintenance`| 볼륨이 다른 호스트 장비로 이전 중인 상태 |
-| `deleting`| 볼륨을 삭제 중인 상태 |
-| `awaiting-transfer`| 볼륨이 전송을 기다리는 상태 |
-| `error`| 볼륨 생성 시 오류가 발생한 상태 |
-| `error_deleting`| 볼륨 삭제 시 오류가 발생한 상태 |
-| `backing-up`| 볼륨이 백업 중인 상태 |
-| `restoring-backup`| 볼륨이 백업본에서 복구 중인 상태 |
-| `error_backing-up`| 백업 중 오류가 발생한 상태 |
-| `error_restoring`| 복구 중 오류가 발생한 상태 |
-| `error_extending`| 볼륨 확장 중 오류가 발생한 상태 |
-| `downloading`| 볼륨 생성 시 지정한 이미지를 다운로드하는 상태 |
-| `uploading`| 이미지 생성 시 볼륨의 이미지를 업로드하는 상태 |
-| `retyping`| 볼륨 타입을 변경하는 상태 |
-| `extending`| 볼륨을 확장하는 상태 |
+| `creating` | Creating a volume |
+| `available` | Volume is created and ready for attachment |
+| `attaching`| Attaching volume to an instance |
+| `detaching` | Detaching volume |
+| `in-use`| Volume is attached to an instance |
+| `maintenance`| Volume is migrating to another host equipment |
+| `deleting`| Deleting a volume |
+| `awaiting-transfer`| Volume is waiting for transfer |
+| `error`| Error occurred while creating a volume |
+| `error_deleting`| Error occurred while deleting a volume |
+| `backing-up`| Backing up volume |
+| `restoring-backup`| Restoring volume from backup |
+| `error_backing-up`| Error occurred while backing up |
+| `error_restoring`| Error occurred while restoring |
+| `error_extending`| Error occurred while extending volume |
+| `downloading`| Downloading specified image while creating a volume |
+| `uploading`| Uploading volume image while creating an image |
+| `retyping`| Changing volume type |
+| `extending`| Extending volume |
 
-### 볼륨 목록 보기
-현재 테넌트에 속한 볼륨 목록을 반환합니다.
+### List Volumes 
+Return the list of volumes included to a current tenant. 
 
 ```
 GET /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| sort | Query | String | - | 정렬 기준이 될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 볼륨 개수<br>기본값은 1000으로 설정 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 오프셋(offset)번째 볼륨부터 반환 |
-| marker | Query | UUID | - | 반환할 볼륨의 직전 볼륨 ID<br>정렬 순서에 따라 `marker`로 지정된 볼륨 이후부터 `limit`만큼 반환 |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| sort | Query | String | - | Name of volume field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | Volume count to return <br>Default is 1000 |
+| offset | Query | Integer | - | Start point of the list to return<br>Return from the offset volume out of the entire list |
+| marker | Query | UUID | - | ID of the previous volume of a volume to return <br>Return as much as the `limit` after volume specified as the `marker` according to the sorting order |
 
-#### 응답
+#### Response	
 
-| 이름 | 종류 | 속성 | 설명 |
+| Name | Type | Attributes | Description |
 |---|---|---|---|
-| volumes | Body | Array | 볼륨 객체 목록 |
-| volumes.id | Body | UUID | 볼륨 ID |
-| volumes.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volumes.name | Body | String | 볼륨 이름 |
-| volumes_links  | Body | Object | 페이지 매김(페이지네이션)을 위한 정보 객체 (다음 목록을 가리키는 경로)<br>`limit`, `offset`을 추가한 경우 반환 |
+| volumes | Body | Array | List of volume objects |
+| volumes.id | Body | UUID | Volume ID |
+| volumes.links | Body | Object | Reference objects for volume resource links |
+| volumes.name | Body | String | Volume name |
+| volumes_links  | Body | Object | Information object (path indicating the next list) for pagination <br>Return when`limit` and `offset` are added |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -154,62 +155,65 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 상세 목록 보기
-현재 테넌트에 속한 볼륨 목록을 반환합니다.
+### List Volume Details 
+Return the list of volumes included to a current tenant. 
 
 ```
 GET /v2/{tenantId}/volumes/detail
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| sort | Query | String | - | 정렬 기준이 될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 볼륨 개수<br>기본값은 1000으로 설정 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br/>전체 목록 중 오프셋(offset)번째 볼륨부터 반환 |
-| marker | Query | UUID | - | 반환할 볼륨의 직전 볼륨 ID<br/>정렬 순서에 따라 `marker`로 지정된 볼륨 이후부터 `limit`만큼 반환 |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| sort | Query | String | - | Name of volume field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | Volume count to return<br>Default is 1000 |
+| offset | Query | Integer | - | Start point of the list to return <br/>Return from the offset volume out of the entire list |
+| marker | Query | UUID | - | ID of the previous volume of a volume to return <br/>Return as much as `limit` after volume specified as the `marker` according to the sorting order |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| volumes | Body | Array | 볼륨 상세 정보 객체 목록 |
-| volumes.attachments | Body | Object | 볼륨 연결 정보 객체 |
-| volumes.attachments.server_id | Body | UUID | 볼륨이 연결된 인스턴스 ID |
-| volumes.attachments.attachment_id | Body | UUID | 볼륨 연결 ID |
-| volumes.attachments.volume_id | Body | UUID | 볼륨 ID |
-| volumes.attachments.device | Body | String | 인스턴스 내 장치 이름 |
-| volumes.attachments.id | Body | String | 볼륨 ID |
-| volumes.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volumes.availability_zone | Body | String | 볼륨 가용성 영역 |
-| volumes.encrypted | Body | Boolean | 볼륨 암호화 여부 |
-| volumes.os-volume-replication:extended_status | Body | String | 볼륨 확장 상태 |
-| volumes.volume_type | Body | String | 볼륨 타입 이름 |
-| volumes.snapshot_id | Body | UUID | 볼륨 생성 시 지정한 스냅숏 ID |
-| volumes.id | Body | UUID | 볼륨 ID |
-| volumes.size | Body | Integer | 볼륨 크기(GB) |
-| volumes.user_id | Body | String | 볼륨 소유주 ID |
-| volumes.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
-| volumes.metadata | Body | Object | 볼륨 메타데이터 객체 |
-| volumes.status | Body | Enum | 볼륨 상태 |
-| volumes.description | Body | String | 볼륨 설명 |
-| volumes.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
-| volumes.source_volid | Body | UUID | 볼륨 생성 시 지정한 볼륨 ID |
-| volumes.consistencygroup_id | Body | UUID | 볼륨  그룹 ID |
-| volumes.name | Body | String | 볼륨 이름 |
-| volumes.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volumes.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| volumes.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
-| volumes.replication_status | Body | String | 볼륨 복제 상태 |
-| volumes.volumes_links  | Body | Object | 페이지 매김(페이지네이션)을 위한 정보 객체(다음 목록을 가리키는 경로)<br>`limit`, `offset`을 추가한 경우 반환 |
+| volumes | Body | Array | List of detail volume information objects |
+| volumes.attachments | Body | Object | Information object for volume attachment |
+| volumes.attachments.server_id | Body | UUID | ID of instance with volume attached |
+| volumes.attachments.attachment_id | Body | UUID | ID of volume attachment |
+| volumes.attachments.volume_id | Body | UUID | Volume ID |
+| volumes.attachments.device | Body | String | Name of device within instance |
+| volumes.attachments.id | Body | String | Volume ID |
+| volumes.links | Body | Object | Reference object of volume resource link |
+| volumes.availability_zone | Body | String | Volume availability area |
+| volumes.encrypted | Body | Boolean | Volume encrypted or not |
+| volumes.os-volume-replication:extended_status | Body | String | Volume extension status |
+| volumes.volume_type | Body | String | Name of volume type |
+| volumes.snapshot_id | Body | UUID | Snapshot ID specified while creating a volume |
+| volumes.id | Body | UUID | Volume ID |
+| volumes.size | Body | Integer | Volume size(GB) |
+| volumes.user_id | Body | String | ID of volume owner |
+| volumes.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
+| volumes.metadata | Body | Object | Volume metadata object |
+| volumes.status | Body | Enum | Volume status |
+| volumes.description | Body | String | Volume description |
+| volumes.multiattach | Body | Boolean | Multiple attachment or not<br>With `true`, multiple attachment to many instances are available |
+| volumes.source_volid | Body | UUID | Volume ID specified when creating a volume |
+| volumes.consistencygroup_id | Body | UUID | ID of volume group |
+| volumes.name | Body | String | Name of volume |
+| volumes.bootable | Body | Boolean | Volume bootable or not |
+| volumes.created_at | Body | Datetime | Time of volume creation <br>In the format of `YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volumes.os-volume-replication:driver_data | Body | String | Volume replication data |
+| volumes.replication_status | Body | String | Volume replication status |
+| volumes.volumes_links  | Body | Object | Information object (pointing to the next list) for pagination <br>Return when`limit` and `offset` are added |
 
-<details><summary>예시</summary>
+
+
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -256,58 +260,59 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 보기
-지정한 볼륨의 상세 정보를 반환합니다.
+### Get Volume 
+Return details of specified volume.  
 
 ```
 GET /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| volumeId | URL | UUID | O | 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| volumeId | URL | UUID | O | Volume ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| volume | Body | Object | 볼륨 상세 정보 객체 |
-| volume.attachments | Body | Object | 볼륨 연결 정보 객체 |
-| volume.attachments.server_id | Body | UUID | 볼륨이 연결된 인스턴스 ID |
-| volume.attachments.attachment_id | Body | UUID | 볼륨 연결 ID |
-| volume.attachments.volume_id | Body | UUID | 볼륨 ID |
-| volume.attachments.device | Body | String | 인스턴스 내 장치 이름 |
-| volume.attachments.id | Body | String | 볼륨 ID |
-| volume.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volume.availability_zone | Body | String | 볼륨 가용성 영역 |
-| volume.encrypted | Body | Boolean | 볼륨 암호화 여부 |
-| volume.os-volume-replication:extended_status | Body | String | 볼륨 확장 상태 |
-| volume.volume_type | Body | String | 볼륨 타입 이름 |
-| volume.snapshot_id | Body | UUID | 볼륨 생성 시 지정한 스냅숏 ID |
-| volume.id | Body | UUID | 볼륨 ID |
-| volume.size | Body | Integer | 볼륨 크기(GB) |
-| volume.user_id | Body | String | 볼륨 소유주 ID |
-| volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
-| volume.metadata | Body | Object | 볼륨 메타데이터 객체 |
-| volume.status | Body | Enum | 볼륨 상태 |
-| volume.description | Body | String | 볼륨 설명 |
-| volume.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
-| volume.source_volid | Body | UUID | 볼륨 생성 시 지정한 볼륨 ID |
-| volume.consistencygroup_id | Body | UUID | 볼륨 컨시스턴시(일관성) 그룹 ID |
-| volume.name | Body | String | 볼륨 이름 |
-| volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
-| volume.replication_status | Body | String | 볼륨 복제 상태 |
+| volume | Body | Object | Detail information object of volume |
+| volume.attachments | Body | Object | Information object for volume attachment |
+| volume.attachments.server_id | Body | UUID | ID of instance attached to volume |
+| volume.attachments.attachment_id | Body | UUID | ID of volume attachment |
+| volume.attachments.volume_id | Body | UUID | Volume ID |
+| volume.attachments.device | Body | String | Name of equipment within instance |
+| volume.attachments.id | Body | String | Volume ID |
+| volume.links | Body | Object | Reference object for volume resource link |
+| volume.availability_zone | Body | String | Volume availability area |
+| volume.encrypted | Body | Boolean | Volume encrypted or not |
+| volume.os-volume-replication:extended_status | Body | String | Volume extended status |
+| volume.volume_type | Body | String | Volume type name |
+| volume.snapshot_id | Body | UUID | Snapshot ID specified when creating volume |
+| volume.id | Body | UUID | Volume ID |
+| volume.size | Body | Integer | Volume size (GB) |
+| volume.user_id | Body | String | Volume owner ID |
+| volume.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
+| volume.metadata | Body | Object | Volume metadata object |
+| volume.status | Body | Enum | Volume status |
+| volume.description | Body | String | Volume description |
+| volume.multiattach | Body | Boolean | Multiple attachment is available or not<br>With `true`, simultaneous attachment to many instances is enabled |
+| volume.source_volid | Body | UUID | Volume ID specified when creating volume |
+| volume.consistencygroup_id | Body | UUID | Volume consistency volume ID |
+| volume.name | Body | String | Volume name |
+| volume.bootable | Body | Boolean | Volume bootable |
+| volume.created_at | Body | Datetime | Volume creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.os-volume-replication:driver_data | Body | String | Volume replication data |
+| volume.replication_status | Body | String | Volume replication status |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -352,34 +357,35 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 생성하기
-스냅숏으로부터 새로운 볼륨을 생성하거나 빈 볼륨을 생성합니다.
+### Create Volume
+Create a new or empty volume from snapshot. 
 
-볼륨은 생성 직후 즉시 사용할 수 없습니다. 볼륨 상태를 조회해서 `available` 상태인 것을 확인한 후 사용합니다.
+Volumes are not immediately available after created. Query volume status and check if it is `available`  first.  
 
 ```
 POST /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| volume | Body | Object | O | 볼륨 생성 요청 객체 |
-| volume.size | Body | Integer | O | 볼륨 크기(GB) |
-| volume.description | Body | String | - | 볼륨 설명 |
-| volume.multiattach | Body | Boolean | - | 다중 연결 가능 여부<br>`true`로 설정하면<br>여러 인스턴스에 동시에 연결할 수 있음 |
-| volume.availability_zone | Body | String | - | 볼륨 가용성 영역 이름 |
-| volume.name | Body | String | - | 볼륨 이름 |
-| volume.volume_type | Body | String | - | 볼륨 타입 이름 |
-| volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID, 생략하면 빈 볼륨이 생성됨 |
-| volume.metadata | Body | Object | - | 볼륨 메타데이터 객체 |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| volume | Body | Object | O | Object requesting of creating volume |
+| volume.size | Body | Integer | O | Volume size (GB) |
+| volume.description | Body | String | - | Volume description |
+| volume.multiattach | Body | Boolean | - | Multiple attachment is available or not <br>With`true`, simultaneous attachment to many instances is enabled |
+| volume.availability_zone | Body | String | - | Name of volume availability area |
+| volume.name | Body | String | - | Volume name |
+| volume.volume_type | Body | String | - | Volume type name |
+| volume.snapshot_id | Body | UUID | - | Original snapshot ID: if left blank, empty volume is created |
+| volume.metadata | Body | Object | - | Volume metadata object |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -391,10 +397,8 @@ X-Auth-Token: {tokenId}
         "multiattach": false,
         "snapshot_id": null,
         "name": null,
-        "imageRef": null,
         "volume_type": null,
-        "metadata": {},
-        "consistencygroup_id": null
+        "metadata": {}
     }
 }
 ```
@@ -402,35 +406,36 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 속성 | 설명 |
+| Name | Type | Attributes | Description |
 |---|---|---|---|
-| volume | Body | Object | 볼륨 상세 정보 객체 |
-| volume.attachments | Body | Object | 볼륨 연결 정보 객체 |
-| volume.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volume.availability_zone | Body | String | 볼륨 가용성 영역 |
-| volume.encrypted | Body | Boolean | 볼륨 암호화 여부 |
-| volume.os-volume-replication:extended_status | Body | String | 볼륨 확장 상태 |
-| volume.volume_type | Body | String | 볼륨 타입 이름 |
-| volume.snapshot_id | Body | UUID | 볼륨 생성 시 지정한 스냅숏 ID |
-| volumes.id | Body | UUID | 볼륨 ID |
-| volume.size | Body | Integer | 볼륨 크기(GB) |
-| volume.user_id | Body | String | 볼륨 소유주 ID |
-| volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
-| volume.metadata | Body | Object | 볼륨 메타데이터 객체 |
-| volume.status | Body | Enum | 볼륨 상태 |
-| volume.description | Body | String | 볼륨 설명 |
-| volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
-| volume.consistencygroup_id | Body | UUID | 볼륨 컨시스턴시 그룹 ID |
-| volume.name | Body | String | 볼륨 이름 |
-| volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
-| volume.replication_status | Body | String | 볼륨 복제 상태 |
+| volume | Body | Object | Information object for volume details |
+| volume.attachments | Body | Object | Information object for volume attachment |
+| volume.links | Body | Object | Reference object for volume resource links |
+| volume.availability_zone | Body | String | Volume visibility area |
+| volume.encrypted | Body | Boolean | Volume encrypted or not |
+| volume.os-volume-replication:extended_status | Body | String | Volume extended status |
+| volume.volume_type | Body | String | Volume type name |
+| volume.snapshot_id | Body | UUID | Snapshot ID specified for creating volume |
+| volumes.id | Body | UUID | Volume ID |
+| volume.size | Body | Integer | Volume size (GB) |
+| volume.user_id | Body | String | Volume owner ID |
+| volume.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
+| volume.metadata | Body | Object | Volume metadata object |
+| volume.status | Body | Enum | Volume status |
+| volume.description | Body | String | Volume description |
+| volume.multiattach | Body | Boolean | Attachable to many instances |
+| volume.consistencygroup_id | Body | UUID | Volume consistency group ID |
+| volume.name | Body | String | Volume name |
+| volume.bootable | Body | Boolean | Volume bootable |
+| volume.created_at | Body | Datetime | Volume creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| volume.os-volume-replication:driver_data | Body | String | Volume replication data |
+| volume.replication_status | Body | String | Volume replication status |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -469,56 +474,57 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 삭제하기
+### Delete Volume 
 
-지정한 볼륨을 삭제합니다. 연결되어 있거나 스냅숏이 생성된 볼륨은 삭제할 수 없습니다.
+Delete specified volume. Volumes that are attached or with snapshots created cannot be deleted. 
 
 ```
 DELETE /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| volumeId | URL | String | O | 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| volumeId | URL | String | O | Volume ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not return a response body.  
 
 ---
 
-### 볼륨으로 이미지 생성하기
-볼륨으로부터 이미지를 생성합니다. 
+### Create Image with Volume
+Create image from volume. 
 
-이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다. 남은 공간이 이보다 작을 경우 초기화 작업이 실패할 수 있습니다.
+At least 100KB space is required for basic initialization after image is created. If you have less space than that, initialization may fail. 
 
 ```
 POST /v2/{tenantId}/volumes/{volumeId}/action
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| volumeId | URL | UUID | O | 볼륨 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| os-volume_upload_image | Body | Object | O | 볼륨 이미지 생성 요청 객체 |
-| os-volume_upload_image.image_name | Body | String | O | 이미지 이름 |
-| os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 볼륨일때 이미지 생성 허용 여부<br>기본값은 false |
-| os-volume_upload_image.disk_format | Body | String | - | 이미지 디스크 포맷 |
-| os-volume_upload_image.container_format | Body | String | - | 이미지 컨테이너 포맷 |
-| os-volume_upload_image.visibility | Body | String | - | 이미지 가시성<br>`private`, `shared` 중 하나 |
-| os-volume_upload_image.protected | Body | Boolean | - | 이미지 보호 여부</br>protected=true인 경우 수정 및 삭제가 불가 |
+| tenantId | URL | String | O | Tenant ID |
+| volumeId | URL | UUID | O | Volume ID |
+| tokenId | Header | String | O | Token ID |
+| os-volume_upload_image | Body | Object | O | Object requesting of creating volume image |
+| os-volume_upload_image.image_name | Body | String | O | Image name |
+| os-volume_upload_image.force | Body | Boolean | - | Image creation allowed or not for volumes attached to instance <br>Default is false |
+| os-volume_upload_image.disk_format | Body | String | - | Image disk format |
+| os-volume_upload_image.container_format | Body | String | - | Image container format |
+| os-volume_upload_image.visibility | Body | String | - | Image visibility<br>Either`private`, or `shared` |
+| os-volume_upload_image.protected | Body | Boolean | - | Image protected or not</br>Unable to modify or delete, if protected=true |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -536,24 +542,25 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 속성 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| os-volume_upload_image | Body | Object | 볼륨 이미지 생성 응답 객체 |
-| os-volume_upload_image.status | Body | String | 볼륨 상태 |
-| os-volume_upload_image.image_name | Body | String | 이미지 이름 |
-| os-volume_upload_image.disk_format | Body | String | 이미지 디스크 포맷 |
-| os-volume_upload_image.container_format | Body | String | 이미지 컨테이너 포맷 |
-| os-volume_upload_image.updated_at | Body | Datetime | 이미지 수정 시각 |
-| os-volume_upload_image.image_id | Body | UUID | 이미지 ID |
-| os-volume_upload_image.display_description | Body | String | 볼륨 설명 |
-| os-volume_upload_image.id | Body | UUID | 볼륨 ID |
-| os-volume_upload_image.size | Body | Integer | 볼륨 크기 (GB) |
-| os-volume_upload_image.volume_type | Body | Object | 볼륨 타입 정보 객체 |
+| os-volume_upload_image | Body | Object | Response object creating volume image |
+| os-volume_upload_image.status | Body | String | Volume status |
+| os-volume_upload_image.image_name | Body | String | Image name |
+| os-volume_upload_image.disk_format | Body | String | Image disk format |
+| os-volume_upload_image.container_format | Body | String | Image container format |
+| os-volume_upload_image.updated_at | Body | Datetime | Image modification time |
+| os-volume_upload_image.image_id | Body | UUID | Image ID |
+| os-volume_upload_image.display_description | Body | String | Volume description |
+| os-volume_upload_image.id | Body | UUID | Volume ID |
+| os-volume_upload_image.size | Body | Integer | Volume size (GB) |
+| os-volume_upload_image.volume_type | Body | Object | Information object for volume type |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -598,54 +605,55 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 스냅숏
-### 스냅숏 상태
-스냅숏은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
+## Snapshot
+### Snapshot Status
+Snapshots exist in various statues, and each status defines operations.  See the list of available statuses like below:
 
-| 상태 명 | 설명 |
+| Status Name | Description |
 |--|--|
-| `creating` | 생성 중인 상태 |
-| `available` | 스냅숏이 생성되어 사용할 준비가 된 상태 |
-| `backing-up`| 스냅숏이 백업 중인 상태 |
-| `deleting`| 스냅숏이 삭제 중인 상태 |
-| `error`| 생성 중 오류가 발생한 상태 |
-| `deleted`| 삭제된 상태 |
-| `unmanaging`| 스냅숏에 대한 관리 모드가 해제 중인 상태 |
-| `restoring`| 스냅숏으로부터 볼륨을 복원 중인 상태 |
-| `error_deleting`| 삭제 중 오류가 발생한 상태 |
+| `creating` | Creating a snapshot |
+| `available` | Snapshot has been created and is available |
+| `backing-up      | Backing up a snapshot                               |
+| `deleting`| Deleting a snapshot |
+| `error`| Error has occurred while creating a snapshot |
+| `deleted`| Snapshot has been deleted |
+| `unmanaging`| Snapshot has been released from the management mode |
+| `restoring`| Restoring volume from snapshot |
+| `error_deleting`| Error has occurred while deleting a snapshot |
 
-### 스냅숏 목록 보기
-스냅숏 목록을 반환합니다.
+### List Snapshots 
+Return the list of snapshots. 
 
 ```
 GET /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 속성 | 설명 |
-|---|---|---|---|
-| snapshots | Body | Array | 스냅숏 정보 객체 목록 |
-| snapshots.status | Body | Enum | 스냅숏 상태 |
-| snapshots.description | Body | String | 스냅숏 설명 |
-| snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| snapshots.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshots.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
-| snapshots.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
-| snapshots.id | Body | UUID | 스냅숏 ID |
-| snapshots.name | Body | String | 스냅숏 이름 |
+| Name                 | Type | Format   | Description                                                  |
+| -------------------- | ---- | -------- | ------------------------------------------------------------ |
+| snapshot             | Body | Array    | Information object of snapshot details                       |
+| snapshot.status      | Body | Enum     | Snapshot status                                              |
+| snapshot.description | Body | String   | Snapshot description                                         |
+| snapshot.created_at  | Body | Datetime | Snapshot creation time <br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.metadata    | Body | Object   | Snapshot metadata object                                     |
+| snapshot.volume_id   | Body | UUID     | Original volume ID of snapshot                               |
+| snapshot.size        | Body | Integer  | Original volume size of snapshot (GB)                        |
+| snapshot.id          | Body | UUID     | Snapshot ID                                                  |
+| snapshot.name        | Body | String   | Snapshot name                                                |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -669,40 +677,41 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 스냅숏 목록 상세 보기
-스냅숏 상세 정보 목록을 반환합니다.
+### List Snapshot Details 
+Return the list of snapshot details. 
 
 ```
 GET /v2/{tenantId}/snapshots/detail
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| snapshots | Body | Array | 스냅숏 상세 정보 객체 목록 |
-| snapshots.status | Body | Enum | 스냅숏 상태 |
-| snapshots.description | Body | String | 스냅숏 설명 |
-| snapshots.os-extended-snapshot-attributes:progress | Body | String | 스냅숏 생성 진행 상태 |
-| snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| snapshots.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshots.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
-| snapshots.os-extended-snapshot-attributes:project_id | Body | String | 테넌트 ID |
-| snapshots.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
-| snapshots.id | Body | UUID | 스냅숏 ID |
-| snapshots.name | Body | String | 스냅숏 이름 |
+| Name                                                | Type | Format   | Description                                                  |
+| --------------------------------------------------- | ---- | -------- | ------------------------------------------------------------ |
+| snapshot                                            | Body | Array    | Information object of snapshot details                       |
+| snapshot.status                                     | Body | Enum     | Snapshot status                                              |
+| snapshot.description                                | Body | String   | Snapshot description                                         |
+| snapshot.os-extended-snapshot-attributes:progress   | Body | String   | Progress of snapshot creation                                |
+| snapshot.created_at                                 | Body | Datetime | Snapshot creation time In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.metadata                                   | Body | Object   | Snapshot metadata object                                     |
+| snapshot.volume_id                                  | Body | UUID     | Original volume ID of snapshot                               |
+| snapshot.os-extended-snapshot-attributes:project_id | Body | String   | Tenant ID                                                    |
+| snapshot.size                                       | Body | Integer  | Original volume size of snapshot (GB)                        |
+| snapshot.id                                         | Body | UUID     | Snapshot ID                                                  |
+| snapshot.name                                       | Body | String   | Snapshot name                                                |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -728,41 +737,42 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 스냅숏 보기
-지정한 스냅숏의 상세 정보를 반환합니다.
+### Get Snapshot
+Return details of specified snapshot. 
 
 ```
 GET /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. .
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| snapshotId | URL | UUID | O | 스냅숏 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| snapshotId | URL | UUID | O | Snapshot ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| snapshot | Body | Object | 스냅숏 상세 정보 객체 |
-| snapshot.status | Body | Enum | 스냅숏 상태 |
-| snapshot.description | Body | String | 스냅숏 설명 |
-| snapshot.os-extended-snapshot-attributes:progress | Body | String | 스냅숏 생성 진행 상태 |
-| snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| snapshot.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshot.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
-| snapshot.os-extended-snapshot-attributes:project_id | Body | String | 테넌트 ID |
-| snapshot.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
-| snapshot.id | Body | UUID | 스냅숏 ID |
-| snapshot.name | Body | String | 스냅숏 이름 |
+| snapshot | Body | Object | Information object of snapshot details |
+| snapshot.status | Body | Enum | Snapshot status |
+| snapshot.description | Body | String | Snapshot description |
+| snapshot.os-extended-snapshot-attributes:progress | Body | String | Progress of snapshot creation |
+| snapshot.created_at | Body | Datetime | Snapshot creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.metadata | Body | Object | Snapshot metadata object |
+| snapshot.volume_id | Body | UUID | Original volume ID of snapshot |
+| snapshot.os-extended-snapshot-attributes:project_id | Body | String | Tenant ID |
+| snapshot.size | Body | Integer | Original volume size of snapshot (GB) |
+| snapshot.id | Body | UUID | Snapshot ID |
+| snapshot.name | Body | String | Snapshot name |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -786,28 +796,29 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 스냅숏 생성하기
-지정한 볼륨의 스냅숏을 생성합니다.
+### Create Snapshot
+Create snapshot for specified volume. 
 
 ```
 POST /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
+#### Request 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| snapshot | Body | Object | O | 스냅숏 생성 요청 객체 |
-| snapshot.volume_id | Body | UUID | O | 원본 볼륨 ID |
-| snapshot.force | Body | Boolean | - | 강제 스냅숏 생성 여부<br>`true`면 볼륨이 연결되어도 스냅숏을 생성 |
-| snapshot.description | Body | String | - | 스냅숏 설명 |
-| snapshot.name | Body | String | - | 스냅숏 이름 |
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| snapshot | Body | Object | O | Object requesting of creating snapshot |
+| snapshot.volume_id | Body | UUID | O | Original volume ID |
+| snapshot.force | Body | Boolean | - | Forced to create snapshot or not<br>With`true`, snapshot is created even if volume is attached |
+| snapshot.description | Body | String | - | Snapshot description |
+| snapshot.name | Body | String | - | Snapshot name |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -823,22 +834,23 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
-#### 응답
+#### Response
 
-| 이름 | 종류 | 형식 | 설명 |
+| Name | Type | Format | Description |
 |---|---|---|---|
-| snapshot | Body | Object | 스냅숏 상세 정보 객체 |
-| snapshot.status | Body | Enum | 스냅숏 상태 |
-| snapshot.description | Body | String | 스냅숏 설명 |
-| snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| snapshot.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshot.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
-| snapshot.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
-| snapshot.id | Body | UUID | 스냅숏 ID |
-| snapshot.name | Body | String | 스냅숏 이름 |
+| snapshot | Body | Object | Information object of snapshot details |
+| snapshot.status | Body | Enum | Snapshot status |
+| snapshot.description | Body | String | Snapshot description |
+| snapshot.created_at | Body | Datetime | Snapshot creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.metadata | Body | Object | Snapshot metadata object |
+| snapshot.volume_id | Body | UUID | Original volume ID of snapshot |
+| snapshot.size | Body | Integer | Original volume size of snapshot (GB) |
+| snapshot.id | Body | UUID | Snapshot ID |
+| snapshot.name | Body | String | Snapshot name |
 
-<details><summary>예시</summary>
+<details><summary>Example</summary>
 <p>
+
 
 ```json
 {
@@ -860,22 +872,22 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 스냅숏 삭제하기
-지정한 스냅숏을 삭제합니다.
+### Delete Snapshot
+Delete snapshot as specified. 
 
 ```
 DELETE /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
-#### 요청
-이 API는 요청 본문을 요구하지 않습니다.
+#### Request
+This API does not require a request body. 
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
+| Name | Type | Format | Required | Description |
 |---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| snapshotId | URL | String | O | 스냅숏 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| tenantId | URL | String | O | Tenant ID |
+| snapshotId | URL | String | O | Snapshot ID |
+| tokenId | Header | String | O | Token ID |
 
-#### 응답
-이 API는 응답 본문을 반환하지 않습니다.
+#### Response
+This API does not require a request body. 
