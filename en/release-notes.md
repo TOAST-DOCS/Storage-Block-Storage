@@ -1,5 +1,11 @@
 ## Storage > Block Storage > Release Notes
 
+### September 27, 2022
+
+#### Feature Updates
+
+* Added a process to check snapshot integrity when running **Create Block Storage** in **Snapshot**.
+
 ### March 29, 2022
 
 #### Added Features
