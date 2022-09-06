@@ -4,7 +4,7 @@
 
 #### Feature Updates
 
-* Added a process to check snapshot integrity when running **Create Block Storage** in **Snapshot**.
+* Added a process to check snapshot integrity when running **Create Block Storage from a Snapshot**.
 
 ### March 29, 2022
 
