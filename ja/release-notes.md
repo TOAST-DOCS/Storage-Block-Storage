@@ -1,6 +1,6 @@
 ## Storage > Block Storage > Release Notes
 
-### 2022. 10. 04.
+### 2022. 9. 27.
 
 #### 機能変更
 
