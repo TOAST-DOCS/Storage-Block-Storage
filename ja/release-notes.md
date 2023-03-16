@@ -1,5 +1,9 @@
 ## Storage > Block Storage > Release Notes
 
+### 2023. 03. 28.
+
+* APIエンドポイントの変更
+
 ### 2022. 9. 27.
 
 #### 機能変更
