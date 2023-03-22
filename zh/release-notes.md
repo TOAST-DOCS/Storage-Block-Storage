@@ -1,5 +1,9 @@
 ## Storage > Block Storage > Release Notes
 
+### March 28, 2023
+
+* Changed API endpoint
+
 ### September 27, 2022
 
 #### Feature Updates
