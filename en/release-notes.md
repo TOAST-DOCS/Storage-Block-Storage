@@ -1,5 +1,9 @@
 ## Storage > Block Storage > Release Notes
 
+### May 30, 2023
+
+* Added the encrypted block storage type.
+
 ### March 28, 2023
 
 * Changed API endpoint
