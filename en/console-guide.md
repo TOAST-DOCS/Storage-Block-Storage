@@ -12,6 +12,28 @@ You can also create block storage from snapshots. In this case, the size of bloc
 
 To create block storage with snapshots, the availability zone of block storage will be fixed to the zone where the snapshot is stored. A block storage cannot be created in any different availability zone.
 
+### Encrypted Block Storage
+
+You can create encrypted block storage by selecting **Encrypted HDD** or **Encrypted SSD** from the block storage type. Encrypted block storage is encrypted using a symmetric key managed by NHN Cloud's Secure Key Manager service. Therefore, to create encrypted block storage, you must create a symmetric key in the Secure Key Manager service in advance.
+
+The policies for encrypted block storage are as follows.
+
+* You cannot create a snapshot from encrypted block storage.
+* You cannot create encrypted block storage from a snapshot.
+* You cannot create an image from an instance whose default disk is encrypted block storage.  
+* Encrypted block storage cannot be replicated into a different region.
+* Due to encryption and decryption, I/O performance may be reduced compared to general block storage types (**HDD**, **SSD**).
+* You cannot change the symmetric key ID that is registered when creating encrypted block storage. To change the symmetric key, you must use the key rotation feature of Secure Key Manager.
+* After selecting encrypted block storage, the **Rotate Key** button allows you to re-encrypt block storage encrypted with an older version of the key with a newer version of the key.
+
+> [Note]
+Backup products allow you to prepare for data loss due to key deletion, and create a replica for safe keeping.
+
+<!-- For newline -->
+
+> [Caution]
+If the Secure Key Manager service deletes the symmetric key that you set for encrypted block storage and then detaches that block storage from the instance, it can't be decrypted again. You must manage symmetric keys carefully to avoid accidentally deleting them.
+
 ## Delete Block Storage
 
 Check the following before deleting block storage:
