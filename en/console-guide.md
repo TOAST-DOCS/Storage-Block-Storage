@@ -29,6 +29,8 @@ The policies for encrypted block storage are as follows.
 > [Note]
 Backup products allow you to prepare for data loss due to key deletion, and create a replica for safe keeping.
 
+<!-- For newline -->
+
 > [Caution]
 If the Secure Key Manager service deletes the symmetric key that you set for encrypted block storage and then detaches that block storage from the instance, it can't be decrypted again. You must manage symmetric keys carefully to avoid accidentally deleting them.
 
