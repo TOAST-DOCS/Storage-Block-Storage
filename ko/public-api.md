@@ -371,7 +371,6 @@ X-Auth-Token: {tokenId}
 | volume | Body | Object | O | 볼륨 생성 요청 객체 |
 | volume.size | Body | Integer | O | 볼륨 크기(GB) |
 | volume.description | Body | String | - | 볼륨 설명 |
-| volume.multiattach | Body | Boolean | - | 다중 연결 가능 여부<br>`true`로 설정하면<br>여러 인스턴스에 동시에 연결할 수 있음 |
 | volume.availability_zone | Body | String | - | 볼륨 가용성 영역 이름 |
 | volume.name | Body | String | - | 볼륨 이름 |
 | volume.volume_type | Body | String | - | 볼륨 타입 이름 |
