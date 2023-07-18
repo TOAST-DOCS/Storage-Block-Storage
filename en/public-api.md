@@ -376,7 +376,6 @@ X-Auth-Token: {tokenId}
 | volume | Body | Object | O | Object requesting of creating volume |
 | volume.size | Body | Integer | O | Volume size (GB) |
 | volume.description | Body | String | - | Volume description |
-| volume.multiattach | Body | Boolean | - | Multiple attachment is available or not <br>With`true`, simultaneous attachment to many instances is enabled |
 | volume.availability_zone | Body | String | - | Name of volume availability area |
 | volume.name | Body | String | - | Volume name |
 | volume.volume_type | Body | String | - | Volume type name |
