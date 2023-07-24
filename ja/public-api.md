@@ -371,7 +371,6 @@ X-Auth-Token: {tokenId}
 | volume | Body | Object | O | ボリューム作成リクエストオブジェクト |
 | volume.size | Body | Integer | O | ボリュームサイズ(GB) |
 | volume.description | Body | String | - | ボリュームの説明 |
-| volume.multiattach | Body | Boolean | - | 多重接続可否<br>`true`に設定すると<br>複数のインスタンスに同時に接続できる |
 | volume.availability_zone | Body | String | - | ボリュームアベイラビリティゾーン名 |
 | volume.name | Body | String | - | ボリューム名 |
 | volume.volume_type | Body | String | - | ボリュームタイプ名 |
