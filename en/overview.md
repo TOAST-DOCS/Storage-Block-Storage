@@ -325,4 +325,4 @@ Block storage with block storage snapshots cannot be deleted. To delete block st
 
 ### Billing
 
-Block storage is charged according to `tbe size of the block storage` set when it is created. Snapshot is charged according to the size of the original block storage.
+Block storage is charged according to `the size of the block storage` set when it is created. Snapshot is charged according to the size of the original block storage.
