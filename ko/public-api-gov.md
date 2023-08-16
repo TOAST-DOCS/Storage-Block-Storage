@@ -10,10 +10,10 @@ API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [AP
 
 API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
 
-## 볼륨 타입
-### 볼륨 타입 목록 보기
+## 블록 스토리지 타입
+### 블록 스토리지 타입 목록 보기
 ```
-GET /v2/{tenantId}/types
+GET /v2/{tenantId}/types지
 X-Auth-Token: {tokenId}
 ```
 
@@ -29,12 +29,12 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 속성 | 설명 |
 |---|---|---|---|
-| volume_types | Body | Array | 볼륨 타입 객체 목록 |
-| volume_types.id | Body | UUID | 볼륨 타입 ID |
-| volume_types.name | Body | String | 볼륨 타입 이름 |
-| volume_types.os-volume-type-access:is_public | Body | Boolean | 볼륨 타입 공개 여부 |
-| volume_types.description | Body | String | 볼륨 타입 설명 |
-| volume_types.extra_specs | Body | Object | 볼륨 타입 관련 추가 사양 정보 객체 |
+| volume_types | Body | Array | 블록 스토리지 타입 객체 목록 |
+| volume_types.id | Body | UUID | 블록 스토리지 타입 ID |
+| volume_types.name | Body | String | 블록 스토리지 타입 이름 |
+| volume_types.os-volume-type-access:is_public | Body | Boolean | 블록 스토리지 타입 공개 여부 |
+| volume_types.description | Body | String | 블록 스토리지 타입 설명 |
+| volume_types.extra_specs | Body | Object | 블록 스토리지 타입 관련 추가 사양 정보 객체 |
 
 <details><summary>예시</summary>
 <p>
@@ -69,34 +69,34 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## 볼륨
-### 볼륨 상태
-볼륨은 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
+## 블록 스토리지
+### 블록 스토리지 상태
+블록 스토리지는 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
 
-| 상태 명 | 설명 |
-|--|--|
-| `creating` | 생성 중인 상태 |
-| `available` | 볼륨이 생성되어 연결할 준비가 된 상태 |
-| `attaching`| 볼륨이 인스턴스에 연결 중인 상태 |
-| `detaching`| 볼륨이 연결 해제 중인 상태 |
-| `in-use`| 볼륨이 인스턴스에 연결된 상태 |
-| `maintenance`| 볼륨이 다른 호스트 장비로 이전 중인 상태 |
-| `deleting`| 볼륨을 삭제 중인 상태 |
-| `awaiting-transfer`| 볼륨이 전송을 기다리는 상태 |
-| `error`| 볼륨 생성 시 오류가 발생한 상태 |
-| `error_deleting`| 볼륨 삭제 시 오류가 발생한 상태 |
-| `backing-up`| 볼륨이 백업 중인 상태 |
-| `restoring-backup`| 볼륨이 백업본에서 복구 중인 상태 |
-| `error_backing-up`| 백업 중 오류가 발생한 상태 |
-| `error_restoring`| 복구 중 오류가 발생한 상태 |
-| `error_extending`| 볼륨 확장 중 오류가 발생한 상태 |
-| `downloading`| 볼륨 생성 시 지정한 이미지를 다운로드하는 상태 |
-| `uploading`| 이미지 생성 시 볼륨의 이미지를 업로드하는 상태 |
-| `retyping`| 볼륨 타입을 변경하는 상태 |
-| `extending`| 볼륨을 확장하는 상태 |
+| 상태 명 | 설명                              |
+|--|---------------------------------|
+| `creating` | 생성 중인 상태                        |
+| `available` | 블록 스토리지가 생성되어 연결할 준비가 된 상태      |
+| `attaching`| 블록 스토리지가 인스턴스에 연결 중인 상태         |
+| `detaching`| 블록 스토리지가 연결 해제 중인 상태            |
+| `in-use`| 블록 스토리지가 인스턴스에 연결된 상태           |
+| `maintenance`| 블록 스토리지가 다른 호스트 장비로 이전 중인 상태    |
+| `deleting`| 블록 스토리지를 삭제 중인 상태               |
+| `awaiting-transfer`| 블록 스토리지가 전송을 기다리는 상태            |
+| `error`| 블록 스토리지 생성 시 오류가 발생한 상태         |
+| `error_deleting`| 블록 스토리지 삭제 시 오류가 발생한 상태         |
+| `backing-up`| 블록 스토리지가 백업 중인 상태               |
+| `restoring-backup`| 블록 스토리지가 백업본에서 복구 중인 상태         |
+| `error_backing-up`| 백업 중 오류가 발생한 상태                 |
+| `error_restoring`| 복구 중 오류가 발생한 상태                 |
+| `error_extending`| 블록 스토리지 확장 중 오류가 발생한 상태         |
+| `downloading`| 블록 스토리지 생성 시 지정한 이미지를 다운로드하는 상태 |
+| `uploading`| 이미지 생성 시 블록 스토리지의 이미지를 업로드하는 상태 |
+| `retyping`| 블록 스토리지 타입을 변경하는 상태             |
+| `extending`| 블록 스토리지를 확장하는 상태                |
 
-### 볼륨 목록 보기
-현재 테넌트에 속한 볼륨 목록을 반환합니다.
+### 블록 스토리지 목록 보기
+현재 테넌트에 속한 블록 스토리지 목록을 반환합니다.
 
 ```
 GET /v2/{tenantId}/volumes
@@ -110,19 +110,19 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| sort | Query | String | - | 정렬 기준이 될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 볼륨 개수<br>기본값은 1000으로 설정 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 오프셋(offset)번째 볼륨부터 반환 |
-| marker | Query | UUID | - | 반환할 볼륨의 직전 볼륨 ID<br>정렬 순서에 따라 `marker`로 지정된 볼륨 이후부터 `limit`만큼 반환 |
+| sort | Query | String | - | 정렬 기준이 될 블록 스토리지 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정 |
+| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 오프셋(offset)번째 블록 스토리지부터 반환 |
+| marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit`만큼 반환 |
 
 #### 응답
 
 | 이름 | 종류 | 속성 | 설명 |
 |---|---|---|---|
-| volumes | Body | Array | 볼륨 객체 목록 |
-| volumes.id | Body | UUID | 볼륨 ID |
-| volumes.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volumes.name | Body | String | 볼륨 이름 |
+| volumes | Body | Array | 블록 스토리지 객체 목록 |
+| volumes.id | Body | UUID | 블록 스토리지 ID |
+| volumes.links | Body | Object | 블록 스토리지 리소스 링크 참조 객체 |
+| volumes.name | Body | String | 블록 스토리지 이름 |
 | volumes_links  | Body | Object | 페이지 매김(페이지네이션)을 위한 정보 객체 (다음 목록을 가리키는 경로)<br>`limit`, `offset`을 추가한 경우 반환 |
 
 <details><summary>예시</summary>
@@ -154,8 +154,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 상세 목록 보기
-현재 테넌트에 속한 볼륨 목록을 반환합니다.
+### 블록 스토리지 상세 목록 보기
+현재 테넌트에 속한 블록 스토리지 목록을 반환합니다.
 
 ```
 GET /v2/{tenantId}/volumes/detail
@@ -169,43 +169,43 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| sort | Query | String | - | 정렬 기준이 될 볼륨 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 볼륨 개수<br>기본값은 1000으로 설정 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br/>전체 목록 중 오프셋(offset)번째 볼륨부터 반환 |
-| marker | Query | UUID | - | 반환할 볼륨의 직전 볼륨 ID<br/>정렬 순서에 따라 `marker`로 지정된 볼륨 이후부터 `limit`만큼 반환 |
+| sort | Query | String | - | 정렬 기준이 될 블록 스토리지 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정 |
+| offset | Query | Integer | - | 반환할 목록의 시작점<br/>전체 목록 중 오프셋(offset)번째 블록 스토리지부터 반환 |
+| marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br/>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit`만큼 반환 |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| volumes | Body | Array | 볼륨 상세 정보 객체 목록 |
-| volumes.attachments | Body | Object | 볼륨 연결 정보 객체 |
-| volumes.attachments.server_id | Body | UUID | 볼륨이 연결된 인스턴스 ID |
-| volumes.attachments.attachment_id | Body | UUID | 볼륨 연결 ID |
-| volumes.attachments.volume_id | Body | UUID | 볼륨 ID |
-| volumes.attachments.device | Body | String | 인스턴스 내 장치 이름 |
-| volumes.attachments.id | Body | String | 볼륨 ID |
-| volumes.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volumes.availability_zone | Body | String | 볼륨 가용성 영역 |
-| volumes.encrypted | Body | Boolean | 볼륨 암호화 여부 |
-| volumes.os-volume-replication:extended_status | Body | String | 볼륨 확장 상태 |
-| volumes.volume_type | Body | String | 볼륨 타입 이름 |
-| volumes.snapshot_id | Body | UUID | 볼륨 생성 시 지정한 스냅숏 ID |
-| volumes.id | Body | UUID | 볼륨 ID |
-| volumes.size | Body | Integer | 볼륨 크기(GB) |
-| volumes.user_id | Body | String | 볼륨 소유주 ID |
-| volumes.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
-| volumes.metadata | Body | Object | 볼륨 메타데이터 객체 |
-| volumes.status | Body | Enum | 볼륨 상태 |
-| volumes.description | Body | String | 볼륨 설명 |
-| volumes.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
-| volumes.source_volid | Body | UUID | 볼륨 생성 시 지정한 볼륨 ID |
-| volumes.consistencygroup_id | Body | UUID | 볼륨  그룹 ID |
-| volumes.name | Body | String | 볼륨 이름 |
-| volumes.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volumes.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| volumes.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
-| volumes.replication_status | Body | String | 볼륨 복제 상태 |
+| 이름 | 종류 | 형식 | 설명                                                                       |
+|---|---|---|--------------------------------------------------------------------------|
+| volumes | Body | Array | 블록 스토리지 상세 정보 객체 목록                                                      |
+| volumes.attachments | Body | Object | 블록 스토리지 연결 정보 객체                                                         |
+| volumes.attachments.server_id | Body | UUID | 블록 스토리지가 연결된 인스턴스 ID                                                     |
+| volumes.attachments.attachment_id | Body | UUID | 블록 스토리지 연결 ID                                                            |
+| volumes.attachments.volume_id | Body | UUID | 블록 스토리지 ID                                                               |
+| volumes.attachments.device | Body | String | 인스턴스 내 장치 이름                                                             |
+| volumes.attachments.id | Body | String | 블록 스토리지 ID                                                               |
+| volumes.links | Body | Object | 블록 스토리지 리소스 링크 참조 객체                                                     |
+| volumes.availability_zone | Body | String | 블록 스토리지 가용성 영역                                                           |
+| volumes.encrypted | Body | Boolean | 블록 스토리지 암호화 여부                                                           |
+| volumes.os-volume-replication:extended_status | Body | String | 블록 스토리지 확장 상태                                                            |
+| volumes.volume_type | Body | String | 블록 스토리지 타입 이름                                                            |
+| volumes.snapshot_id | Body | UUID | 블록 스토리지 생성 시 지정한 스냅숏 ID                                                  |
+| volumes.id | Body | UUID | 블록 스토리지 ID                                                               |
+| volumes.size | Body | Integer | 블록 스토리지 크기(GB)                                                           |
+| volumes.user_id | Body | String | 블록 스토리지 소유주 ID                                                           |
+| volumes.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID                                                                   |
+| volumes.metadata | Body | Object | 블록 스토리지 메타데이터 객체                                                         |
+| volumes.status | Body | Enum | 블록 스토리지 상태                                                               |
+| volumes.description | Body | String | 블록 스토리지 설명                                                               |
+| volumes.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음                             |
+| volumes.source_volid | Body | UUID | 블록 스토리지 생성 시 지정한 블록 스토리지 ID                                              |
+| volumes.consistencygroup_id | Body | UUID | 블록 스토리지  그룹 ID                                                           |
+| volumes.name | Body | String | 블록 스토리지 이름                                                               |
+| volumes.bootable | Body | Boolean | 블록 스토리지 부팅 가능 여부                                                         |
+| volumes.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태                        |
+| volumes.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터                                                           |
+| volumes.replication_status | Body | String | 블록 스토리지 복제 상태                                                            |
 | volumes.volumes_links  | Body | Object | 페이지 매김(페이지네이션)을 위한 정보 객체(다음 목록을 가리키는 경로)<br>`limit`, `offset`을 추가한 경우 반환 |
 
 <details><summary>예시</summary>
@@ -256,8 +256,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 보기
-지정한 볼륨의 상세 정보를 반환합니다.
+### 블록 스토리지 보기
+지정한 블록 스토리지의 상세 정보를 반환합니다.
 
 ```
 GET /v2/{tenantId}/volumes/{volumeId}
@@ -270,41 +270,41 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
-| volumeId | URL | UUID | O | 볼륨 ID |
+| volumeId | URL | UUID | O | 블록 스토리지 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
 
-| 이름 | 종류 | 형식 | 설명 |
-|---|---|---|---|
-| volume | Body | Object | 볼륨 상세 정보 객체 |
-| volume.attachments | Body | Object | 볼륨 연결 정보 객체 |
-| volume.attachments.server_id | Body | UUID | 볼륨이 연결된 인스턴스 ID |
-| volume.attachments.attachment_id | Body | UUID | 볼륨 연결 ID |
-| volume.attachments.volume_id | Body | UUID | 볼륨 ID |
-| volume.attachments.device | Body | String | 인스턴스 내 장치 이름 |
-| volume.attachments.id | Body | String | 볼륨 ID |
-| volume.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volume.availability_zone | Body | String | 볼륨 가용성 영역 |
-| volume.encrypted | Body | Boolean | 볼륨 암호화 여부 |
-| volume.os-volume-replication:extended_status | Body | String | 볼륨 확장 상태 |
-| volume.volume_type | Body | String | 볼륨 타입 이름 |
-| volume.snapshot_id | Body | UUID | 볼륨 생성 시 지정한 스냅숏 ID |
-| volume.id | Body | UUID | 볼륨 ID |
-| volume.size | Body | Integer | 볼륨 크기(GB) |
-| volume.user_id | Body | String | 볼륨 소유주 ID |
-| volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
-| volume.metadata | Body | Object | 볼륨 메타데이터 객체 |
-| volume.status | Body | Enum | 볼륨 상태 |
-| volume.description | Body | String | 볼륨 설명 |
-| volume.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음 |
-| volume.source_volid | Body | UUID | 볼륨 생성 시 지정한 볼륨 ID |
-| volume.consistencygroup_id | Body | UUID | 볼륨 컨시스턴시(일관성) 그룹 ID |
-| volume.name | Body | String | 볼륨 이름 |
-| volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
-| volume.replication_status | Body | String | 볼륨 복제 상태 |
+| 이름 | 종류 | 형식 | 설명                                            |
+|---|---|---|-----------------------------------------------|
+| volume | Body | Object | 블록 스토리지 상세 정보 객체                              |
+| volume.attachments | Body | Object | 블록 스토리지 연결 정보 객체                              |
+| volume.attachments.server_id | Body | UUID | 블록 스토리지가 연결된 인스턴스 ID                          |
+| volume.attachments.attachment_id | Body | UUID | 블록 스토리지 연결 ID                                 |
+| volume.attachments.volume_id | Body | UUID | 블록 스토리지 ID                                    |
+| volume.attachments.device | Body | String | 인스턴스 내 장치 이름                                  |
+| volume.attachments.id | Body | String | 블록 스토리지 ID                                    |
+| volume.links | Body | Object | 블록 스토리지 리소스 링크 참조 객체                          |
+| volume.availability_zone | Body | String | 블록 스토리지 가용성 영역                                |
+| volume.encrypted | Body | Boolean | 블록 스토리지 암호화 여부                                |
+| volume.os-volume-replication:extended_status | Body | String | 블록 스토리지 확장 상태                                 |
+| volume.volume_type | Body | String | 블록 스토리지 타입 이름                                 |
+| volume.snapshot_id | Body | UUID | 블록 스토리지 생성 시 지정한 스냅숏 ID                       |
+| volume.id | Body | UUID | 블록 스토리지 ID                                    |
+| volume.size | Body | Integer | 블록 스토리지 크기(GB)                                |
+| volume.user_id | Body | String | 블록 스토리지 소유주 ID                                |
+| volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID                                        |
+| volume.metadata | Body | Object | 블록 스토리지 메타데이터 객체                              |
+| volume.status | Body | Enum | 블록 스토리지 상태                                    |
+| volume.description | Body | String | 블록 스토리지 설명                                    |
+| volume.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음  |
+| volume.source_volid | Body | UUID | 블록 스토리지 생성 시 지정한 블록 스토리지 ID                   |
+| volume.consistencygroup_id | Body | UUID | 블록 스토리지 컨시스턴시(일관성) 그룹 ID                      |
+| volume.name | Body | String | 블록 스토리지 이름                                    |
+| volume.bootable | Body | Boolean | 블록 스토리지 부팅 가능 여부                              |
+| volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터                                |
+| volume.replication_status | Body | String | 블록 스토리지 복제 상태                                 |
 
 <details><summary>예시</summary>
 <p>
@@ -352,10 +352,10 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 생성하기
-스냅숏으로부터 새로운 볼륨을 생성하거나 빈 볼륨을 생성합니다.
+### 블록 스토리지 생성하기
+스냅숏으로부터 새로운 블록 스토리지를 생성하거나 빈 블록 스토리지를 생성합니다.
 
-볼륨은 생성 직후 즉시 사용할 수 없습니다. 볼륨 상태를 조회해서 `available` 상태인 것을 확인한 후 사용합니다.
+블록 스토리지는 생성 직후 즉시 사용할 수 없습니다. 블록 스토리지 상태를 조회해서 `available` 상태인 것을 확인한 후 사용합니다.
 
 ```
 POST /v2/{tenantId}/volumes
@@ -364,18 +364,18 @@ X-Auth-Token: {tokenId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| volume | Body | Object | O | 볼륨 생성 요청 객체 |
-| volume.size | Body | Integer | O | 볼륨 크기(GB) |
-| volume.description | Body | String | - | 볼륨 설명 |
-| volume.availability_zone | Body | String | - | 볼륨 가용성 영역 이름 |
-| volume.name | Body | String | - | 볼륨 이름 |
-| volume.volume_type | Body | String | - | 볼륨 타입 이름 |
-| volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID, 생략하면 빈 볼륨이 생성됨 |
-| volume.metadata | Body | Object | - | 볼륨 메타데이터 객체 |
+| 이름 | 종류 | 형식 | 필수 | 설명                             |
+|---|---|---|---|--------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                         |
+| tokenId | Header | String | O | 토큰 ID                          |
+| volume | Body | Object | O | 블록 스토리지 생성 요청 객체               |
+| volume.size | Body | Integer | O | 블록 스토리지 크기(GB)                 |
+| volume.description | Body | String | - | 블록 스토리지 설명                     |
+| volume.availability_zone | Body | String | - | 블록 스토리지 가용성 영역 이름              |
+| volume.name | Body | String | - | 블록 스토리지 이름                     |
+| volume.volume_type | Body | String | - | 블록 스토리지 타입 이름                  |
+| volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID, 생략하면 빈 블록 스토리지가 생성됨 |
+| volume.metadata | Body | Object | - | 블록 스토리지 메타데이터 객체               |
 
 <details><summary>예시</summary>
 <p>
@@ -403,28 +403,28 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 속성 | 설명 |
 |---|---|---|---|
-| volume | Body | Object | 볼륨 상세 정보 객체 |
-| volume.attachments | Body | Object | 볼륨 연결 정보 객체 |
-| volume.links | Body | Object | 볼륨 리소스 링크 참조 객체 |
-| volume.availability_zone | Body | String | 볼륨 가용성 영역 |
-| volume.encrypted | Body | Boolean | 볼륨 암호화 여부 |
-| volume.os-volume-replication:extended_status | Body | String | 볼륨 확장 상태 |
-| volume.volume_type | Body | String | 볼륨 타입 이름 |
-| volume.snapshot_id | Body | UUID | 볼륨 생성 시 지정한 스냅숏 ID |
-| volumes.id | Body | UUID | 볼륨 ID |
-| volume.size | Body | Integer | 볼륨 크기(GB) |
-| volume.user_id | Body | String | 볼륨 소유주 ID |
+| volume | Body | Object | 블록 스토리지 상세 정보 객체 |
+| volume.attachments | Body | Object | 블록 스토리지 연결 정보 객체 |
+| volume.links | Body | Object | 블록 스토리지 리소스 링크 참조 객체 |
+| volume.availability_zone | Body | String | 블록 스토리지 가용성 영역 |
+| volume.encrypted | Body | Boolean | 블록 스토리지 암호화 여부 |
+| volume.os-volume-replication:extended_status | Body | String | 블록 스토리지 확장 상태 |
+| volume.volume_type | Body | String | 블록 스토리지 타입 이름 |
+| volume.snapshot_id | Body | UUID | 블록 스토리지 생성 시 지정한 스냅숏 ID |
+| volumes.id | Body | UUID | 블록 스토리지 ID |
+| volume.size | Body | Integer | 블록 스토리지 크기(GB) |
+| volume.user_id | Body | String | 블록 스토리지 소유주 ID |
 | volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID |
-| volume.metadata | Body | Object | 볼륨 메타데이터 객체 |
-| volume.status | Body | Enum | 볼륨 상태 |
-| volume.description | Body | String | 볼륨 설명 |
+| volume.metadata | Body | Object | 블록 스토리지 메타데이터 객체 |
+| volume.status | Body | Enum | 블록 스토리지 상태 |
+| volume.description | Body | String | 블록 스토리지 설명 |
 | volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
-| volume.consistencygroup_id | Body | UUID | 볼륨 컨시스턴시 그룹 ID |
-| volume.name | Body | String | 볼륨 이름 |
-| volume.bootable | Body | Boolean | 볼륨 부팅 가능 여부 |
-| volume.created_at | Body | Datetime | 볼륨 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
-| volume.os-volume-replication:driver_data | Body | String | 볼륨 복제 데이터 |
-| volume.replication_status | Body | String | 볼륨 복제 상태 |
+| volume.consistencygroup_id | Body | UUID | 블록 스토리지 컨시스턴시 그룹 ID |
+| volume.name | Body | String | 블록 스토리지 이름 |
+| volume.bootable | Body | Boolean | 블록 스토리지 부팅 가능 여부 |
+| volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
+| volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
+| volume.replication_status | Body | String | 블록 스토리지 복제 상태 |
 
 <details><summary>예시</summary>
 <p>
@@ -466,9 +466,9 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨 삭제하기
+### 블록 스토리지 삭제하기
 
-지정한 볼륨을 삭제합니다. 연결되어 있거나 스냅숏이 생성된 볼륨은 삭제할 수 없습니다.
+지정한 블록 스토리지를 삭제합니다. 연결되어 있거나 스냅숏이 생성된 블록 스토리지는 삭제할 수 없습니다.
 
 ```
 DELETE /v2/{tenantId}/volumes/{volumeId}
@@ -481,7 +481,7 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
-| volumeId | URL | String | O | 볼륨 ID |
+| volumeId | URL | String | O | 블록 스토리지 ID |
 | tokenId | Header | String | O | 토큰 ID |
 
 #### 응답
@@ -489,8 +489,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### 볼륨으로 이미지 생성하기
-볼륨으로부터 이미지를 생성합니다. 
+### 블록 스토리지로 이미지 생성하기
+블록 스토리지로부터 이미지를 생성합니다. 
 
 이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다. 남은 공간이 이보다 작을 경우 초기화 작업이 실패할 수 있습니다.
 
@@ -504,11 +504,11 @@ X-Auth-Token: {tokenId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
-| volumeId | URL | UUID | O | 볼륨 ID |
+| volumeId | URL | UUID | O | 블록 스토리지 ID |
 | tokenId | Header | String | O | 토큰 ID |
-| os-volume_upload_image | Body | Object | O | 볼륨 이미지 생성 요청 객체 |
+| os-volume_upload_image | Body | Object | O | 블록 스토리지 이미지 생성 요청 객체 |
 | os-volume_upload_image.image_name | Body | String | O | 이미지 이름 |
-| os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 볼륨일 때 이미지 생성 허용 여부<br>기본값은 false |
+| os-volume_upload_image.force | Body | Boolean | - | 인스턴스에 연결된 블록 스토리지일 때 이미지 생성 허용 여부<br>기본값은 false |
 | os-volume_upload_image.disk_format | Body | String | - | 이미지 디스크 포맷 |
 | os-volume_upload_image.container_format | Body | String | - | 이미지 컨테이너 포맷 |
 | os-volume_upload_image.visibility | Body | String | - | 이미지 가시성<br>`private`, `shared` 중 하나 |
@@ -537,17 +537,17 @@ X-Auth-Token: {tokenId}
 
 | 이름 | 종류 | 속성 | 설명 |
 |---|---|---|---|
-| os-volume_upload_image | Body | Object | 볼륨 이미지 생성 응답 객체 |
-| os-volume_upload_image.status | Body | String | 볼륨 상태 |
+| os-volume_upload_image | Body | Object | 블록 스토리지 이미지 생성 응답 객체 |
+| os-volume_upload_image.status | Body | String | 블록 스토리지 상태 |
 | os-volume_upload_image.image_name | Body | String | 이미지 이름 |
 | os-volume_upload_image.disk_format | Body | String | 이미지 디스크 포맷 |
 | os-volume_upload_image.container_format | Body | String | 이미지 컨테이너 포맷 |
 | os-volume_upload_image.updated_at | Body | Datetime | 이미지 수정 시각 |
 | os-volume_upload_image.image_id | Body | UUID | 이미지 ID |
-| os-volume_upload_image.display_description | Body | String | 볼륨 설명 |
-| os-volume_upload_image.id | Body | UUID | 볼륨 ID |
-| os-volume_upload_image.size | Body | Integer | 볼륨 크기(GB) |
-| os-volume_upload_image.volume_type | Body | Object | 볼륨 타입 정보 객체 |
+| os-volume_upload_image.display_description | Body | String | 블록 스토리지 설명 |
+| os-volume_upload_image.id | Body | UUID | 블록 스토리지 ID |
+| os-volume_upload_image.size | Body | Integer | 블록 스토리지 크기(GB) |
+| os-volume_upload_image.volume_type | Body | Object | 블록 스토리지 타입 정보 객체 |
 
 <details><summary>예시</summary>
 <p>
@@ -599,17 +599,17 @@ X-Auth-Token: {tokenId}
 ### 스냅숏 상태
 스냅숏은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
 
-| 상태 명 | 설명 |
-|--|--|
-| `creating` | 생성 중인 상태 |
-| `available` | 스냅숏이 생성되어 사용할 준비가 된 상태 |
-| `backing-up`| 스냅숏이 백업 중인 상태 |
-| `deleting`| 스냅숏이 삭제 중인 상태 |
-| `error`| 생성 중 오류가 발생한 상태 |
-| `deleted`| 삭제된 상태 |
-| `unmanaging`| 스냅숏에 대한 관리 모드가 해제 중인 상태 |
-| `restoring`| 스냅숏으로부터 볼륨을 복원 중인 상태 |
-| `error_deleting`| 삭제 중 오류가 발생한 상태 |
+| 상태 명 | 설명                        |
+|--|---------------------------|
+| `creating` | 생성 중인 상태                  |
+| `available` | 스냅숏이 생성되어 사용할 준비가 된 상태    |
+| `backing-up`| 스냅숏이 백업 중인 상태             |
+| `deleting`| 스냅숏이 삭제 중인 상태             |
+| `error`| 생성 중 오류가 발생한 상태           |
+| `deleted`| 삭제된 상태                    |
+| `unmanaging`| 스냅숏에 대한 관리 모드가 해제 중인 상태   |
+| `restoring`| 스냅숏으로부터 블록 스토리지를 복원 중인 상태 |
+| `error_deleting`| 삭제 중 오류가 발생한 상태           |
 
 ### 스냅숏 목록 보기
 스냅숏 목록을 반환합니다.
@@ -636,8 +636,8 @@ X-Auth-Token: {tokenId}
 | snapshots.description | Body | String | 스냅숏 설명 |
 | snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshots.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshots.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
-| snapshots.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
+| snapshots.volume_id | Body | UUID | 스냅숏의 원본 블록 스토리지 ID |
+| snapshots.size | Body | Integer | 스냅숏의 원본 블록 스토리지 크기(GB) |
 | snapshots.id | Body | UUID | 스냅숏 ID |
 | snapshots.name | Body | String | 스냅숏 이름 |
 
@@ -692,9 +692,9 @@ X-Auth-Token: {tokenId}
 | snapshots.os-extended-snapshot-attributes:progress | Body | String | 스냅숏 생성 진행 상태 |
 | snapshots.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshots.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshots.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
+| snapshots.volume_id | Body | UUID | 스냅숏의 원본 블록 스토리지 ID |
 | snapshots.os-extended-snapshot-attributes:project_id | Body | String | 테넌트 ID |
-| snapshots.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
+| snapshots.size | Body | Integer | 스냅숏의 원본 블록 스토리지 크기(GB) |
 | snapshots.id | Body | UUID | 스냅숏 ID |
 | snapshots.name | Body | String | 스냅숏 이름 |
 
@@ -752,9 +752,9 @@ X-Auth-Token: {tokenId}
 | snapshot.os-extended-snapshot-attributes:progress | Body | String | 스냅숏 생성 진행 상태 |
 | snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshot.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshot.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
+| snapshot.volume_id | Body | UUID | 스냅숏의 원본 블록 스토리지 ID |
 | snapshot.os-extended-snapshot-attributes:project_id | Body | String | 테넌트 ID |
-| snapshot.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
+| snapshot.size | Body | Integer | 스냅숏의 원본 블록 스토리지 크기(GB) |
 | snapshot.id | Body | UUID | 스냅숏 ID |
 | snapshot.name | Body | String | 스냅숏 이름 |
 
@@ -784,7 +784,7 @@ X-Auth-Token: {tokenId}
 ---
 
 ### 스냅숏 생성하기
-지정한 볼륨의 스냅숏을 생성합니다.
+지정한 블록 스토리지의 스냅숏을 생성합니다.
 
 ```
 POST /v2/{tenantId}/snapshots
@@ -793,15 +793,15 @@ X-Auth-Token: {tokenId}
 
 #### 요청
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
-| snapshot | Body | Object | O | 스냅숏 생성 요청 객체 |
-| snapshot.volume_id | Body | UUID | O | 원본 볼륨 ID |
-| snapshot.force | Body | Boolean | - | 강제 스냅숏 생성 여부<br>`true`면 볼륨이 연결되어도 스냅숏을 생성 |
-| snapshot.description | Body | String | - | 스냅숏 설명 |
-| snapshot.name | Body | String | - | 스냅숏 이름 |
+| 이름 | 종류 | 형식 | 필수 | 설명                                             |
+|---|---|---|---|------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                         |
+| tokenId | Header | String | O | 토큰 ID                                          |
+| snapshot | Body | Object | O | 스냅숏 생성 요청 객체                                   |
+| snapshot.volume_id | Body | UUID | O | 원본 블록 스토리지 ID                                  |
+| snapshot.force | Body | Boolean | - | 강제 스냅숏 생성 여부<br>`true`면 블록 스토리지가 연결되어도 스냅숏을 생성 |
+| snapshot.description | Body | String | - | 스냅숏 설명                                         |
+| snapshot.name | Body | String | - | 스냅숏 이름                                         |
 
 <details><summary>예시</summary>
 <p>
@@ -829,8 +829,8 @@ X-Auth-Token: {tokenId}
 | snapshot.description | Body | String | 스냅숏 설명 |
 | snapshot.created_at | Body | Datetime | 스냅숏 생성 시간<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | snapshot.metadata | Body | Object | 스냅숏 메타데이터 객체 |
-| snapshot.volume_id | Body | UUID | 스냅숏의 원본 볼륨 ID |
-| snapshot.size | Body | Integer | 스냅숏의 원본 볼륨 크기(GB) |
+| snapshot.volume_id | Body | UUID | 스냅숏의 원본 블록 스토리지 ID |
+| snapshot.size | Body | Integer | 스냅숏의 원본 블록 스토리지 크기(GB) |
 | snapshot.id | Body | UUID | 스냅숏 ID |
 | snapshot.name | Body | String | 스냅숏 이름 |
 
