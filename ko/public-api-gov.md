@@ -13,7 +13,7 @@ API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니
 ## 블록 스토리지 타입
 ### 블록 스토리지 타입 목록 보기
 ```
-GET /v2/{tenantId}/types지
+GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
 ```
 
@@ -106,14 +106,14 @@ X-Auth-Token: {tokenId}
 #### 요청
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| 이름 | 종류 | 형식 | 필수 | 설명                                                                                               |
+|---|---|---|---|--------------------------------------------------------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                                                                           |
+| tokenId | Header | String | O | 토큰 ID                                                                                            |
 | sort | Query | String | - | 정렬 기준이 될 블록 스토리지 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 오프셋(offset)번째 블록 스토리지부터 반환 |
-| marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit`만큼 반환 |
+| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정                                                                 |
+| offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 오프셋(offset) 번째 블록 스토리지부터 반환                                               |
+| marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit` 만큼 반환                 |
 
 #### 응답
 
@@ -165,14 +165,14 @@ X-Auth-Token: {tokenId}
 #### 요청
 이 API는 요청 본문을 요구하지 않습니다.
 
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | 테넌트 ID |
-| tokenId | Header | String | O | 토큰 ID |
+| 이름 | 종류 | 형식 | 필수 | 설명                                                                                               |
+|---|---|---|---|--------------------------------------------------------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                                                                           |
+| tokenId | Header | String | O | 토큰 ID                                                                                            |
 | sort | Query | String | - | 정렬 기준이 될 블록 스토리지 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정 |
-| offset | Query | Integer | - | 반환할 목록의 시작점<br/>전체 목록 중 오프셋(offset)번째 블록 스토리지부터 반환 |
-| marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br/>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit`만큼 반환 |
+| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정                                                                 |
+| offset | Query | Integer | - | 반환할 목록의 시작점<br/>전체 목록 중 오프셋(offset) 번째 블록 스토리지부터 반환                                              |
+| marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br/>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit` 만큼 반환                |
 
 #### 응답
 
