@@ -6,7 +6,7 @@ Create block storage to be attached to an instance.
 
 Block storage can be created with empty storage containing no data, or by snapshots of existing block storage.
 
-To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For volume type, choose either **HDD** or **SSD**, based on the required I/O performance.
+To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For block storage type, choose either **HDD** or **SSD**, based on the required I/O performance.
 
 You can also create block storage from snapshots. In this case, the size of block storage must be the same as or larger than that of a snapshot. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
 
@@ -20,7 +20,7 @@ The policies for encrypted block storage are as follows.
 
 * You cannot create a snapshot from encrypted block storage.
 * You cannot create encrypted block storage from a snapshot.
-* You cannot create an image from an instance whose default disk is encrypted block storage.  
+* You cannot create an image from an instance that is using encrypted root block storage.  
 * Encrypted block storage cannot be replicated into a different region.
 * Due to encryption and decryption, I/O performance may be reduced compared to general block storage types (**HDD**, **SSD**).
 * You cannot change the symmetric key ID that is registered when creating encrypted block storage. To change the symmetric key, you must use the key rotation feature of Secure Key Manager.
@@ -56,7 +56,7 @@ If you attach empty block storage, it must be partitioned and formatted in the i
 
 ### Detach Block Storage
 
-Detach unnecessary block storage from an instance. Note, however, that default disk cannot be detached.
+Detach unnecessary block storage from an instance. Note, however, root block storage cannot be detached.
 
 You can detach block storage even while the instance is running. However, you must first unmount the block storage from the instance and detach the block storage in the console. Detaching while the block storage is mounted causes the following issues:
 
@@ -107,7 +107,7 @@ Select the availability zone to use in the region to which to replicate. You can
 
 The instance might boot with block storage additionally attached to the instance mounted on `/`. This usually happens when you attach block storage created with the instance's OS image to another instance additionally.
 
-Linux determines which disk to mount on `/` using `etc/fstab` at boot time. For the OS images used by NHN Cloud, the disk to mount is determined based on the file system UUID. If block storage with the same file system UUID value is attached, unintended block storage may be mounted on `/`.
+Linux determines which block storage to mount on `/` using `etc/fstab` at boot time. For the OS images used by NHN Cloud, the block storage to mount is determined based on the file system UUID. If block storage with the same file system UUID value is attached, unintended block storage may be mounted on `/`.
 
 ```console
 # cat /etc/fstab
