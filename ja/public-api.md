@@ -10,8 +10,8 @@ APIを使用するにはAPIエンドポイントとトークンなどが必要�
 
 APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、NHN Cloud内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
 
-## ボリュームタイプ
-### ボリュームタイプリスト表示
+## ブロックストレージタイプ
+### ブロックストレージタイプリスト表示
 ```
 GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
@@ -29,12 +29,12 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | プロパティ | 説明 |
 |---|---|---|---|
-| volume_types | Body | Array | ボリュームタイプオブジェクトリスト |
-| volume_types.id | Body | UUID | ボリュームタイプID |
-| volume_types.name | Body | String | ボリュームタイプ名 |
-| volume_types.os-volume-type-access:is_public | Body | Boolean | ボリュームタイプ公開表示有無 |
-| volume_types.description | Body | String | ボリュームタイプの説明 |
-| volume_types.extra_specs | Body | Object | ボリュームタイプ関連追加仕様情報オブジェクト |
+| volume_types | Body | Array | ブロックストレージタイプオブジェクトリスト |
+| volume_types.id | Body | UUID | ブロックストレージタイプID |
+| volume_types.name | Body | String | ブロックストレージタイプ名 |
+| volume_types.os-volume-type-access:is_public | Body | Boolean | ブロックストレージタイプ公開表示有無 |
+| volume_types.description | Body | String | ブロックストレージタイプの説明 |
+| volume_types.extra_specs | Body | Object | ブロックストレージタイプ関連追加仕様情報オブジェクト |
 
 <details><summary>例</summary>
 <p>
@@ -69,34 +69,34 @@ X-Auth-Token: {tokenId}
 
 ---
 
-## ボリューム
-### ボリューム状態
-ボリュームはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
+## ブロックストレージ
+### ブロックストレージ状態
+ブロックストレージはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
 
-| 状態名 | 説明 |
-|--|--|
-| `creating` | 作成中の状態 |
-| `available` | ボリュームが作成され、接続する準備ができた状態 |
-| `attaching`| ボリュームがインスタンスに接続中の状態 |
-| `detaching`| ボリュームが接続解除中の状態 |
-| `in-use`| ボリュームがインスタンスに接続された状態 |
-| `maintenance`| ボリュームが他のホスト機器に移行される状態 |
-| `deleting`| ボリュームが削除中の状態 |
-| `awaiting-transfer`| ボリュームが転送待機中の状態 |
-| `error`| ボリューム作成時にエラーが発生した状態 |
-| `error_deleting`| ボリューム削除時にエラーが発生した状態 |
-| `backing-up`| ボリュームがバックアップ中の状態 |
-| `restoring-backup`| ボリュームがバックアップから復旧中の状態 |
-| `error_backing-up`| バックアップ中にエラーが発生した状態 |
-| `error_restoring`| 復旧中にエラーが発生した状態 |
-| `error_extending`| ボリューム拡張中にエラーが発生した状態 |
-| `downloading`| ボリューム作成時、指定したイメージをダウンロードしている状態 |
-| `uploading`| イメージ作成時、ボリュームのイメージをアップロードしている状態 |
-| `retyping`| ボリュームタイプを変更中の状態 |
-| `extending`| ボリュームを拡張している状態 |
+| 状態 명 | 説明                        |
+|--|----------------------------|
+| `creating` | 作成中の状態                  |
+| `available` | ブロックストレージが作成され、接続する準備ができた状態     |
+| `attaching`| ブロックストレージがインスタンスに接続中の状態        |
+| `detaching`| ブロックストレージが接続解除中の状態           |
+| `in-use`| ブロックストレージがインスタンスに接続された状態          |
+| `maintenance`| ブロックストレージが他のホスト機器に移行される状態   |
+| `deleting`| ブロックストレージが削除中の状態              |
+| `awaiting-transfer`| ブロックストレージが転送待機中の状態           |
+| `error`| ブロックストレージ作成時にエラーが発生した状態        |
+| `error_deleting`| ブロックストレージ削除時にエラーが発生した状態        |
+| `backing-up`| ブロックストレージがバックアップ中の状態              |
+| `restoring-backup`| ブロックストレージがバックアップから復旧中の状態        |
+| `error_backing-up`| バックアップ中にエラーが発生した状態           |
+| `error_restoring`| 復旧中にエラーが発生した状態           |
+| `error_extending`| ブロックストレージ拡張中にエラーが発生した状態        |
+| `downloading`| ブロックストレージ作成時、指定したイメージをダウンロードしている状態 |
+| `uploading`| イメージ作成時、ブロックストレージのイメージをアップロードしている状態 |
+| `retyping`| ブロックストレージタイプを変更中の状態            |
+| `extending`| ブロックストレージを拡張している状態               |
 
-### ボリュームリスト表示
-現在テナントに属しているボリュームリストを返します。
+### ブロックストレージリスト表示
+現在テナントに属しているブロックストレージリストを返します。
 
 ```
 GET /v2/{tenantId}/volumes
@@ -106,23 +106,23 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
-| tokenId | Header | String | O | トークンID |
-| sort | Query | String | - | ソートの基準になるボリュームフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 返すボリュームの個数<br>基本値は1000に設定 |
-| offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のボリュームから返す |
-| marker | Query | UUID | - | 返すボリュームの直前のボリュームID<br>ソート順序に応じて`marker`に指定されたボリューム以降から`limit`分を返す |
+| 名前 | 種類 | 形式 | 必須 | 説明                                                                                              |
+|---|---|---|---|--------------------------------------------------------------------------------------------------|
+| tenantId | URL | String | O | テナントID                                                                                           |
+| tokenId | Header | String | O | トークンID                                                                                            |
+| sort | Query | String | - | ソートの基準になるブロックストレージフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は1000に設定                                                                 |
+| offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のブロックストレージから返す                                               |
+| marker | Query | UUID | - | 返すブロックストレージの直前のブロックストレージID<br>ソート順序に応じて`marker`に指定されたブロックストレージ以降から`limit`分を返す                 |
 
 #### レスポンス
 
 | 名前 | 種類 | プロパティ | 説明 |
 |---|---|---|---|
-| volumes | Body | Array | ボリュームオブジェクトリスト |
-| volumes.id | Body | UUID | ボリュームID |
-| volumes.links | Body | Object | ボリュームリソースリンクレファレンスオブジェクト |
-| volumes.name | Body | String | ボリューム名 |
+| volumes | Body | Array | ブロックストレージオブジェクトリスト |
+| volumes.id | Body | UUID | ブロックストレージID |
+| volumes.links | Body | Object | ブロックストレージリソースリンクレファレンスオブジェクト |
+| volumes.name | Body | String | ブロックストレージ名 |
 | volumes_links  | Body | Object | ページネーション用の情報オブジェクト(次のリストを指すパス)<br>`limit`、`offset`を追加した場合に返す |
 
 <details><summary>例</summary>
@@ -154,8 +154,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### ボリューム詳細リスト表示
-現在テナントに属しているボリュームリストを返します。
+### ブロックストレージ詳細リスト表示
+現在テナントに属しているブロックストレージリストを返します。
 
 ```
 GET /v2/{tenantId}/volumes/detail
@@ -165,47 +165,47 @@ X-Auth-Token: {tokenId}
 #### リクエスト
 このAPIはリクエスト本文を要求しません。
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
-| tokenId | Header | String | O | トークンID |
-| sort | Query | String | - | ソートの基準になるボリュームフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 返すボリュームの個数<br>基本値は1000に設定 |
-| offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のボリュームから返す |
-| marker | Query | UUID | - | 返すボリュームの直前のボリュームID<br>ソート順序に応じて`marker`に指定されたボリューム以降から`limit`分を返す |
+| 名前 | 種類 | 形式 | 必須 | 説明                                                                                              |
+|---|---|---|---|--------------------------------------------------------------------------------------------------|
+| tenantId | URL | String | O | テナントID                                                                                           |
+| tokenId | Header | String | O | トークンID                                                                                            |
+| sort | Query | String | - | ソートの基準になるブロックストレージフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は1000に設定                                                                |
+| offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のブロックストレージから返す                                              |
+| marker | Query | UUID | - | 返すブロックストレージの直前のブロックストレージID<br>ソート順序に応じて`marker`に指定されたブロックストレージ以降から`limit`分を返す                |
 
 #### レスポンス
 
 | 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
-| volumes | Body | Array | ボリューム詳細情報オブジェクトリスト |
-| volumes.attachments | Body | Object | ボリューム接続情報オブジェクト |
-| volumes.attachments.server_id | Body | UUID | ボリュームが接続されたインスタンスID |
-| volumes.attachments.attachment_id | Body | UUID | ボリューム接続ID |
-| volumes.attachments.volume_id | Body | UUID | ボリュームID |
+| volumes | Body | Array | ブロックストレージ詳細情報オブジェクトリスト |
+| volumes.attachments | Body | Object | ブロックストレージ接続情報オブジェクト |
+| volumes.attachments.server_id | Body | UUID | ブロックストレージが接続されたインスタンスID |
+| volumes.attachments.attachment_id | Body | UUID | ブロックストレージ接続ID |
+| volumes.attachments.volume_id | Body | UUID | ブロックストレージID |
 | volumes.attachments.device | Body | String | インスタンス内の機器名 |
-| volumes.attachments.id | Body | String | ボリュームID |
-| volumes.links | Body | Object | ボリュームリソースリンクレファレンスオブジェクト |
-| volumes.availability_zone | Body | String | ボリュームアベイラビリティゾーン |
-| volumes.encrypted | Body | Boolean | ボリュームの暗号化有無 |
-| volumes.os-volume-replication:extended_status | Body | String | ボリューム拡張状態 |
-| volumes.volume_type | Body | String | ボリュームタイプ名 |
-| volumes.snapshot_id | Body | UUID | ボリューム作成時に指定したSnapshot ID |
-| volumes.id | Body | UUID | ボリュームID |
-| volumes.size | Body | Integer | ボリュームサイズ(GB)|
-| volumes.user_id | Body | String | ボリュームのオーナーID |
+| volumes.attachments.id | Body | String | ブロックストレージID |
+| volumes.links | Body | Object | ブロックストレージリソースリンクレファレンスオブジェクト |
+| volumes.availability_zone | Body | String | ブロックストレージアベイラビリティゾーン |
+| volumes.encrypted | Body | Boolean | ブロックストレージの暗号化有無 |
+| volumes.os-volume-replication:extended_status | Body | String | ブロックストレージ拡張状態 |
+| volumes.volume_type | Body | String | ブロックストレージタイプ名 |
+| volumes.snapshot_id | Body | UUID | ブロックストレージ作成時に指定したSnapshot ID |
+| volumes.id | Body | UUID | ブロックストレージID |
+| volumes.size | Body | Integer | ブロックストレージサイズ(GB)|
+| volumes.user_id | Body | String | ブロックストレージのオーナーID |
 | volumes.os-vol-tenant-attr:tenant_id | Body | String | テナントID |
-| volumes.metadata | Body | Object | ボリュームメタデータオブジェクト |
-| volumes.status | Body | Enum | ボリューム状態 |
-| volumes.description | Body | String | ボリュームの説明 |
+| volumes.metadata | Body | Object | ブロックストレージメタデータオブジェクト |
+| volumes.status | Body | Enum | ブロックストレージ状態 |
+| volumes.description | Body | String | ブロックストレージの説明 |
 | volumes.multiattach | Body | Boolean | 多重接続可否<br>`true`の場合、複数のインスタンスに同時に接続できる |
-| volumes.source_volid | Body | UUID | ボリューム作成時に指定したVolume ID |
-| volumes.consistencygroup_id | Body | UUID | ボリュームConsistencyグループID |
-| volumes.name | Body | String | ボリューム名 |
-| volumes.bootable | Body | Boolean | ボリューム起動可否 |
-| volumes.created_at | Body | Datetime | ボリューム作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
-| volumes.os-volume-replication:driver_data | Body | String | ボリューム複製データ |
-| volumes.replication_status | Body | String | ボリューム複製状態 |
+| volumes.source_volid | Body | UUID | ブロックストレージ作成時に指定したVolume ID |
+| volumes.consistencygroup_id | Body | UUID | ブロックストレージConsistencyグループID |
+| volumes.name | Body | String | ブロックストレージ名 |
+| volumes.bootable | Body | Boolean | ブロックストレージ起動可否 |
+| volumes.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
+| volumes.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
+| volumes.replication_status | Body | String | ブロックストレージ複製状態 |
 | volumes.volumes_links  | Body | Object | ページネーション用の情報オブジェクト(次のリストを指すパス)<br>`limit`、`offset`を追加した場合に返す |
 
 <details><summary>例</summary>
@@ -256,8 +256,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### ボリューム表示
-指定したボリュームの詳細情報を返します。
+### ブロックストレージ表示
+指定したブロックストレージの詳細情報を返します。
 
 ```
 GET /v2/{tenantId}/volumes/{volumeId}
@@ -270,41 +270,41 @@ X-Auth-Token: {tokenId}
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
-| volumeId | URL | UUID | O | ボリュームID |
+| volumeId | URL | UUID | O | ブロックストレージID |
 | tokenId | Header | String | O | トークンID |
 
 #### レスポンス
 
-| 名前 | 種類 | 形式 | 説明 |
-|---|---|---|---|
-| volume | Body | Object | ボリューム詳細情報オブジェクト |
-| volume.attachments | Body | Object | ボリューム接続情報オブジェクト |
-| volume.attachments.server_id | Body | UUID | ボリュームが接続されたインスタンスID |
-| volume.attachments.attachment_id | Body | UUID | ボリューム接続ID |
-| volume.attachments.volume_id | Body | UUID | ボリュームID |
-| volume.attachments.device | Body | String | インスタンス内の機器名 |
-| volume.attachments.id | Body | String | ボリュームID |
-| volume.links | Body | Object | ボリュームリソースリンクリファレンスオブジェクト |
-| volume.availability_zone | Body | String | ボリュームアベイラビリティゾーン |
-| volume.encrypted | Body | Boolean | ボリュームの暗号化有無 |
-| volume.os-volume-replication:extended_status | Body | String | ボリューム拡張状態 |
-| volume.volume_type | Body | String | ボリュームタイプ名 |
-| volume.snapshot_id | Body | UUID | ボリューム作成時に指定したSnapshot ID |
-| volume.id | Body | UUID | ボリュームID |
-| volume.size | Body | Integer | ボリュームサイズ(GB) |
-| volume.user_id | Body | String | ボリュームのオーナーID |
-| volume.os-vol-tenant-attr:tenant_id | Body | String | テナントID |
-| volume.metadata | Body | Object | ボリュームメタデータオブジェクト |
-| volume.status | Body | Enum | ボリュームの状態 |
-| volume.description | Body | String | ボリュームの説明 |
+| 名前 | 種類 | 形式 | 説明                                          |
+|---|---|---|----------------------------------------------|
+| volume | Body | Object | ブロックストレージ詳細情報オブジェクト                                 |
+| volume.attachments | Body | Object | ブロックストレージ接続情報オブジェクト                                 |
+| volume.attachments.server_id | Body | UUID | ブロックストレージが接続されたインスタンスID                              |
+| volume.attachments.attachment_id | Body | UUID | ブロックストレージ接続ID                                     |
+| volume.attachments.volume_id | Body | UUID | ブロックストレージID                                        |
+| volume.attachments.device | Body | String | インスタンス内の機器名                                |
+| volume.attachments.id | Body | String | ブロックストレージID                                        |
+| volume.links | Body | Object | ブロックストレージリソースリンクリファレンスオブジェクト                             |
+| volume.availability_zone | Body | String | ブロックストレージアベイラビリティゾーン                                   |
+| volume.encrypted | Body | Boolean | ブロックストレージの暗号化有無                                    |
+| volume.os-volume-replication:extended_status | Body | String | ブロックストレージ拡張状態                                    |
+| volume.volume_type | Body | String | ブロックストレージタイプ名                                    |
+| volume.snapshot_id | Body | UUID | ブロックストレージ作成時に指定したスナップショットID                           |
+| volume.id | Body | UUID | ブロックストレージID                                        |
+| volume.size | Body | Integer | ブロックストレージサイズ(GB)                                    |
+| volume.user_id | Body | String | ブロックストレージのオーナーID                                    |
+| volume.os-vol-tenant-attr:tenant_id | Body | String | テナントID                                       |
+| volume.metadata | Body | Object | ブロックストレージメタデータオブジェクト                                 |
+| volume.status | Body | Enum | ブロックストレージの状態                                       |
+| volume.description | Body | String | ブロックストレージの説明                                       |
 | volume.multiattach | Body | Boolean | 多重接続可否<br>`true`の場合、複数のインスタンスに同時に接続できる |
-| volume.source_volid | Body | UUID | ボリューム作成時に指定したVolume ID |
-| volume.consistencygroup_id | Body | UUID | ボリュームConsistencyグループID |
-| volume.name | Body | String | ボリューム名 |
-| volume.bootable | Body | Boolean | ボリューム起動可否 |
-| volume.created_at | Body | Datetime | ボリューム作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| volume.os-volume-replication:driver_data | Body | String | ボリューム複製データ |
-| volume.replication_status | Body | String | ボリューム複製状態 |
+| volume.source_volid | Body | UUID | ブロックストレージ作成時に指定したブロックストレージID                            |
+| volume.consistencygroup_id | Body | UUID | ブロックストレージConsistencyグループID                          |
+| volume.name | Body | String | ブロックストレージ名                                       |
+| volume.bootable | Body | Boolean | ブロックストレージ起動可否                                 |
+| volume.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`     |
+| volume.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ                                   |
+| volume.replication_status | Body | String | ブロックストレージ複製状態                                    |
 
 <details><summary>例</summary>
 <p>
@@ -352,10 +352,10 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### ボリュームを作成する
-スナップショットから新しいボリュームを作成したり、空のボリュームを作成します。
+### ブロックストレージを作成する
+スナップショットから新しいブロックストレージを作成したり、空のブロックストレージを作成します。
 
-ボリュームは、作成直後は使用できません。ボリューム状態を照会して`available`状態に変わったことを確認してから使用します。
+ブロックストレージは、作成直後は使用できません。ブロックストレージ状態を照会して`available`状態に変わったことを確認してから使用します。
 
 ```
 POST /v2/{tenantId}/volumes
@@ -364,18 +364,18 @@ X-Auth-Token: {tokenId}
 
 #### リクエスト
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
-| tokenId | Header | String | O | トークンID |
-| volume | Body | Object | O | ボリューム作成リクエストオブジェクト |
-| volume.size | Body | Integer | O | ボリュームサイズ(GB) |
-| volume.description | Body | String | - | ボリュームの説明 |
-| volume.availability_zone | Body | String | - | ボリュームアベイラビリティゾーン名 |
-| volume.name | Body | String | - | ボリューム名 |
-| volume.volume_type | Body | String | - | ボリュームタイプ名 |
-| volume.snapshot_id | Body | UUID | - | 原本スナップショットID。省略すると空のボリュームが作成される。 |
-| volume.metadata | Body | Object | - | ボリュームメタデータオブジェクト |
+| 名前 | 種類 | 形式 | 必須 | 説明                       |
+|---|---|---|---|---------------------------|
+| tenantId | URL | String | O | テナントID                    |
+| tokenId | Header | String | O | トークンID                     |
+| volume | Body | Object | O | ブロックストレージ作成リクエストオブジェクト              |
+| volume.size | Body | Integer | O | ブロックストレージサイズ(GB)                 |
+| volume.description | Body | String | - | ブロックストレージの説明                    |
+| volume.availability_zone | Body | String | - | ブロックストレージアベイラビリティゾーン名             |
+| volume.name | Body | String | - | ブロックストレージ名                    |
+| volume.volume_type | Body | String | - | ブロックストレージタイプ名                 |
+| volume.snapshot_id | Body | UUID | - | 原本スナップショットID。省略すると空のブロックストレージが作成される。 |
+| volume.metadata | Body | Object | - | ブロックストレージメタデータオブジェクト              |
 
 <details><summary>例</summary>
 <p>
@@ -403,27 +403,27 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | プロパティ | 説明 |
 |---|---|---|---|
-| volume | Body | Object | ボリューム詳細情報オブジェクト |
-| volume.attachments | Body | Object | ボリューム接続情報オブジェクト |
-| volume.links | Body | Object | ボリュームリソースリンクリファレンスオブジェクト |
-| volume.availability_zone | Body | String | ボリュームアベイラビリティゾーン |
-| volume.encrypted | Body | Boolean | ボリュームの暗号化有無 |
-| volume.os-volume-replication:extended_status | Body | String | ボリューム拡張状態 |
-| volume.volume_type | Body | String | ボリュームタイプ名 |
-| volume.snapshot_id | Body | UUID | ボリューム作成時に指定したSnapshot ID |
-| volumes.id | Body | UUID | ボリュームID |
-| volume.size | Body | Integer | ボリュームサイズ(GB) |
-| volume.user_id | Body | String | ボリュームのオーナーID |
+| volume | Body | Object | ブロックストレージ詳細情報オブジェクト |
+| volume.attachments | Body | Object | ブロックストレージ接続情報オブジェクト |
+| volume.links | Body | Object | ブロックストレージリソースリンクリファレンスオブジェクト |
+| volume.availability_zone | Body | String | ブロックストレージアベイラビリティゾーン |
+| volume.encrypted | Body | Boolean | ブロックストレージの暗号化有無 |
+| volume.os-volume-replication:extended_status | Body | String | ブロックストレージ拡張状態 |
+| volume.volume_type | Body | String | ブロックストレージタイプ名 |
+| volume.snapshot_id | Body | UUID | ブロックストレージ作成時に指定したSnapshot ID |
+| volumes.id | Body | UUID | ブロックストレージID |
+| volume.size | Body | Integer | ブロックストレージサイズ(GB) |
+| volume.user_id | Body | String | ブロックストレージのオーナーID |
 | volume.os-vol-tenant-attr:tenant_id | Body | String | テナントID |
-| volume.metadata | Body | Object | ボリュームメタデータオブジェクト |
-| volume.status | Body | Enum | ボリュームの状態 |
-| volume.description | Body | String | ボリュームの説明 |
+| volume.metadata | Body | Object | ブロックストレージメタデータオブジェクト |
+| volume.status | Body | Enum | ブロックストレージの状態 |
+| volume.description | Body | String | ブロックストレージの説明 |
 | volume.multiattach | Body | Boolean | 複数のインスタンスへの接続可否 |
-| volume.name | Body | String | ボリューム名 |
-| volume.bootable | Body | Boolean | ボリューム起動可否 |
-| volume.created_at | Body | Datetime | ボリューム作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
-| volume.os-volume-replication:driver_data | Body | String | ボリューム複製データ |
-| volume.replication_status | Body | String | ボリューム複製状態 |
+| volume.name | Body | String | ブロックストレージ名 |
+| volume.bootable | Body | Boolean | ブロックストレージ起動可否 |
+| volume.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
+| volume.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
+| volume.replication_status | Body | String | ブロックストレージ複製状態 |
 
 <details><summary>例</summary>
 <p>
@@ -465,9 +465,9 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### ボリュームを削除する
+### ブロックストレージを削除する
 
-指定したボリュームを削除します。接続されていたり、スナップショットが作成されたボリュームは削除できません。
+指定したブロックストレージを削除します。接続されていたり、スナップショットが作成されたブロックストレージは削除できません。
 
 ```
 DELETE /v2/{tenantId}/volumes/{volumeId}
@@ -480,7 +480,7 @@ X-Auth-Token: {tokenId}
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
-| volumeId | URL | String | O | ボリュームID |
+| volumeId | URL | String | O | ブロックストレージID |
 | tokenId | Header | String | O | トークンID |
 
 #### レスポンス
@@ -488,8 +488,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### ボリュームでイメージを作成する
-ボリュームからイメージを作成します。 
+### ブロックストレージでイメージを作成する
+ブロックストレージからイメージを作成します。 
 
 イメージ作成後、基本的な初期化作業のために100KBの空き容量が必要です。空き容量がそれ以下の場合、初期化作業に失敗する場合があります。
 
@@ -503,11 +503,11 @@ X-Auth-Token: {tokenId}
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
-| volumeId | URL | UUID | O | ボリュームID |
+| volumeId | URL | UUID | O | ブロックストレージID |
 | tokenId | Header | String | O | トークンID |
-| os-volume_upload_image | Body | Object | O | ボリュームイメージ作成リクエストオブジェクト |
+| os-volume_upload_image | Body | Object | O | ブロックストレージイメージ作成リクエストオブジェクト |
 | os-volume_upload_image.image_name | Body | String | O | イメージ名 |
-| os-volume_upload_image.force | Body | Boolean | - | インスタンスに接続されたボリュームの場合、イメージ作成を許可するかどうか<br>デフォルト値はfalse |
+| os-volume_upload_image.force | Body | Boolean | - | インスタンスに接続されたブロックストレージの場合、イメージ作成を許可するかどうか<br>デフォルト値はfalse |
 | os-volume_upload_image.disk_format | Body | String | - | イメージディスクフォーマット |
 | os-volume_upload_image.container_format | Body | String | - | イメージコンテナフォーマット |
 | os-volume_upload_image.visibility | Body | String | - | イメージの可視性<br>`private`または`shared` |
@@ -536,17 +536,17 @@ X-Auth-Token: {tokenId}
 
 | 名前 | 種類 | プロパティ | 説明 |
 |---|---|---|---|
-| os-volume_upload_image | Body | Object | ボリュームイメージ作成レスポンスオブジェクト |
-| os-volume_upload_image.status | Body | String | ボリュームの状態 |
+| os-volume_upload_image | Body | Object | ブロックストレージイメージ作成レスポンスオブジェクト |
+| os-volume_upload_image.status | Body | String | ブロックストレージの状態 |
 | os-volume_upload_image.image_name | Body | String | イメージ名 |
 | os-volume_upload_image.disk_format | Body | String | イメージディスクフォーマット |
 | os-volume_upload_image.container_format | Body | String | イメージコンテナフォーマット |
 | os-volume_upload_image.updated_at | Body | Datetime | イメージ修正時刻 |
 | os-volume_upload_image.image_id | Body | UUID | イメージID |
-| os-volume_upload_image.display_description | Body | String | ボリュームの説明 |
-| os-volume_upload_image.id | Body | UUID | ボリュームID |
-| os-volume_upload_image.size | Body | Integer | ボリュームサイズ(GB) |
-| os-volume_upload_image.volume_type | Body | Object | ボリュームタイプ情報オブジェクト |
+| os-volume_upload_image.display_description | Body | String | ブロックストレージの説明 |
+| os-volume_upload_image.id | Body | UUID | ブロックストレージID |
+| os-volume_upload_image.size | Body | Integer | ブロックストレージサイズ(GB) |
+| os-volume_upload_image.volume_type | Body | Object | ブロックストレージタイプ情報オブジェクト |
 
 <details><summary>例</summary>
 <p>
@@ -598,17 +598,17 @@ X-Auth-Token: {tokenId}
 ### スナップショット状態
 スナップショットはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
 
-| 状態名 | 説明 |
-|--|--|
-| `creating` | 作成中の状態 |
+| 状態名 | 説明                     |
+|--|-------------------------|
+| `creating` | 作成中の状態               |
 | `available` | スナップショットが作成され、使用する準備ができた状態 |
-| `backing-up`| スナップショットがバックアップ中の状態 |
-| `deleting`| スナップショットが削除中の状態 |
-| `error`| 作成中にエラーが発生した状態 |
-| `deleted`| 削除された状態 |
+| `backing-up`| スナップショットがバックアップ中の状態          |
+| `deleting`| スナップショットが削除中の状態          |
+| `error`| 作成中にエラーが発生した状態        |
+| `deleted`| 削除された状態                 |
 | `unmanaging`| スナップショットの管理モードが解除中の状態 |
-| `restoring`| スナップショットからボリュームを復元中の状態 |
-| `error_deleting`| 削除中にエラーが発生した状態 |
+| `restoring`| スナップショットからブロックストレージを復元中の状態   |
+| `error_deleting`| 削除中にエラーが発生した状態        |
 
 ### スナップショットのリスト表示
 スナップショットのリストを返します。
@@ -635,8 +635,8 @@ X-Auth-Token: {tokenId}
 | snapshots.description | Body | String | スナップショットの説明 |
 | snapshots.created_at | Body | Datetime | スナップショットの作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | snapshots.metadata | Body | Object | スナップショットメタデータオブジェクト |
-| snapshots.volume_id | Body | UUID | スナップショットの原本ボリュームID |
-| snapshots.size | Body | Integer | スナップショットの原本ボリュームサイズ(GB) |
+| snapshots.volume_id | Body | UUID | スナップショットの原本ブロックストレージID |
+| snapshots.size | Body | Integer | スナップショットの原本ブロックストレージサイズ(GB) |
 | snapshots.id | Body | UUID | スナップショットID |
 | snapshots.name | Body | String | スナップショットの名前 |
 
@@ -691,9 +691,9 @@ X-Auth-Token: {tokenId}
 | snapshots.os-extended-snapshot-attributes:progress | Body | String | スナップショット作成進行状態 |
 | snapshots.created_at | Body | Datetime | スナップショットの作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | snapshots.metadata | Body | Object | スナップショットメタデータオブジェクト |
-| snapshots.volume_id | Body | UUID | スナップショットの原本ボリュームID |
+| snapshots.volume_id | Body | UUID | スナップショットの原本ブロックストレージID |
 | snapshots.os-extended-snapshot-attributes:project_id | Body | String | テナントID |
-| snapshots.size | Body | Integer | スナップショットの原本ボリュームサイズ(GB) |
+| snapshots.size | Body | Integer | スナップショットの原本ブロックストレージサイズ(GB) |
 | snapshots.id | Body | UUID | スナップショットID |
 | snapshots.name | Body | String | スナップショットの名前 |
 
@@ -751,9 +751,9 @@ X-Auth-Token: {tokenId}
 | snapshot.os-extended-snapshot-attributes:progress | Body | String | スナップショットの作成進行状態 |
 | snapshot.created_at | Body | Datetime | スナップショットの作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | snapshot.metadata | Body | Object | スナップショットメタデータオブジェクト |
-| snapshot.volume_id | Body | UUID | スナップショットの原本ボリュームID |
+| snapshot.volume_id | Body | UUID | スナップショットの原本ブロックストレージID |
 | snapshot.os-extended-snapshot-attributes:project_id | Body | String | テナントID |
-| snapshot.size | Body | Integer | スナップショットの原本ボリュームサイズ(GB) |
+| snapshot.size | Body | Integer | スナップショットの原本ブロックストレージサイズ(GB) |
 | snapshot.id | Body | UUID | スナップショットID |
 | snapshot.name | Body | String | スナップショットの名前 |
 
@@ -783,7 +783,7 @@ X-Auth-Token: {tokenId}
 ---
 
 ### スナップショットを作成する
-指定したボリュームのスナップショットを作成します。
+指定したブロックストレージのスナップショットを作成します。
 
 ```
 POST /v2/{tenantId}/snapshots/
@@ -792,15 +792,15 @@ X-Auth-Token: {tokenId}
 
 #### リクエスト
 
-| 名前 | 種類 | 形式 | 必須 | 説明 |
-|---|---|---|---|---|
-| tenantId | URL | String | O | テナントID |
-| tokenId | Header | String | O | トークンID |
-| snapshot | Body | Object | O | スナップショット作成リクエストオブジェクト |
-| snapshot.volume_id | Body | UUID | O | 原本ボリュームID |
-| snapshot.force | Body | Boolean | - | 強制的にスナップショットを作成するかどうか<br>`true`の場合、ボリュームが接続されていてもスナップショットを作成 |
-| snapshot.description | Body | String | - | スナップショットの説明 |
-| snapshot.name | Body | String | - | スナップショットの名前 |
+| 名前 | 種類 | 形式 | 必須 | 説明                                       |
+|---|---|---|---|-------------------------------------------|
+| tenantId | URL | String | O | テナントID                                    |
+| tokenId | Header | String | O | トークンID                                     |
+| snapshot | Body | Object | O | スナップショット作成リクエストオブジェクト                             |
+| snapshot.volume_id | Body | UUID | O | 原本ブロックストレージID                                  |
+| snapshot.force | Body | Boolean | - | 強制的にスナップショットを作成するかどうか<br>`true`の場合、ブロックストレージが接続されていてもスナップショットを作成 |
+| snapshot.description | Body | String | - | スナップショットの説明                                   |
+| snapshot.name | Body | String | - | スナップショットの名前                                   |
 
 <details><summary>例</summary>
 <p>
@@ -828,8 +828,8 @@ X-Auth-Token: {tokenId}
 | snapshot.description | Body | String | スナップショットの説明 |
 | snapshot.created_at | Body | Datetime | スナップショットの作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | snapshot.metadata | Body | Object | スナップショットメタデータオブジェクト |
-| snapshot.volume_id | Body | UUID | スナップショットの原本ボリュームID |
-| snapshot.size | Body | Integer | スナップショットの原本ボリュームサイズ(GB) |
+| snapshot.volume_id | Body | UUID | スナップショットの原本ブロックストレージID |
+| snapshot.size | Body | Integer | スナップショットの原本ブロックストレージサイズ(GB) |
 | snapshot.id | Body | UUID | スナップショットID |
 | snapshot.name | Body | String | スナップショットの名前 |
 
