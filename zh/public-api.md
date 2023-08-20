@@ -1,24 +1,24 @@
 ## Storage > Block Storage > API v2 Guide
 
-To enable APIs, API endpoint and token are required. Prepare information required to enable an API, in reference of  [Preparing for APIs](/Compute/Compute/ko/identity-api/)
+To use the API, API endpoint and token are required. Refer to [API usage preparations](/Compute/Compute/en/identity-api/) to prepare the information required to use the API.
 
-Use `volumev2`-type endpoint for Block Storage API. For more details, see `serviceCatalog` from response of token issuance. 
+Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalog` in the token issuance response for the valid endpoint.
 
 | Type | Region | Endpoint |
 |---|---|---|
-| volumev2 | Korea (Pangyo) <br>Japan | https://kr1-api-block-storage-infrastructure.nhncloudservice.com<br>https://jp1-api-block-storage-infrastructure.nhncloudservice.com |
+| volumev2 | Korea (Pangyo)<br>Korea (Pyeongchon)<br>Japan | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://kr2-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
 
-In API response, you may find fields that are not specified in the guide. Refrain from using them because such fields are only for the NHN Cloud internal usage and might be changed without previous notice. 
+In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, so refrain from using them because they may be changed without prior notice.
 
-## Volume Type
-### List Volume Types 
+## Block Storage Type
+### List Block Storage Types 
 ```
 GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -27,14 +27,14 @@ This API does not require a request body.
 
 #### Response
 
-| Name | Type | Attribute | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
-| volume_types | Body | Array | List of volume type objects |
-| volume_types.id | Body | UUID | ID of volume type |
-| volume_types.name | Body | String | Name of volume type |
-| volume_types.os-volume-type-access:is_public | Body | Boolean | Publicize volume type or not |
-| volume_types.description | Body | String | Description of volume type |
-| volume_types.extra_specs | Body | Object | Information object of extra specifications related with volume type |
+| volume_types | Body | Array | List of block storage type objects |
+| volume_types.id | Body | UUID | ID of block storage type |
+| volume_types.name | Body | String | Name of block storage type |
+| volume_types.os-volume-type-access:is_public | Body | Boolean | Publicize block storage type or not |
+| volume_types.description | Body | String | Description of block storage type |
+| volume_types.extra_specs | Body | Object | Information object of extra specifications related with block storage type |
 
 <details><summary>Example</summary>
 <p>
@@ -69,34 +69,34 @@ This API does not require a request body.
 
 ---
 
-## Volume
-### Volume Status
-Volumes are available in many statuses with operations defined for each status. See the following list of available statuses:  
+## Block Storage
+### Block Storage Status
+Block storage is available in many statuses with operations defined for each status. See the following list of available statuses:  
 
-| Status Name | Description |
-|--|--|
-| `creating` | Creating a volume |
-| `available` | Volume is created and ready for attachment |
-| `attaching`| Attaching volume to an instance |
-| `detaching` | Detaching volume |
-| `in-use`| Volume is attached to an instance |
-| `maintenance`| Volume is migrating to another host equipment |
-| `deleting`| Deleting a volume |
-| `awaiting-transfer`| Volume is waiting for transfer |
-| `error`| Error occurred while creating a volume |
-| `error_deleting`| Error occurred while deleting a volume |
-| `backing-up`| Backing up volume |
-| `restoring-backup`| Restoring volume from backup |
+| Status Name | Description                         |
+|--|----------------------------|
+| `creating` | Creating a volume                    |
+| `available` | Block storage is created and ready for attachment |
+| `attaching`| Attaching block storage to an instance |
+| `detaching` | Detaching block storage |
+| `in-use`| block storage is attached to an instance |
+| `maintenance`| block storage is migrating to another host equipment |
+| `deleting`| Deleting block storage |
+| `awaiting-transfer`| block storage is waiting for transfer |
+| `error`| Error occurred while creating block storage |
+| `error_deleting`| Error occurred while deleting block storage |
+| `backing-up`| Backing up block storage |
+| `restoring-backup`| Restoring block storage from backup |
 | `error_backing-up`| Error occurred while backing up |
 | `error_restoring`| Error occurred while restoring |
-| `error_extending`| Error occurred while extending volume |
-| `downloading`| Downloading specified image while creating a volume |
-| `uploading`| Uploading volume image while creating an image |
-| `retyping`| Changing volume type |
-| `extending`| Extending volume |
+| `error_extending`| Error occurred while extending block storage |
+| `downloading`| Downloading specified image while creating block storage |
+| `uploading`| Uploading block storage image while creating an image |
+| `retyping`| Changing block storage type |
+| `extending`| Extending block storage |
 
-### List Volumes 
-Return the list of volumes included to a current tenant. 
+### List Block Storage 
+Return the list of block storage included to a current tenant. 
 
 ```
 GET /v2/{tenantId}/volumes
@@ -104,30 +104,29 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
-| Name | Type | Format | Required | Description |
-|---|---|---|---|---|
+| Name | Type | Format | Required | Description                                                                                               |
+|---|---|---|---|--------------------------------------------------------------------------------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| sort | Query | String | - | Name of volume field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | Volume count to return <br>Default is 1000 |
-| offset | Query | Integer | - | Start point of the list to return<br>Return from the offset volume out of the entire list |
-| marker | Query | UUID | - | ID of the previous volume of a volume to return <br>Return as much as the `limit` after volume specified as the `marker` according to the sorting order |
+| sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | block storage count to return <br>Default is 1000 |
+| offset | Query | Integer | - | Start point of the list to return<br>Return from the offset block storage out of the entire list |
+| marker | Query | UUID | - | ID of the previous block storage of block storage to return <br>Return as much as the `limit` after block storage specified as the `marker` according to the sorting order |
 
-#### Response	
+#### Response
 
-| Name | Type | Attributes | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
-| volumes | Body | Array | List of volume objects |
-| volumes.id | Body | UUID | Volume ID |
-| volumes.links | Body | Object | Reference objects for volume resource links |
-| volumes.name | Body | String | Volume name |
+| volumes | Body | Array | List of block storage objects |
+| volumes.id | Body | UUID | Block storage ID |
+| volumes.links | Body | Object | Reference objects for block storage resource links |
+| volumes.name | Body | String | Block storage name |
 | volumes_links  | Body | Object | Information object (path indicating the next list) for pagination <br>Return when`limit` and `offset` are added |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -136,11 +135,11 @@ This API does not require a request body.
       "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570",
       "links": [
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
           "rel": "bookmark"
         }
       ],
@@ -155,8 +154,8 @@ This API does not require a request body.
 
 ---
 
-### List Volume Details 
-Return the list of volumes included to a current tenant. 
+### List Block Storage Details 
+Return the list of block storage included to a current tenant. 
 
 ```
 GET /v2/{tenantId}/volumes/detail
@@ -164,56 +163,55 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
-|---|---|---|---|---|
+|---|---|---|---|------------------------------------------------------------------------------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| sort | Query | String | - | Name of volume field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | Volume count to return<br>Default is 1000 |
-| offset | Query | Integer | - | Start point of the list to return <br/>Return from the offset volume out of the entire list |
-| marker | Query | UUID | - | ID of the previous volume of a volume to return <br/>Return as much as `limit` after volume specified as the `marker` according to the sorting order |
+| sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
+| limit | Query | Integer | - | block storage count to return<br>Default is 1000 |
+| offset | Query | Integer | - | Start point of the list to return <br/>Return from the offset block storage out of the entire list |
+| marker | Query | UUID | - | ID of the previous block storage of block storage to return <br/>Return as much as `limit` after block storage specified as the `marker` according to the sorting order |
 
 #### Response
 
 | Name | Type | Format | Description |
 |---|---|---|---|
-| volumes | Body | Array | List of detail volume information objects |
-| volumes.attachments | Body | Object | Information object for volume attachment |
-| volumes.attachments.server_id | Body | UUID | ID of instance with volume attached |
-| volumes.attachments.attachment_id | Body | UUID | ID of volume attachment |
-| volumes.attachments.volume_id | Body | UUID | Volume ID |
+| volumes | Body | Array | List of detail block storage information objects |
+| volumes.attachments | Body | Object | Information object for block storage attachment |
+| volumes.attachments.server_id | Body | UUID | ID of instance with block storage attached |
+| volumes.attachments.attachment_id | Body | UUID | ID of block storage attachment |
+| volumes.attachments.volume_id | Body | UUID | Block storage ID |
 | volumes.attachments.device | Body | String | Name of device within instance |
-| volumes.attachments.id | Body | String | Volume ID |
-| volumes.links | Body | Object | Reference object of volume resource link |
-| volumes.availability_zone | Body | String | Volume availability area |
-| volumes.encrypted | Body | Boolean | Volume encrypted or not |
-| volumes.os-volume-replication:extended_status | Body | String | Volume extension status |
-| volumes.volume_type | Body | String | Name of volume type |
-| volumes.snapshot_id | Body | UUID | Snapshot ID specified while creating a volume |
-| volumes.id | Body | UUID | Volume ID |
-| volumes.size | Body | Integer | Volume size(GB) |
-| volumes.user_id | Body | String | ID of volume owner |
+| volumes.attachments.id | Body | String | Block storage ID |
+| volumes.links | Body | Object | Reference object of block storage resource link |
+| volumes.availability_zone | Body | String | Block storage availability area |
+| volumes.encrypted | Body | Boolean | Block storage encrypted or not |
+| volumes.os-volume-replication:extended_status | Body | String | Block storage extension status |
+| volumes.volume_type | Body | String | Name of block storage type |
+| volumes.snapshot_id | Body | UUID | Snapshot ID specified while creating block storage |
+| volumes.id | Body | UUID | Block storage ID |
+| volumes.size | Body | Integer | Block storage size(GB) |
+| volumes.user_id | Body | String | ID of block storage owner |
 | volumes.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
-| volumes.metadata | Body | Object | Volume metadata object |
-| volumes.status | Body | Enum | Volume status |
-| volumes.description | Body | String | Volume description |
+| volumes.metadata | Body | Object | Block storage metadata object |
+| volumes.status | Body | Enum | Block storage status |
+| volumes.description | Body | String | Block storage description |
 | volumes.multiattach | Body | Boolean | Multiple attachment or not<br>With `true`, multiple attachment to many instances are available |
-| volumes.source_volid | Body | UUID | Volume ID specified when creating a volume |
-| volumes.consistencygroup_id | Body | UUID | ID of volume group |
-| volumes.name | Body | String | Name of volume |
-| volumes.bootable | Body | Boolean | Volume bootable or not |
-| volumes.created_at | Body | Datetime | Time of volume creation <br>In the format of `YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| volumes.os-volume-replication:driver_data | Body | String | Volume replication data |
-| volumes.replication_status | Body | String | Volume replication status |
+| volumes.source_volid | Body | UUID | Block storage ID specified when creating block storage |
+| volumes.consistencygroup_id | Body | UUID | ID of block storage group |
+| volumes.name | Body | String | Name of block storage |
+| volumes.bootable | Body | Boolean | block storage bootable or not |
+| volumes.created_at | Body | Datetime | Time of block storage creation <br>In the format of `YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volumes.os-volume-replication:driver_data | Body | String | block storage replication data |
+| volumes.replication_status | Body | String | block storage replication status |
 | volumes.volumes_links  | Body | Object | Information object (pointing to the next list) for pagination <br>Return when`limit` and `offset` are added |
 
 
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -222,11 +220,11 @@ This API does not require a request body.
       "attachments": [],
       "links": [
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "bookmark"
         }
       ],
@@ -260,59 +258,57 @@ This API does not require a request body.
 
 ---
 
-### Get Volume 
-Return details of specified volume.  
-
+### Get Block Storage 
+Return details of specified block storage.  
 ```
 GET /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
-| volumeId | URL | UUID | O | Volume ID |
+| volumeId | URL | UUID | O | Block storage ID |
 | tokenId | Header | String | O | Token ID |
 
 #### Response
 
-| Name | Type | Format | Description |
-|---|---|---|---|
-| volume | Body | Object | Detail information object of volume |
-| volume.attachments | Body | Object | Information object for volume attachment |
-| volume.attachments.server_id | Body | UUID | ID of instance attached to volume |
-| volume.attachments.attachment_id | Body | UUID | ID of volume attachment |
-| volume.attachments.volume_id | Body | UUID | Volume ID |
+| Name | Type | Format | Description                                           |
+|---|---|---|----------------------------------------------|
+| volume | Body | Object | Detail information object of block storage |
+| volume.attachments | Body | Object | Information object for block storage attachment |
+| volume.attachments.server_id | Body | UUID | ID of instance attached to block storage |
+| volume.attachments.attachment_id | Body | UUID | ID of block storage attachment |
+| volume.attachments.volume_id | Body | UUID | block storage ID |
 | volume.attachments.device | Body | String | Name of equipment within instance |
-| volume.attachments.id | Body | String | Volume ID |
-| volume.links | Body | Object | Reference object for volume resource link |
-| volume.availability_zone | Body | String | Volume availability area |
-| volume.encrypted | Body | Boolean | Volume encrypted or not |
-| volume.os-volume-replication:extended_status | Body | String | Volume extended status |
-| volume.volume_type | Body | String | Volume type name |
-| volume.snapshot_id | Body | UUID | Snapshot ID specified when creating volume |
-| volume.id | Body | UUID | Volume ID |
-| volume.size | Body | Integer | Volume size (GB) |
-| volume.user_id | Body | String | Volume owner ID |
+| volume.attachments.id | Body | String | block storage ID |
+| volume.links | Body | Object | Reference object for block storage resource link |
+| volume.availability_zone | Body | String | block storage availability area |
+| volume.encrypted | Body | Boolean | block storage encrypted or not |
+| volume.os-volume-replication:extended_status | Body | String | block storage extended status |
+| volume.volume_type | Body | String | block storage type name |
+| volume.snapshot_id | Body | UUID | Snapshot ID specified when creating block storage |
+| volume.id | Body | UUID | block storage ID |
+| volume.size | Body | Integer | block storage size (GB) |
+| volume.user_id | Body | String | block storage owner ID |
 | volume.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
-| volume.metadata | Body | Object | Volume metadata object |
-| volume.status | Body | Enum | Volume status |
-| volume.description | Body | String | Volume description |
+| volume.metadata | Body | Object | block storage metadata object |
+| volume.status | Body | Enum | block storage status |
+| volume.description | Body | String | block storage description |
 | volume.multiattach | Body | Boolean | Multiple attachment is available or not<br>With `true`, simultaneous attachment to many instances is enabled |
-| volume.source_volid | Body | UUID | Volume ID specified when creating volume |
-| volume.consistencygroup_id | Body | UUID | Volume consistency volume ID |
-| volume.name | Body | String | Volume name |
-| volume.bootable | Body | Boolean | Volume bootable |
-| volume.created_at | Body | Datetime | Volume creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| volume.os-volume-replication:driver_data | Body | String | Volume replication data |
-| volume.replication_status | Body | String | Volume replication status |
+| volume.source_volid | Body | UUID | block storage ID specified when creating block storage |
+| volume.consistencygroup_id | Body | UUID | block storage consistency block storage ID |
+| volume.name | Body | String | block storage name |
+| volume.bootable | Body | Boolean | block storage bootable |
+| volume.created_at | Body | Datetime | block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.os-volume-replication:driver_data | Body | String | block storage replication data |
+| volume.replication_status | Body | String | block storage replication status |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -320,11 +316,11 @@ This API does not require a request body.
     "attachments": [],
     "links": [
       {
-        "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
         "rel": "bookmark"
       }
     ],
@@ -357,10 +353,10 @@ This API does not require a request body.
 
 ---
 
-### Create Volume
-Create a new or empty volume from snapshot. 
+### Create Block Storage
+Create a new or empty block storage from snapshot. 
 
-Volumes are not immediately available after created. Query volume status and check if it is `available`  first.  
+Block storage is not immediately available after created. Query block storage status and check if it is `available`  first.  
 
 ```
 POST /v2/{tenantId}/volumes
@@ -369,22 +365,21 @@ X-Auth-Token: {tokenId}
 
 #### Request
 
-| Name | Type | Format | Required | Description |
-|---|---|---|---|---|
+| Name | Type | Format | Required | Description                        |
+|---|---|---|---|---------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| volume | Body | Object | O | Object requesting of creating volume |
-| volume.size | Body | Integer | O | Volume size (GB) |
-| volume.description | Body | String | - | Volume description |
-| volume.availability_zone | Body | String | - | Name of volume availability area |
-| volume.name | Body | String | - | Volume name |
-| volume.volume_type | Body | String | - | Volume type name |
-| volume.snapshot_id | Body | UUID | - | Original snapshot ID: if left blank, empty volume is created |
-| volume.metadata | Body | Object | - | Volume metadata object |
+| volume | Body | Object | O | Object requesting of creating block storage |
+| volume.size | Body | Integer | O | block storage size (GB) |
+| volume.description | Body | String | - | block storage description |
+| volume.availability_zone | Body | String | - | Name of voblock storagelume availability area |
+| volume.name | Body | String | - | block storage name |
+| volume.volume_type | Body | String | - | block storage type name |
+| volume.snapshot_id | Body | UUID | - | Original snapshot ID: if left blank, empty block storage is created |
+| volume.metadata | Body | Object | - | block storage metadata object |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -407,34 +402,33 @@ X-Auth-Token: {tokenId}
 
 #### Response
 
-| Name | Type | Attributes | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
-| volume | Body | Object | Information object for volume details |
-| volume.attachments | Body | Object | Information object for volume attachment |
-| volume.links | Body | Object | Reference object for volume resource links |
-| volume.availability_zone | Body | String | Volume visibility area |
-| volume.encrypted | Body | Boolean | Volume encrypted or not |
-| volume.os-volume-replication:extended_status | Body | String | Volume extended status |
-| volume.volume_type | Body | String | Volume type name |
-| volume.snapshot_id | Body | UUID | Snapshot ID specified for creating volume |
-| volumes.id | Body | UUID | Volume ID |
-| volume.size | Body | Integer | Volume size (GB) |
-| volume.user_id | Body | String | Volume owner ID |
+| volume | Body | Object | Information object for block storage details |
+| volume.attachments | Body | Object | Information object for block storage attachment |
+| volume.links | Body | Object | Reference object for block storage resource links |
+| volume.availability_zone | Body | String | block storage visibility area |
+| volume.encrypted | Body | Boolean | block storage encrypted or not |
+| volume.os-volume-replication:extended_status | Body | String | block storage extended status |
+| volume.volume_type | Body | String | block storage type name |
+| volume.snapshot_id | Body | UUID | Snapshot ID specified for creating block storage |
+| volumes.id | Body | UUID | block storage ID |
+| volume.size | Body | Integer | block storage size (GB) |
+| volume.user_id | Body | String | block storage owner ID |
 | volume.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
-| volume.metadata | Body | Object | Volume metadata object |
-| volume.status | Body | Enum | Volume status |
-| volume.description | Body | String | Volume description |
+| volume.metadata | Body | Object | block storage metadata object |
+| volume.status | Body | Enum | block storage status |
+| volume.description | Body | String | block storage description |
 | volume.multiattach | Body | Boolean | Attachable to many instances |
-| volume.consistencygroup_id | Body | UUID | Volume consistency group ID |
-| volume.name | Body | String | Volume name |
-| volume.bootable | Body | Boolean | Volume bootable |
-| volume.created_at | Body | Datetime | Volume creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
-| volume.os-volume-replication:driver_data | Body | String | Volume replication data |
-| volume.replication_status | Body | String | Volume replication status |
+| volume.consistencygroup_id | Body | UUID | block storage consistency group ID |
+| volume.name | Body | String | block storage name |
+| volume.bootable | Body | Boolean | block storage bootable |
+| volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| volume.os-volume-replication:driver_data | Body | String | block storage replication data |
+| volume.replication_status | Body | String | block storage replication status |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -443,10 +437,10 @@ X-Auth-Token: {tokenId}
     "user_id": "94acd5b4d2bf47dda734e34a113f96ff",
     "attachments": [],
     "links": [{
-      "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
       "rel": "self"
     }, {
-      "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
       "rel": "bookmark"
     }],
     "availability_zone": "kr-pub-a",
@@ -473,9 +467,9 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### Delete Volume 
+### Delete Block Storage 
 
-Delete specified volume. Volumes that are attached or with snapshots created cannot be deleted. 
+Delete specified block storage. Block storage that is attached or with snapshots created cannot be deleted. 
 
 ```
 DELETE /v2/{tenantId}/volumes/{volumeId}
@@ -483,23 +477,23 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
-| volumeId | URL | String | O | Volume ID |
+| volumeId | URL | String | O | Block storage ID |
 | tokenId | Header | String | O | Token ID |
 
 #### Response
-This API does not return a response body.  
+This API does not return a response body.
 
 ---
 
-### Create Image with Volume
-Create image from volume. 
+### Create Image with Block Storage
+Create image from block storage. 
 
-At least 100KB space is required for basic initialization after image is created. If you have less space than that, initialization may fail. 
+At least 100KB of free space is required for basic initialization after image creation. The initialization operation may fail if the free space is less than this.
 
 ```
 POST /v2/{tenantId}/volumes/{volumeId}/action
@@ -511,19 +505,18 @@ X-Auth-Token: {tokenId}
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
-| volumeId | URL | UUID | O | Volume ID |
+| volumeId | URL | UUID | O | Block storage ID |
 | tokenId | Header | String | O | Token ID |
-| os-volume_upload_image | Body | Object | O | Object requesting of creating volume image |
+| os-volume_upload_image | Body | Object | O | Object requesting of creating block storage image |
 | os-volume_upload_image.image_name | Body | String | O | Image name |
-| os-volume_upload_image.force | Body | Boolean | - | Image creation allowed or not for volumes attached to instance <br>Default is false |
+| os-volume_upload_image.force | Body | Boolean | - | Image creation allowed or not for block storage attached to instance <br>Default is false |
 | os-volume_upload_image.disk_format | Body | String | - | Image disk format |
 | os-volume_upload_image.container_format | Body | String | - | Image container format |
-| os-volume_upload_image.visibility | Body | String | - | Image visibility<br>Either`private`, or `shared` |
-| os-volume_upload_image.protected | Body | Boolean | - | Image protected or not</br>Unable to modify or delete, if protected=true |
+| os-volume_upload_image.visibility | Body | String | - | Image visibility<br>One of `private` or `shared` |
+| os-volume_upload_image.protected | Body | Boolean | - | Whether to protect image</br>Cannot be modified or deleted when protected=true |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -543,23 +536,22 @@ X-Auth-Token: {tokenId}
 
 #### Response
 
-| Name | Type | Format | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
-| os-volume_upload_image | Body | Object | Response object creating volume image |
-| os-volume_upload_image.status | Body | String | Volume status |
+| os-volume_upload_image | Body | Object | Response object creating block storage image |
+| os-volume_upload_image.status | Body | String | block storage status |
 | os-volume_upload_image.image_name | Body | String | Image name |
 | os-volume_upload_image.disk_format | Body | String | Image disk format |
 | os-volume_upload_image.container_format | Body | String | Image container format |
 | os-volume_upload_image.updated_at | Body | Datetime | Image modification time |
 | os-volume_upload_image.image_id | Body | UUID | Image ID |
-| os-volume_upload_image.display_description | Body | String | Volume description |
-| os-volume_upload_image.id | Body | UUID | Volume ID |
-| os-volume_upload_image.size | Body | Integer | Volume size (GB) |
-| os-volume_upload_image.volume_type | Body | Object | Information object for volume type |
+| os-volume_upload_image.display_description | Body | String | block storage description |
+| os-volume_upload_image.id | Body | UUID | block storage ID |
+| os-volume_upload_image.size | Body | Integer | block storage size (GB) |
+| os-volume_upload_image.volume_type | Body | Object | Information object for block storage type |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -605,11 +597,11 @@ X-Auth-Token: {tokenId}
 ---
 
 ## Snapshot
-### Snapshot Status
-Snapshots exist in various statues, and each status defines operations.  See the list of available statuses like below:
+### Snapshot status
+Snapshots exist in various statuses, and each status defines its own set of permissible operations. See the following list of volume statuses.
 
-| Status Name | Description |
-|--|--|
+| Status Name | Description                     |
+|--|-------------------------|
 | `creating` | Creating a snapshot |
 | `available` | Snapshot has been created and is available |
 | `backing-up      | Backing up a snapshot                               |
@@ -617,11 +609,11 @@ Snapshots exist in various statues, and each status defines operations.  See the
 | `error`| Error has occurred while creating a snapshot |
 | `deleted`| Snapshot has been deleted |
 | `unmanaging`| Snapshot has been released from the management mode |
-| `restoring`| Restoring volume from snapshot |
+| `restoring`| Restoring block storage from snapshot |
 | `error_deleting`| Error has occurred while deleting a snapshot |
 
-### List Snapshots 
-Return the list of snapshots. 
+### List Snapshots
+Returns the list of snapshots.
 
 ```
 GET /v2/{tenantId}/snapshots
@@ -629,7 +621,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -645,14 +637,13 @@ This API does not require a request body.
 | snapshot.description | Body | String   | Snapshot description                                         |
 | snapshot.created_at  | Body | Datetime | Snapshot creation time <br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
 | snapshot.metadata    | Body | Object   | Snapshot metadata object                                     |
-| snapshot.volume_id   | Body | UUID     | Original volume ID of snapshot                               |
-| snapshot.size        | Body | Integer  | Original volume size of snapshot (GB)                        |
+| snapshot.volume_id   | Body | UUID     | Original block storage ID of snapshot                               |
+| snapshot.size        | Body | Integer  | Original block storage size of snapshot (GB)                        |
 | snapshot.id          | Body | UUID     | Snapshot ID                                                  |
 | snapshot.name        | Body | String   | Snapshot name                                                |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -676,8 +667,8 @@ This API does not require a request body.
 
 ---
 
-### List Snapshot Details 
-Return the list of snapshot details. 
+### List Snapshots with Details
+Returns a list of snapshot details.
 
 ```
 GET /v2/{tenantId}/snapshots/detail
@@ -685,7 +676,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -702,15 +693,14 @@ This API does not require a request body.
 | snapshot.os-extended-snapshot-attributes:progress   | Body | String   | Progress of snapshot creation                                |
 | snapshot.created_at                                 | Body | Datetime | Snapshot creation time In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
 | snapshot.metadata                                   | Body | Object   | Snapshot metadata object                                     |
-| snapshot.volume_id                                  | Body | UUID     | Original volume ID of snapshot                               |
+| snapshot.volume_id                                  | Body | UUID     | Original block storage ID of snapshot                               |
 | snapshot.os-extended-snapshot-attributes:project_id | Body | String   | Tenant ID                                                    |
-| snapshot.size                                       | Body | Integer  | Original volume size of snapshot (GB)                        |
+| snapshot.size                                       | Body | Integer  | Original block storage size of snapshot (GB)                        |
 | snapshot.id                                         | Body | UUID     | Snapshot ID                                                  |
 | snapshot.name                                       | Body | String   | Snapshot name                                                |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -736,8 +726,8 @@ This API does not require a request body.
 
 ---
 
-### Get Snapshot
-Return details of specified snapshot. 
+### View Snapshot
+Returns details of the specified snapshot.
 
 ```
 GET /v2/{tenantId}/snapshots/{snapshotId}
@@ -745,7 +735,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. .
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -757,21 +747,20 @@ This API does not require a request body. .
 
 | Name | Type | Format | Description |
 |---|---|---|---|
-| snapshot | Body | Object | Information object of snapshot details |
+| snapshot | Body | Object | Snapshot Details Object |
 | snapshot.status | Body | Enum | Snapshot status |
 | snapshot.description | Body | String | Snapshot description |
-| snapshot.os-extended-snapshot-attributes:progress | Body | String | Progress of snapshot creation |
-| snapshot.created_at | Body | Datetime | Snapshot creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.os-extended-snapshot-attributes:progress | Body | String | Snapshot creation progress |
+| snapshot.created_at | Body | Datetime | Snapshot creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`format |
 | snapshot.metadata | Body | Object | Snapshot metadata object |
-| snapshot.volume_id | Body | UUID | Original volume ID of snapshot |
+| snapshot.volume_id | Body | UUID | Original block storage ID of snapshot |
 | snapshot.os-extended-snapshot-attributes:project_id | Body | String | Tenant ID |
-| snapshot.size | Body | Integer | Original volume size of snapshot (GB) |
+| snapshot.size | Body | Integer | Original block storage size of snapshot (GB) |
 | snapshot.id | Body | UUID | Snapshot ID |
 | snapshot.name | Body | String | Snapshot name |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -796,28 +785,27 @@ This API does not require a request body. .
 ---
 
 ### Create Snapshot
-Create snapshot for specified volume. 
+Create snapshot for specified block storage. 
 
 ```
 POST /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
-#### Request 
+#### Request
 
-| Name | Type | Format | Required | Description |
-|---|---|---|---|---|
+| Name | Type | Format | Required | Description                                       |
+|---|---|---|---|-------------------------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | snapshot | Body | Object | O | Object requesting of creating snapshot |
-| snapshot.volume_id | Body | UUID | O | Original volume ID |
-| snapshot.force | Body | Boolean | - | Forced to create snapshot or not<br>With`true`, snapshot is created even if volume is attached |
+| snapshot.volume_id | Body | UUID | O | Original block storage ID |
+| snapshot.force | Body | Boolean | - | Forced to create snapshot or not<br>With`true`, snapshot is created even if block storage is attached |
 | snapshot.description | Body | String | - | Snapshot description |
 | snapshot.name | Body | String | - | Snapshot name |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -837,19 +825,18 @@ X-Auth-Token: {tokenId}
 
 | Name | Type | Format | Description |
 |---|---|---|---|
-| snapshot | Body | Object | Information object of snapshot details |
+| snapshot | Body | Object | Snapshot Details Object |
 | snapshot.status | Body | Enum | Snapshot status |
 | snapshot.description | Body | String | Snapshot description |
-| snapshot.created_at | Body | Datetime | Snapshot creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.created_at | Body | Datetime | Snapshot creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`format |
 | snapshot.metadata | Body | Object | Snapshot metadata object |
-| snapshot.volume_id | Body | UUID | Original volume ID of snapshot |
-| snapshot.size | Body | Integer | Original volume size of snapshot (GB) |
+| snapshot.volume_id | Body | UUID | Original block storage ID of snapshot |
+| snapshot.size | Body | Integer | Original block storage size of snapshot (GB) |
 | snapshot.id | Body | UUID | Snapshot ID |
 | snapshot.name | Body | String | Snapshot name |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -871,8 +858,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### Delete Snapshot
-Delete snapshot as specified. 
+### Delete Snapshots
+Deletes a specified snapshot.
 
 ```
 DELETE /v2/{tenantId}/snapshots/{snapshotId}
@@ -880,7 +867,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -889,4 +876,4 @@ This API does not require a request body.
 | tokenId | Header | String | O | Token ID |
 
 #### Response
-This API does not require a request body. 
+This API does not return a response body.
