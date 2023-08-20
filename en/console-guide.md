@@ -56,7 +56,7 @@ If you attach empty block storage, it must be partitioned and formatted in the i
 
 ### Detach Block Storage
 
-Detach unnecessary block storage from an instance. Note, however, that root block storage cannot be detached.
+Detach unnecessary block storage from an instance. Note, however, root block storage cannot be detached.
 
 You can detach block storage even while the instance is running. However, you must first unmount the block storage from the instance and detach the block storage in the console. Detaching while the block storage is mounted causes the following issues:
 
@@ -107,7 +107,7 @@ Select the availability zone to use in the region to which to replicate. You can
 
 The instance might boot with block storage additionally attached to the instance mounted on `/`. This usually happens when you attach block storage created with the instance's OS image to another instance additionally.
 
-Linux determines which block storage to mount on `/` using `etc/fstab` at boot time. For the OS images used by NHN Cloud, the disk to mount is determined based on the file system UUID. If block storage with the same file system UUID value is attached, unintended block storage may be mounted on `/`.
+Linux determines which block storage to mount on `/` using `etc/fstab` at boot time. For the OS images used by NHN Cloud, the block storage to mount is determined based on the file system UUID. If block storage with the same file system UUID value is attached, unintended block storage may be mounted on `/`.
 
 ```console
 # cat /etc/fstab

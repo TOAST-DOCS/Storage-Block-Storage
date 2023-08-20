@@ -1,6 +1,6 @@
 ## Storage > Block Storage > Overview
 
-Additional block storage is available in addition to the instance root block storage.
+Additional block storage is available in addition to an instance's root block storage.
 
 - Deleting an attached instance does not affect the block storage.
 - Block storage cannot be attached to multiple instances at the same time.
@@ -63,7 +63,7 @@ Once the type of partition is decided, you need to enter the number of partition
 ```
 Partition number (1-4, default 1): 1
 ```
-Now, determine the size of the partition. The available range varies depending on the size of created block storage. In this example, we will create a partition that uses the block storage, so select the default value.
+Now, determine the size of the partition. The available range varies depending on the size of created block storage. In this example, we will create a partition that uses the entire block storage, so select the default value.
 ```
 First sector (2048-20971519, default 2048):
 Using default value 2048
@@ -96,8 +96,8 @@ Now, format the `vdb1` partition. On Linux, use the `mkfs` command. When formatt
 # mkfs -t xfs /dev/vdb1
 ```
 
-#### Mount the Block Storage
-Block storage where a file system has been created can only be accessed after the mount process. You can mount the block storage with the simple `mount` command, but it will be unmounted when the instance reboots. This example explains how to mount a disk automatically during the instance boot process by adding block storage to be mounted to the `/etc/fstab` file.
+#### Mount Block Storage
+Block storage where a file system has been created can only be accessed after the mount process. You can mount the block storage with the simple `mount` command, but it will be unmounted when the instance reboots. This example explains how to mount block storage automatically during the instance boot process by adding block storage to be mounted to the `/etc/fstab` file.
 
 The following is the output of the `/etc/fstab` file.
 ```
