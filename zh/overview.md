@@ -1,6 +1,6 @@
 ## Storage > Block Storage > Overview
 
-Block Storage is a virtual disk that can be attached in addition to the default disk of the instance.
+Additional block storage is available in addition to an instance's root block storage.
 
 - Deleting an attached instance does not affect the block storage.
 - Block storage cannot be attached to multiple instances at the same time.
@@ -9,8 +9,8 @@ Block Storage is a virtual disk that can be attached in addition to the default 
 
 Block storage can be used in many situations:
 
-- When the storage space of the default disk is insufficient, you can increase the storage space of the instance by attaching additional block storage.
-- To keep the data on the instance's default disk permanently before deleting the instance, you can attach block storage and copy data to the block storage.
+- When the storage space of the root block storage is insufficient, you can increase the storage space of the instance by attaching additional block storage.
+- To keep the data on the instance's root block storage permanently before deleting the instance, you can attach block storage and copy data to the block storage.
 
 To use block storage, you need to do the following:
 
@@ -18,7 +18,7 @@ To use block storage, you need to do the following:
 2. [Attach the created block storage to the target instance](/Storage/Block%20Storage/en/console-guide/#attach-block-storage).
 3. [Partition, format, and mount the block storage](#use-empty-block-storage) and use it.
 
-Block storage can be attached while the instance is running. Attached block storage is an empty disk, so you will need to partition, format, and mount it manually depending on the operating system of the instance before using it.
+Block storage can be attached while the instance is running. Attached block storage is an empty device, so you will need to partition, format, and mount it manually depending on the operating system of the instance before using it.
 
 
 ## Use Empty Block Storage
@@ -29,7 +29,7 @@ Connect to the instance and take the following steps:
 > [Note] All commands in the following examples must be executed with the `root` privilege.
 
 #### Create a Partition
-When block storage is attached to an instance, it is registered as an empty disk device. Check the list of registered disks with the Linux `lsblk` command.
+When block storage is attached to an instance, it is registered as an empty device. Check the list of registered block storage with the Linux `lsblk` command.
 ```
 # lsblk
 NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
@@ -38,11 +38,11 @@ vda    253:0    0  20G  0 disk
 └─vda2 253:2    0  18G  0 part /
 vdb    253:16   0  10G  0 disk
 ```
-The example above that the default disk `vda` and the additional disk `vdb` are attached. If you look at the output of `lsblk`, you can see that partitions have been created in `vda`, but `vdb` is empty.
+The example above that the root block storage `vda` and the additional block storage `vdb` are attached. If you look at the output of `lsblk`, you can see that partitions have been created in `vda`, but `vdb` is empty.
 
-> [Note] Disk devices are named alphabetically in the order in which block storage is attached to the instance, such as `vda`, `vdb`, `vdc`, and so on. In the example above, the `vdb` disk indicates the second attached disk. The device names can be found on the console's Storage List page.
+> [Note] Block storage devices are named alphabetically in the order in which block storage is attached to the instance, such as `vda`, `vdb`, `vdc`, and so on. In the example above, the `vdb` disk indicates the second attached disk. The device names can be found on the console's Storage List page.
 
-First, create a partition on the empty disk device `vdb`. As shown below, use the `fdisk` utility to create a single partition for the entire disk. A disk can also be partitioned into multiple partitions as needed.
+First, create a partition on the empty device `vdb`. As shown below, use the `fdisk` utility to create a single partition for the entire block storage. Block storage can also be partitioned into multiple partitions as needed.
 ```
 # fdisk /dev/vdb
 Command (m for help): n
@@ -63,7 +63,7 @@ Once the type of partition is decided, you need to enter the number of partition
 ```
 Partition number (1-4, default 1): 1
 ```
-Now it's time to determine the size. The range varies depending on the size of created block storage. In this example, we will create a partition that uses the entire disk, so we will use the default value.
+Now, determine the size of the partition. The available range varies depending on the size of created block storage. In this example, we will create a partition that uses the entire block storage, so select the default value.
 ```
 First sector (2048-20971519, default 2048):
 Using default value 2048
@@ -71,7 +71,7 @@ Last sector, +sectors or +size{K,M,G} (2048-20971519, default 20971519):
 Using default value 20971519
 Partition 1 of type Linux and of size 10 GiB is set
 ```
-The basic partition setup is now complete. Type `w` to reflect the settings entered so far on the disk.
+The basic partition setup is now complete. Type `w` to reflect the settings entered so far on the block storage.
 ```
 Command (m for help): w
 The partition table has been altered!
@@ -89,15 +89,15 @@ NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
 vdb    253:16   0  10G  0 disk
 └─vdb1 253:17   0  10G  0 part /mnt/vdb
 ```
-In the example above, you can see that a partition named `vdb1` has been created on the `vdb` disk. In Linux, partition names are usually in the form of 'device name + number'.
+In the example above, you can see that a partition named `vdb1` has been created on the `vdb`. In Linux, partition names are usually in the form of 'device name + number'.
 
-Now let's format the `vdb1` partition. On Linux, use the `mkfs` command. When formatting a partition, you must specify the file system to use. In this example, we will format it using `xfs`, one of the popular Linux file systems. For file systems available on Linux, see [File system](https://en.wikipedia.org/wiki/File_system).
+Now, format the `vdb1` partition. On Linux, use the `mkfs` command. When formatting a partition, you must specify the file system to use. In this example, we will format the partition using `xfs`, one of the popular Linux file systems. For file systems available on Linux, see [File system](https://en.wikipedia.org/wiki/File_system).
 ```
 # mkfs -t xfs /dev/vdb1
 ```
 
-#### Mount the Disk
-A disk where a file system has been created can only be accessed after the mount process. You can mount the disk with the simple `mount` command, but it will be unmounted when the instance reboots. This example explains how to mount a disk automatically during the instance boot process by adding a disk to be mounted to the `/etc/fstab` file.
+#### Mount Block Storage
+Block storage where a file system has been created can only be accessed after the mount process. You can mount the block storage with the simple `mount` command, but it will be unmounted when the instance reboots. This example explains how to mount block storage automatically during the instance boot process by adding block storage to be mounted to the `/etc/fstab` file.
 
 The following is the output of the `/etc/fstab` file.
 ```
@@ -109,9 +109,9 @@ The following is the output of the `/etc/fstab` file.
 #
 UUID=3d9cc015-610e-4482-9071-fbf998d68121 /                       xfs     defaults,nodev,noatime        1 1
 ```
-You can see that one disk is already registered. The registered disk is the instance's default disk (root disk).
+You can see that one block storage is already registered. The registered block storage is the instance's root block storage.
 
-To register a disk, you need the disk's device unique ID. The device unique ID can be checked with the `blkid` command as shown below.
+To register block storage, you need the disk's device unique ID. The device unique ID can be checked with the `blkid` command as shown below.
 ```
 # blkid /dev/vdb1
 /dev/vdb1: UUID="5a4004f4-3ba6-4484-9459-7c2b321b727f" TYPE="xfs"
@@ -122,14 +122,14 @@ Create a mount target directory. The mount target directory can be any directory
 ```
 mkdir -p /mnt/vdb
 ```
-When the mount target directory is ready, register the disk as follows.
+When the mount target directory is ready, register block storage as follows.
 ```
 # echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime,nofail 1 2" >> /etc/fstab
 ```
 
 > [Note] In the example above, the `nofail` option has been added so that booting can be performed even if the volume mount fails.
 
-Finally, you need to reflect the contents of `/etc/fstab`. Use the `mount -a` command to mount all disks registered in `/etc/fstab`.
+Finally, you need to reflect the contents of `/etc/fstab`. Use the `mount -a` command to mount all block storage registered in `/etc/fstab`.
 ```
 # mount -a
 ```
