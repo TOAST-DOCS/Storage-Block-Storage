@@ -1,14 +1,14 @@
 ## Storage > Block Storage > API v2 Guide
 
-To enable APIs, API endpoint and token are required. Prepare information required to enable an API, in reference of  [Preparing for APIs](/Compute/Compute/ko/identity-api/)
+To use the API, API endpoint and token are required. Refer to [API usage preparations](/Compute/Compute/en/identity-api/) to prepare the information required to use the API.
 
-Use `volumev2`-type endpoint for Block Storage API. For more details, see `serviceCatalog` from response of token issuance. 
+Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalog` in the token issuance response for the valid endpoint.
 
 | Type | Region | Endpoint |
 |---|---|---|
-| volumev2 | Korea (Pangyo) <br>Japan | https://kr1-api-block-storage-infrastructure.nhncloudservice.com<br>https://jp1-api-block-storage-infrastructure.nhncloudservice.com |
+| volumev2 | Korea (Pangyo)<br>Korea (Pyeongchon)<br>Japan | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://kr2-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
 
-In API response, you may find fields that are not specified in the guide. Refrain from using them because such fields are only for the NHN Cloud internal usage and might be changed without previous notice. 
+In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, so refrain from using them because they may be changed without prior notice.
 
 ## Block Storage Type
 ### List Block Storage Types 
@@ -18,7 +18,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -27,7 +27,7 @@ This API does not require a request body.
 
 #### Response
 
-| Name | Type | Attribute | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
 | volume_types | Body | Array | List of block storage type objects |
 | volume_types.id | Body | UUID | ID of block storage type |
@@ -104,7 +104,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description                                                                                               |
 |---|---|---|---|--------------------------------------------------------------------------------------------------|
@@ -115,9 +115,9 @@ This API does not require a request body.
 | offset | Query | Integer | - | Start point of the list to return<br>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br>Return as much as the `limit` after block storage specified as the `marker` according to the sorting order |
 
-#### Response	
+#### Response
 
-| Name | Type | Attributes | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
 | volumes | Body | Array | List of block storage objects |
 | volumes.id | Body | UUID | Block storage ID |
@@ -128,7 +128,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "volumes": [
@@ -136,11 +135,11 @@ This API does not require a request body.
       "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570",
       "links": [
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
           "rel": "bookmark"
         }
       ],
@@ -164,7 +163,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|------------------------------------------------------------------------------------------------|
@@ -214,7 +213,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "volumes": [
@@ -222,11 +220,11 @@ This API does not require a request body.
       "attachments": [],
       "links": [
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "bookmark"
         }
       ],
@@ -262,14 +260,13 @@ This API does not require a request body.
 
 ### Get Block Storage 
 Return details of specified block storage.  
-
 ```
 GET /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -313,18 +310,17 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "volume": {
     "attachments": [],
     "links": [
       {
-        "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
         "rel": "bookmark"
       }
     ],
@@ -385,7 +381,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
     "volume": {
@@ -407,7 +402,7 @@ X-Auth-Token: {tokenId}
 
 #### Response
 
-| Name | Type | Attributes | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
 | volume | Body | Object | Information object for block storage details |
 | volume.attachments | Body | Object | Information object for block storage attachment |
@@ -435,7 +430,6 @@ X-Auth-Token: {tokenId}
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "volume": {
@@ -443,10 +437,10 @@ X-Auth-Token: {tokenId}
     "user_id": "94acd5b4d2bf47dda734e34a113f96ff",
     "attachments": [],
     "links": [{
-      "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
       "rel": "self"
     }, {
-      "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
       "rel": "bookmark"
     }],
     "availability_zone": "kr-pub-a",
@@ -483,7 +477,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -492,14 +486,14 @@ This API does not require a request body.
 | tokenId | Header | String | O | Token ID |
 
 #### Response
-This API does not return a response body.  
+This API does not return a response body.
 
 ---
 
 ### Create Image with Block Storage
 Create image from block storage. 
 
-At least 100KB space is required for basic initialization after image is created. If you have less space than that, initialization may fail. 
+At least 100KB of free space is required for basic initialization after image creation. The initialization operation may fail if the free space is less than this.
 
 ```
 POST /v2/{tenantId}/volumes/{volumeId}/action
@@ -518,12 +512,11 @@ X-Auth-Token: {tokenId}
 | os-volume_upload_image.force | Body | Boolean | - | Image creation allowed or not for block storage attached to instance <br>Default is false |
 | os-volume_upload_image.disk_format | Body | String | - | Image disk format |
 | os-volume_upload_image.container_format | Body | String | - | Image container format |
-| os-volume_upload_image.visibility | Body | String | - | Image visibility<br>Either`private`, or `shared` |
-| os-volume_upload_image.protected | Body | Boolean | - | Image protected or not</br>Unable to modify or delete, if protected=true |
+| os-volume_upload_image.visibility | Body | String | - | Image visibility<br>One of `private` or `shared` |
+| os-volume_upload_image.protected | Body | Boolean | - | Whether to protect image</br>Cannot be modified or deleted when protected=true |
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -543,7 +536,7 @@ X-Auth-Token: {tokenId}
 
 #### Response
 
-| Name | Type | Format | Description |
+| Name | Type | Property | Description |
 |---|---|---|---|
 | os-volume_upload_image | Body | Object | Response object creating block storage image |
 | os-volume_upload_image.status | Body | String | block storage status |
@@ -559,7 +552,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -605,8 +597,8 @@ X-Auth-Token: {tokenId}
 ---
 
 ## Snapshot
-### Snapshot Status
-Snapshots exist in various statues, and each status defines operations.  See the list of available statuses like below:
+### Snapshot status
+Snapshots exist in various statuses, and each status defines its own set of permissible operations. See the following list of volume statuses.
 
 | Status Name | Description                     |
 |--|-------------------------|
@@ -620,8 +612,8 @@ Snapshots exist in various statues, and each status defines operations.  See the
 | `restoring`| Restoring block storage from snapshot |
 | `error_deleting`| Error has occurred while deleting a snapshot |
 
-### List Snapshots 
-Return the list of snapshots. 
+### List Snapshots
+Returns the list of snapshots.
 
 ```
 GET /v2/{tenantId}/snapshots
@@ -629,7 +621,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -653,7 +645,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "snapshots": [
@@ -676,8 +667,8 @@ This API does not require a request body.
 
 ---
 
-### List Snapshot Details 
-Return the list of snapshot details. 
+### List Snapshots with Details
+Returns a list of snapshot details.
 
 ```
 GET /v2/{tenantId}/snapshots/detail
@@ -685,7 +676,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -711,7 +702,6 @@ This API does not require a request body.
 <details><summary>Example</summary>
 <p>
 
-
 ```json
 {
   "snapshots": [
@@ -736,8 +726,8 @@ This API does not require a request body.
 
 ---
 
-### Get Snapshot
-Return details of specified snapshot. 
+### View Snapshot
+Returns details of the specified snapshot.
 
 ```
 GET /v2/{tenantId}/snapshots/{snapshotId}
@@ -745,7 +735,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. .
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -757,11 +747,11 @@ This API does not require a request body. .
 
 | Name | Type | Format | Description |
 |---|---|---|---|
-| snapshot | Body | Object | Information object of snapshot details |
+| snapshot | Body | Object | Snapshot Details Object |
 | snapshot.status | Body | Enum | Snapshot status |
 | snapshot.description | Body | String | Snapshot description |
-| snapshot.os-extended-snapshot-attributes:progress | Body | String | Progress of snapshot creation |
-| snapshot.created_at | Body | Datetime | Snapshot creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.os-extended-snapshot-attributes:progress | Body | String | Snapshot creation progress |
+| snapshot.created_at | Body | Datetime | Snapshot creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`format |
 | snapshot.metadata | Body | Object | Snapshot metadata object |
 | snapshot.volume_id | Body | UUID | Original block storage ID of snapshot |
 | snapshot.os-extended-snapshot-attributes:project_id | Body | String | Tenant ID |
@@ -771,7 +761,6 @@ This API does not require a request body. .
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -803,7 +792,7 @@ POST /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
-#### Request 
+#### Request
 
 | Name | Type | Format | Required | Description                                       |
 |---|---|---|---|-------------------------------------------|
@@ -817,7 +806,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -837,10 +825,10 @@ X-Auth-Token: {tokenId}
 
 | Name | Type | Format | Description |
 |---|---|---|---|
-| snapshot | Body | Object | Information object of snapshot details |
+| snapshot | Body | Object | Snapshot Details Object |
 | snapshot.status | Body | Enum | Snapshot status |
 | snapshot.description | Body | String | Snapshot description |
-| snapshot.created_at | Body | Datetime | Snapshot creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshot.created_at | Body | Datetime | Snapshot creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`format |
 | snapshot.metadata | Body | Object | Snapshot metadata object |
 | snapshot.volume_id | Body | UUID | Original block storage ID of snapshot |
 | snapshot.size | Body | Integer | Original block storage size of snapshot (GB) |
@@ -849,7 +837,6 @@ X-Auth-Token: {tokenId}
 
 <details><summary>Example</summary>
 <p>
-
 
 ```json
 {
@@ -871,8 +858,8 @@ X-Auth-Token: {tokenId}
 
 ---
 
-### Delete Snapshot
-Delete snapshot as specified. 
+### Delete Snapshots
+Deletes a specified snapshot.
 
 ```
 DELETE /v2/{tenantId}/snapshots/{snapshotId}
@@ -880,7 +867,7 @@ X-Auth-Token: {tokenId}
 ```
 
 #### Request
-This API does not require a request body. 
+This API does not require a request body.
 
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
@@ -889,4 +876,4 @@ This API does not require a request body.
 | tokenId | Header | String | O | Token ID |
 
 #### Response
-This API does not require a request body. 
+This API does not return a response body.
