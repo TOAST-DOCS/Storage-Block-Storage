@@ -388,7 +388,6 @@ X-Auth-Token: {tokenId}
         "availability_zone": null,
         "source_volid": null,
         "description": null,
-        "multiattach": false,
         "snapshot_id": null,
         "name": null,
         "volume_type": null,
