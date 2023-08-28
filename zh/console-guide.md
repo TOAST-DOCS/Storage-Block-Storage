@@ -6,7 +6,7 @@ Create block storage to be attached to an instance.
 
 Block storage can be created with empty storage containing no data, or by snapshots of existing block storage.
 
-To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For volume type, choose either **HDD** or **SSD**, based on the required I/O performance.
+To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For block storage type, choose either **HDD** or **SSD**, based on the required I/O performance.
 
 You can also create block storage from snapshots. In this case, the size of block storage must be the same as or larger than that of a snapshot. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
 
@@ -20,7 +20,7 @@ The policies for encrypted block storage are as follows.
 
 * You cannot create a snapshot from encrypted block storage.
 * You cannot create encrypted block storage from a snapshot.
-* You cannot create an image from an instance whose default disk is encrypted block storage.
+* You cannot create an image from an instance that is using encrypted root block storage.  
 * Encrypted block storage cannot be replicated into a different region.
 * Due to encryption and decryption, I/O performance may be reduced compared to general block storage types (**HDD**, **SSD**).
 * You cannot change the symmetric key ID that is registered when creating encrypted block storage. To change the symmetric key, you must use the key rotation feature of Secure Key Manager.
@@ -56,7 +56,7 @@ If you attach empty block storage, it must be partitioned and formatted in the i
 
 ### Detach Block Storage
 
-Detach unnecessary block storage from an instance. Note, however, that default disk cannot be detached.
+Detach unnecessary block storage from an instance. Note, however, root block storage cannot be detached.
 
 You can detach block storage even while the instance is running. However, you must first unmount the block storage from the instance and detach the block storage in the console. Detaching while the block storage is mounted causes the following issues:
 
@@ -84,6 +84,11 @@ After requesting replication, you can check the replication status and whether t
 > [Note]
 > The replication function is a one-time operation, and changes to the original block storage after the replication are not reflected.
 
+<!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
+
+> [Caution]
+> To proceed with replication, at least 100KB of free space in block storage is required.
+
 ### Region
 
 Select a region to replicate to other than the region you are currently using.
@@ -95,3 +100,60 @@ Select the type of block storage to use in the region to which to replicate. You
 ### Availability Zone
 
 Select the availability zone to use in the region to which to replicate. You can select an availability zone that is different from the availability zone being used in the current region.
+
+## Troubleshooting Guide
+
+### An issue where an instance boots from unintended block storage
+
+The instance might boot with block storage additionally attached to the instance mounted on `/`. This usually happens when you attach block storage created with the instance's OS image to another instance additionally.
+
+Linux determines which block storage to mount on `/` using `etc/fstab` at boot time. For the OS images used by NHN Cloud, the block storage to mount is determined based on the file system UUID. If block storage with the same file system UUID value is attached, unintended block storage may be mounted on `/`.
+
+```console
+# cat /etc/fstab
+...
+UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaults        0 0
+```
+
+You can check the file system UUID of block storage with the `blkid` command.
+
+```console
+# blkid
+/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+/dev/vdb1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+```
+
+As shown above, if the file system UUID of the additionally attached block storage is the same, the additionally attached block storage might be mounted on `/` depending on how the Linux distribution works.
+
+Use the following steps to solve the problem by making the file system UUIDs of the two block storage different.
+
+1. After stopping the instance, [detach the block storage](console-guide/#detach-block-storage) that is causing the problem (that is, the one that was mounted on `/` unexpectedly).
+
+2. Start the instance.
+
+3. When booting is complete, [attach the block storage](console-guide/#attach-block-storage) that is causing the problem.
+
+4. Use the command below to change the file system UUID of the block storage that is causing the problem. Execute the command below according to the type of block storage causing the problem. The type of block storage can be found with the `blkid` command.
+
+	If the file system of the block storage causing the problem is ext4:
+
+	<pre><code class="language-console"># tune2fs -U random /dev/vdb1
+	tune2fs 1.42.9 (28-Dec-2013)
+	Setting the UUID on this filesystem could take some time.
+	Proceed anyway (or wait 5 seconds to proceed) ? (y,N) y
+	</code></pre>
+
+	If the file system of the block storage causing the problem is xfs:
+
+	<pre><code class="language-console"># xfs_admin -U generate /dev/vdb1
+	Clearing log and setting UUID
+	writing all SBs
+	new UUID = 0037c590-0545-4736-bcdc-d052681eb5f5
+	</code></pre>
+
+5. Verify that the file system UUID has been changed.
+
+	<pre><code class="language-console"># blkid
+	/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
+	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
+	</code></pre>
