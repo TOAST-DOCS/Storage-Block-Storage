@@ -149,8 +149,10 @@ mkdir -p /mnt/vdb
 マウント対象ディレクトリが準備されている場合は、次のようにブロックストレージを登録します。
 
 ```
-# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime 1 2" >> /etc/fstab
+# echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime,nofail 1 2" >> /etc/fstab
 ```
+
+> [注意]
 
 最後に`/etc/fstab`の内容を反映する必要があります。 `mount -a`コマンドで`/etc/fstab`に登録された全てのブロックストレージをマウントします。
 

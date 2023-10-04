@@ -157,3 +157,11 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 	/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
 	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
 	</code></pre>
+
+### 블록 스토리지의 마운트에 실패하여 인스턴스가 동작하지 않는 문제
+
+추가 블록 스토리지를 추가할 때 `/etc/fstab`를 잘못 설정하였다면 부팅과정에서 볼륨 마운트에 실패하고 인스턴스가 emergency mode로 진입할 수 있습니다.
+
+이러한 상황을 미연에 방지하기 위하여 추가 블록 스토리지를 `/etc/fstab`에 등록할 때에는 [블록 스토리지 마운트 가이드](/Storage/Block%20Storage/ko/overview/#_4)를 따라 `nofail`옵션을 사용하는 것을 권장합니다.
+
+만약 `/etc/fstab`를 잘못 수정하여 인스턴스가 정상적으로 부팅되지 않는다면 고객센터로 문의해주시기 바랍니다.
