@@ -202,7 +202,7 @@ This API does not require a request body.
 | volumes.source_volid | Body | UUID | Block storage ID specified when creating block storage |
 | volumes.consistencygroup_id | Body | UUID | ID of block storage group |
 | volumes.name | Body | String | Name of block storage |
-| volumes.bootable | Body | Boolean | block storage bootable or not |
+| volumes.bootable | Body | String | block storage bootable or not |
 | volumes.created_at | Body | Datetime | Time of block storage creation <br>In the format of `YYYY-MM-DDThh:mm:ss.SSSSSS` |
 | volumes.os-volume-replication:driver_data | Body | String | block storage replication data |
 | volumes.replication_status | Body | String | block storage replication status |
@@ -302,7 +302,7 @@ This API does not require a request body.
 | volume.source_volid | Body | UUID | block storage ID specified when creating block storage |
 | volume.consistencygroup_id | Body | UUID | block storage consistency block storage ID |
 | volume.name | Body | String | block storage name |
-| volume.bootable | Body | Boolean | block storage bootable |
+| volume.bootable | Body | String | block storage bootable |
 | volume.created_at | Body | Datetime | block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
 | volume.os-volume-replication:driver_data | Body | String | block storage replication data |
 | volume.replication_status | Body | String | block storage replication status |
@@ -421,7 +421,7 @@ X-Auth-Token: {tokenId}
 | volume.multiattach | Body | Boolean | Attachable to many instances |
 | volume.consistencygroup_id | Body | UUID | block storage consistency group ID |
 | volume.name | Body | String | block storage name |
-| volume.bootable | Body | Boolean | block storage bootable |
+| volume.bootable | Body | String | block storage bootable |
 | volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
 | volume.os-volume-replication:driver_data | Body | String | block storage replication data |
 | volume.replication_status | Body | String | block storage replication status |
