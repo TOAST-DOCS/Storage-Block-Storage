@@ -152,7 +152,7 @@ mkdir -p /mnt/vdb
 # echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime,nofail 1 2" >> /etc/fstab
 ```
 
-> [注意]
+> 注意] ボリュームマウントに失敗しても起動できるように `nofail` オプションを追加することを推奨します。
 
 最後に`/etc/fstab`の内容を反映する必要があります。 `mount -a`コマンドで`/etc/fstab`に登録された全てのブロックストレージをマウントします。
 
