@@ -158,7 +158,7 @@ Use the following steps to solve the problem by making the file system UUIDs of 
 	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
 	</code></pre>
 
-### An issue where an instance does not operate becauste the block storage mount fails
+### An issue where an instance does not operate because the block storage mount fails
 
 If you set `/etc/fstab` incorrectly when adding block storage, the volume mount may fail during boot and the instance may enter emergency mode.
 
