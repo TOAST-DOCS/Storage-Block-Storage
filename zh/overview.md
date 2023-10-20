@@ -127,7 +127,7 @@ When the mount target directory is ready, register block storage as follows.
 # echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime,nofail 1 2" >> /etc/fstab
 ```
 
-> [Caution] In the example above, the `nofail` option has been added so that booting can be performed even if the volume mount fails.
+> [Caution] It is recommended to add the `nofail` option so that booting can be performed even if the volume mount fails.
 
 Finally, you need to reflect the contents of `/etc/fstab`. Use the `mount -a` command to mount all block storage registered in `/etc/fstab`.
 ```
