@@ -157,3 +157,11 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 	/dev/vda1: UUID="6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02" TYPE="xfs"
 	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
 	</code></pre>
+
+### ブロックストレージのマウントに失敗してインスタンスが動作しない問題
+
+ブロックストレージを追加する時、`/etc/fstab`を誤って設定すると、起動過程でボリュームマウントに失敗し、インスタンスがemergency modeに入ることがあります。
+
+このような状況を防ぐために、追加ブロックストレージを`/etc/fstab`に登録する場合は、[ブロックストレージマウントガイド](/Storage/Block%20Storage/ja/overview/#_4)に従って、`nofail`オプションを使用することを推奨します。
+
+もし`/etc/fstab`を誤って修正し、インスタンスが正常に起動しない場合は、サポートにお問い合わせください。

@@ -202,7 +202,7 @@ X-Auth-Token: {tokenId}
 | volumes.source_volid | Body | UUID | ブロックストレージ作成時に指定したVolume ID |
 | volumes.consistencygroup_id | Body | UUID | ブロックストレージConsistencyグループID |
 | volumes.name | Body | String | ブロックストレージ名 |
-| volumes.bootable | Body | Boolean | ブロックストレージ起動可否 |
+| volumes.bootable | Body | String | ブロックストレージ起動可否 |
 | volumes.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | volumes.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
 | volumes.replication_status | Body | String | ブロックストレージ複製状態 |
@@ -301,7 +301,7 @@ X-Auth-Token: {tokenId}
 | volume.source_volid | Body | UUID | ブロックストレージ作成時に指定したブロックストレージID                            |
 | volume.consistencygroup_id | Body | UUID | ブロックストレージConsistencyグループID                          |
 | volume.name | Body | String | ブロックストレージ名                                       |
-| volume.bootable | Body | Boolean | ブロックストレージ起動可否                                 |
+| volume.bootable | Body | String | ブロックストレージ起動可否                                 |
 | volume.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`     |
 | volume.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ                                   |
 | volume.replication_status | Body | String | ブロックストレージ複製状態                                    |
@@ -419,7 +419,7 @@ X-Auth-Token: {tokenId}
 | volume.description | Body | String | ブロックストレージの説明 |
 | volume.multiattach | Body | Boolean | 複数のインスタンスへの接続可否 |
 | volume.name | Body | String | ブロックストレージ名 |
-| volume.bootable | Body | Boolean | ブロックストレージ起動可否 |
+| volume.bootable | Body | String | ブロックストレージ起動可否 |
 | volume.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | volume.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
 | volume.replication_status | Body | String | ブロックストレージ複製状態 |

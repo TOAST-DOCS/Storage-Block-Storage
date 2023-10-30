@@ -202,7 +202,7 @@ X-Auth-Token: {tokenId}
 | volumes.source_volid | Body | UUID | 블록 스토리지 생성 시 지정한 블록 스토리지 ID |
 | volumes.consistencygroup_id | Body | UUID | 블록 스토리지  그룹 ID |
 | volumes.name | Body | String | 블록 스토리지 이름 |
-| volumes.bootable | Body | Boolean | 블록 스토리지 부팅 가능 여부 |
+| volumes.bootable | Body | String | 블록 스토리지 부팅 가능 여부 |
 | volumes.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volumes.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volumes.replication_status | Body | String | 블록 스토리지 복제 상태 |
@@ -301,7 +301,7 @@ X-Auth-Token: {tokenId}
 | volume.source_volid | Body | UUID | 블록 스토리지 생성 시 지정한 블록 스토리지 ID                            |
 | volume.consistencygroup_id | Body | UUID | 블록 스토리지 컨시스턴시(일관성) 그룹 ID                          |
 | volume.name | Body | String | 블록 스토리지 이름                                        |
-| volume.bootable | Body | Boolean | 블록 스토리지 부팅 가능 여부                                  |
+| volume.bootable | Body | String | 블록 스토리지 부팅 가능 여부                                  |
 | volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`     |
 | volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터                                    |
 | volume.replication_status | Body | String | 블록 스토리지 복제 상태                                     |
@@ -419,7 +419,7 @@ X-Auth-Token: {tokenId}
 | volume.description | Body | String | 블록 스토리지 설명 |
 | volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
 | volume.name | Body | String | 블록 스토리지 이름 |
-| volume.bootable | Body | Boolean | 블록 스토리지 부팅 가능 여부 |
+| volume.bootable | Body | String | 블록 스토리지 부팅 가능 여부 |
 | volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volume.replication_status | Body | String | 블록 스토리지 복제 상태 |
