@@ -127,7 +127,7 @@ mkdir -p /mnt/vdb
 # echo "UUID=5a4004f4-3ba6-4484-9459-7c2b321b727f /mnt/vdb xfs defaults,nodev,noatime,nofail 1 2" >> /etc/fstab
 ```
 
-> [참고] 위 예제에서는 볼륨 마운트에 실패하더라도 부팅이 될 수 있도록 `nofail` 옵션을 추가하였습니다.
+> [주의] 볼륨 마운트에 실패하더라도 부팅이 될 수 있도록 `nofail` 옵션을 추가하는 것을 권장합니다.
 
 마지막으로 `/etc/fstab`의 내용을 반영해야 합니다. `mount -a` 명령어로 `/etc/fstab`에 등록된 모든 블록 스토리지를 마운트 합니다.
 ```
