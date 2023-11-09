@@ -1,5 +1,8 @@
 ## Storage > Block Storage > Release Notes
 
+### 2023. 11. 28.
+* 暗号化高性能ブロックストレージタイプ(Encrypted Performance Optimized SSD)が追加されます。
+
 ### 2023. 08. 29.
 
 * 高性能ブロックストレージタイプ(Performance Optimized SSD)が追加されます。
