@@ -1,8 +1,5 @@
 ## Storage > Block Storage > 릴리스 노트
 
-### 2023. 11. 28.
-* 암호화 고성능 블록 스토리지 타입(Encrypted Performance Optimized SSD)이 추가됩니다.
-
 ### 2023. 08. 29.
 
 * 고성능 블록 스토리지 타입(Performance Optimized SSD)이 추가됩니다.

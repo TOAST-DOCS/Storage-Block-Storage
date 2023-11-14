@@ -1,8 +1,5 @@
 ## Storage > Block Storage > Release Notes
 
-### November 28, 2023
-* Added an encrypted high-performance block storage type (Encrypted Performance Optimized SSD).
-
 ### August 29, 2023
 
 * Added a high-performance block storage type (Performance Optimized SSD).
