@@ -376,6 +376,9 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | - | 블록 스토리지 타입 이름                  |
 | volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID, 생략하면 빈 블록 스토리지가 생성됨 |
 | volume.metadata | Body | Object | - | 블록 스토리지 메타데이터 객체               |
+| volume.nhn_encryption            | Body | Object | - | 블록 스토리지 암호화 정보 |
+| volume.nhn_encryption.skm_appkey | Body | String | O | Secure Key Manager 상품의 앱키 |
+| volume.nhn_encryption.skm_key_id | Body | String | O | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
 
 <details><summary>예시</summary>
 <p>
