@@ -73,13 +73,14 @@ X-Auth-Token: {tokenId}
 ### ブロックストレージ状態
 ブロックストレージはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
 
-| 状態 명 | 説明                        |
+| 状態名 | 説明                        |
 |--|----------------------------|
 | `creating` | 作成中の状態                  |
 | `available` | ブロックストレージが作成され、接続する準備ができた状態     |
 | `attaching`| ブロックストレージがインスタンスに接続中の状態        |
 | `detaching`| ブロックストレージが接続解除中の状態           |
 | `in-use`| ブロックストレージがインスタンスに接続された状態          |
+| `reserved`| 終了したインスタンスのルートブロックストレージ状態        |
 | `maintenance`| ブロックストレージが他のホスト機器に移行される状態   |
 | `deleting`| ブロックストレージが削除中の状態              |
 | `awaiting-transfer`| ブロックストレージが転送待機中の状態           |
@@ -376,6 +377,9 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | - | ブロックストレージタイプ名                 |
 | volume.snapshot_id | Body | UUID | - | 原本スナップショットID。省略すると空のブロックストレージが作成される。 |
 | volume.metadata | Body | Object | - | ブロックストレージメタデータオブジェクト              |
+| volume.nhn_encryption            | Body | Object | - | ブロックストレージ暗号化情報 |
+| volume.nhn_encryption.skm_appkey | Body | String | - | Secure Key Manager商品のアプリケーションキー |
+| volume.nhn_encryption.skm_key_id | Body | String | - | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
 
 <details><summary>例</summary>
 <p>
