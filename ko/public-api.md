@@ -208,6 +208,9 @@ X-Auth-Token: {tokenId}
 | volumes.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volumes.replication_status | Body | String | 블록 스토리지 복제 상태 |
 | volumes.volumes_links  | Body | Object | 페이지 매김(페이지네이션)을 위한 정보 객체(다음 목록을 가리키는 경로)<br>`limit`, `offset`을 추가한 경우 반환 |
+| volumes.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
+| volumes.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
 
 <details><summary>예시</summary>
 <p>
@@ -306,6 +309,9 @@ X-Auth-Token: {tokenId}
 | volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`     |
 | volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터                                    |
 | volume.replication_status | Body | String | 블록 스토리지 복제 상태                                     |
+| volume.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
+| volume.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
+| volume.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
 
 <details><summary>예시</summary>
 <p>
@@ -427,6 +433,9 @@ X-Auth-Token: {tokenId}
 | volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volume.replication_status | Body | String | 블록 스토리지 복제 상태 |
+| volume.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
+| volume.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
+| volume.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
 
 <details><summary>예시</summary>
 <p>
