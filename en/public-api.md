@@ -208,7 +208,9 @@ This API does not require a request body.
 | volumes.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volumes.replication_status | Body | String | Block storage replication status |
 | volumes.volumes_links  | Body | Object | Information object (pointing to the next list) for pagination <br>Return when`limit` and `offset` are added |
-
+| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 
 <details><summary>Example</summary>
@@ -307,6 +309,9 @@ This API does not require a request body.
 | volume.created_at | Body | Datetime | Block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
 | volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volume.replication_status | Body | String | Block storage replication status |
+| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 <details><summary>Example</summary>
 <p>
@@ -429,6 +434,9 @@ X-Auth-Token: {tokenId}
 | volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
 | volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volume.replication_status | Body | String | Block storage replication status |
+| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 <details><summary>Example</summary>
 <p>
