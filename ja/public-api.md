@@ -208,6 +208,9 @@ X-Auth-Token: {tokenId}
 | volumes.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
 | volumes.replication_status | Body | String | ブロックストレージ複製状態 |
 | volumes.volumes_links  | Body | Object | ページネーション用の情報オブジェクト(次のリストを指すパス)<br>`limit`、`offset`を追加した場合に返す |
+| volumes.nhn_encryption            | Body | Object | ブロックストレージの暗号化情報 |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵バージョン |
+| volumes.nhn_encryption.skm_key_id | Body | String | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
 
 <details><summary>例</summary>
 <p>
@@ -306,6 +309,10 @@ X-Auth-Token: {tokenId}
 | volume.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`     |
 | volume.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ                                   |
 | volume.replication_status | Body | String | ブロックストレージ複製状態                                    |
+| volume.nhn_encryption            | Body | Object | ブロックストレージの暗号化情報 |
+| volume.nhn_encryption.skm_key_version | Body | Integer | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵バージョン |
+| volume.nhn_encryption.skm_key_id | Body | String | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
+
 
 <details><summary>例</summary>
 <p>
@@ -427,6 +434,9 @@ X-Auth-Token: {tokenId}
 | volume.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | volume.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
 | volume.replication_status | Body | String | ブロックストレージ複製状態 |
+| volume.nhn_encryption            | Body | Object | ブロックストレージの暗号化情報 |
+| volume.nhn_encryption.skm_key_version | Body | Integer | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵バージョン |
+| volume.nhn_encryption.skm_key_id | Body | String | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
 
 <details><summary>例</summary>
 <p>
