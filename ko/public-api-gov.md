@@ -80,6 +80,7 @@ X-Auth-Token: {tokenId}
 | `attaching`| 블록 스토리지가 인스턴스에 연결 중인 상태         |
 | `detaching`| 블록 스토리지가 연결 해제 중인 상태            |
 | `in-use`| 블록 스토리지가 인스턴스에 연결된 상태           |
+| `reserved`| 종료된 인스턴스의 루트 블록 스토리지 상태         |
 | `maintenance`| 블록 스토리지가 다른 호스트 장비로 이전 중인 상태    |
 | `deleting`| 블록 스토리지를 삭제 중인 상태               |
 | `awaiting-transfer`| 블록 스토리지가 전송을 기다리는 상태            |
