@@ -80,6 +80,7 @@ Block storage is available in many statuses with operations defined for each sta
 | `attaching`| Attaching block storage to an instance |
 | `detaching` | Detaching block storage |
 | `in-use`| block storage is attached to an instance |
+| `reserved`| Status of root block storage for terminated instances       |
 | `maintenance`| block storage is migrating to another host equipment |
 | `deleting`| Deleting block storage |
 | `awaiting-transfer`| block storage is waiting for transfer |
@@ -111,7 +112,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | block storage count to return <br>Default is 1000 |
+| limit | Query | Integer | - | Block storage count to return <br>Default is 1000 |
 | offset | Query | Integer | - | Start point of the list to return<br>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br>Return as much as the `limit` after block storage specified as the `marker` according to the sorting order |
 
@@ -170,7 +171,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | block storage count to return<br>Default is 1000 |
+| limit | Query | Integer | - | Block storage count to return<br>Default is 1000 |
 | offset | Query | Integer | - | Start point of the list to return <br/>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br/>Return as much as `limit` after block storage specified as the `marker` according to the sorting order |
 
@@ -204,10 +205,12 @@ This API does not require a request body.
 | volumes.name | Body | String | Name of block storage |
 | volumes.bootable | Body | String | block storage bootable or not |
 | volumes.created_at | Body | Datetime | Time of block storage creation <br>In the format of `YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| volumes.os-volume-replication:driver_data | Body | String | block storage replication data |
-| volumes.replication_status | Body | String | block storage replication status |
+| volumes.os-volume-replication:driver_data | Body | String | Block storage replication data |
+| volumes.replication_status | Body | String | Block storage replication status |
 | volumes.volumes_links  | Body | Object | Information object (pointing to the next list) for pagination <br>Return when`limit` and `offset` are added |
-
+| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 
 <details><summary>Example</summary>
@@ -282,30 +285,33 @@ This API does not require a request body.
 | volume.attachments | Body | Object | Information object for block storage attachment |
 | volume.attachments.server_id | Body | UUID | ID of instance attached to block storage |
 | volume.attachments.attachment_id | Body | UUID | ID of block storage attachment |
-| volume.attachments.volume_id | Body | UUID | block storage ID |
+| volume.attachments.volume_id | Body | UUID | Block storage ID |
 | volume.attachments.device | Body | String | Name of equipment within instance |
-| volume.attachments.id | Body | String | block storage ID |
+| volume.attachments.id | Body | String | Block storage ID |
 | volume.links | Body | Object | Reference object for block storage resource link |
-| volume.availability_zone | Body | String | block storage availability area |
-| volume.encrypted | Body | Boolean | block storage encrypted or not |
-| volume.os-volume-replication:extended_status | Body | String | block storage extended status |
-| volume.volume_type | Body | String | block storage type name |
+| volume.availability_zone | Body | String | Block storage availability area |
+| volume.encrypted | Body | Boolean | Block storage encrypted or not |
+| volume.os-volume-replication:extended_status | Body | String | Block storage extended status |
+| volume.volume_type | Body | String | Block storage type name |
 | volume.snapshot_id | Body | UUID | Snapshot ID specified when creating block storage |
-| volume.id | Body | UUID | block storage ID |
-| volume.size | Body | Integer | block storage size (GB) |
-| volume.user_id | Body | String | block storage owner ID |
+| volume.id | Body | UUID | Block storage ID |
+| volume.size | Body | Integer | Block storage size (GB) |
+| volume.user_id | Body | String | Block storage owner ID |
 | volume.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
-| volume.metadata | Body | Object | block storage metadata object |
-| volume.status | Body | Enum | block storage status |
-| volume.description | Body | String | block storage description |
+| volume.metadata | Body | Object | Block storage metadata object |
+| volume.status | Body | Enum | Block storage status |
+| volume.description | Body | String | Block storage description |
 | volume.multiattach | Body | Boolean | Multiple attachment is available or not<br>With `true`, simultaneous attachment to many instances is enabled |
-| volume.source_volid | Body | UUID | block storage ID specified when creating block storage |
-| volume.consistencygroup_id | Body | UUID | block storage consistency block storage ID |
-| volume.name | Body | String | block storage name |
-| volume.bootable | Body | String | block storage bootable |
-| volume.created_at | Body | Datetime | block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
-| volume.os-volume-replication:driver_data | Body | String | block storage replication data |
-| volume.replication_status | Body | String | block storage replication status |
+| volume.source_volid | Body | UUID | Block storage ID specified when creating block storage |
+| volume.consistencygroup_id | Body | UUID | Block storage consistency block storage ID |
+| volume.name | Body | String | Block storage name |
+| volume.bootable | Body | String | Block storage bootable |
+| volume.created_at | Body | Datetime | Block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
+| volume.replication_status | Body | String | Block storage replication status |
+| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 <details><summary>Example</summary>
 <p>
@@ -370,13 +376,16 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | volume | Body | Object | O | Object requesting of creating block storage |
-| volume.size | Body | Integer | O | block storage size (GB) |
-| volume.description | Body | String | - | block storage description |
+| volume.size | Body | Integer | O | Block storage size (GB) |
+| volume.description | Body | String | - | Block storage description |
 | volume.availability_zone | Body | String | - | Name of voblock storagelume availability area |
-| volume.name | Body | String | - | block storage name |
-| volume.volume_type | Body | String | - | block storage type name |
+| volume.name | Body | String | - | Block storage name |
+| volume.volume_type | Body | String | - | Block storage type name |
 | volume.snapshot_id | Body | UUID | - | Original snapshot ID: if left blank, empty block storage is created |
-| volume.metadata | Body | Object | - | block storage metadata object |
+| volume.metadata | Body | Object | - | Block storage metadata object |
+| volume.nhn_encryption            | Body | Object | - | Block storage encryption information |
+| volume.nhn_encryption.skm_appkey | Body | String | - | Appkeys for Secure Key Manager |
+| volume.nhn_encryption.skm_key_id | Body | String | - | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 <details><summary>Example</summary>
 <p>
@@ -423,8 +432,11 @@ X-Auth-Token: {tokenId}
 | volume.name | Body | String | block storage name |
 | volume.bootable | Body | String | block storage bootable |
 | volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
-| volume.os-volume-replication:driver_data | Body | String | block storage replication data |
-| volume.replication_status | Body | String | block storage replication status |
+| volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
+| volume.replication_status | Body | String | Block storage replication status |
+| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
+| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 <details><summary>Example</summary>
 <p>
@@ -538,15 +550,15 @@ X-Auth-Token: {tokenId}
 | Name | Type | Property | Description |
 |---|---|---|---|
 | os-volume_upload_image | Body | Object | Response object creating block storage image |
-| os-volume_upload_image.status | Body | String | block storage status |
+| os-volume_upload_image.status | Body | String | Block storage status |
 | os-volume_upload_image.image_name | Body | String | Image name |
 | os-volume_upload_image.disk_format | Body | String | Image disk format |
 | os-volume_upload_image.container_format | Body | String | Image container format |
 | os-volume_upload_image.updated_at | Body | Datetime | Image modification time |
 | os-volume_upload_image.image_id | Body | UUID | Image ID |
-| os-volume_upload_image.display_description | Body | String | block storage description |
-| os-volume_upload_image.id | Body | UUID | block storage ID |
-| os-volume_upload_image.size | Body | Integer | block storage size (GB) |
+| os-volume_upload_image.display_description | Body | String | Block storage description |
+| os-volume_upload_image.id | Body | UUID | Block storage ID |
+| os-volume_upload_image.size | Body | Integer | Block storage size (GB) |
 | os-volume_upload_image.volume_type | Body | Object | Information object for block storage type |
 
 <details><summary>Example</summary>
