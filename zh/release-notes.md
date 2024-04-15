@@ -1,5 +1,8 @@
 ## Storage > Block Storage > Release Notes
+### April 23, 2024
 
+* Ended the use of u2-only storage type in Korea (Pangyo) region.
+  
 ### August 29, 2023
 
 * Added a high-performance block storage type (Performance Optimized SSD).
