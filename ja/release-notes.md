@@ -1,5 +1,9 @@
 ## Storage > Block Storage > Release Notes
 
+### 2024. 04. 23.
+
+* 韓国(パンギョ)リージョンでu2専用ストレージタイプの利用が終了します。
+
 ### 2023. 08. 29.
 
 * 高性能ブロックストレージタイプ(Performance Optimized SSD)が追加されます。
