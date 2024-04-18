@@ -5,7 +5,6 @@
   
 ### August 29, 2023
 
-* Added a high-performance block storage type (Performance Optimized SSD).
 * Changed words such as volume and disk to **Block Storage**.
 
 ### May 30, 2023
