@@ -39,6 +39,66 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 
 一度削除されたブロックストレージは二度と復旧できません。
 
+## ブロックストレージサイズの変更
+
+ブロックストレージのサイズを変更できます。ブロックストレージのサイズは小さくすることはできず、大きくすることしかできません。
+
+インスタンスに接続されたブロックストレージの場合、下記を参考にしてパーティションとファイルシステムを拡張する必要があります。
+
+### Linuxインスタンス
+
+#### パーティション拡張
+
+1. ブロックストレージのパーティションを確認します。
+
+        # sudo lsblk
+
+    パーティションが存在しない場合、下記の「ファイルシステムの拡張」に移動します。
+
+2. パーティションを拡張します。
+
+    例えば、`/dev/vda`デバイスの`1番パーティション`を拡張する場合は下記のようにします。
+
+        # sudo growpart /dev/vda 1
+
+3.拡張されたパーティションを確認します。
+
+        # sudo lsblk
+
+#### ファイルシステムの拡張
+
+1. 拡張するファイルシステムのタイプを確認します。
+
+        # df -hT
+
+2.ファイルシステムの種類によって下記のコマンドを入力して拡張します。
+
+    **[XFSファイルシステム]**例えば、`/`にマウントされたファイルシステムを拡張する場合は下記のようにします。
+
+        # sudo xfs_growfs -d /
+
+    **[Ext4ファイルシステム]**例えば、`/dev/vda`デバイスのファイルシステムを拡張する場合は下記のようにします。
+
+        # sudo resize2fs /dev/vda    
+
+3.拡張されたファイルシステムを確認します。
+
+        # df -hT
+
+
+### Windowsインスタンス
+
+1. **Run**で**diskmgmt.msc**と入力し、**OK**をクリックしてディスク管理ユーティリティを実行します。
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_01.png)
+2.ブロックストレージに追加されたサイズだけ**Unallocated**の状態で表示されます。拡張されたドライブを右クリックした後、**Extend Volume...**をクリックしてボリューム拡張ウィザードを実行します。
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_02.png)
+3.ボリューム拡張ウィザードで**Next**をクリックします。**Select the amount of space in MB**に拡張するメガバイト数を入力します。
+
+    入力可能な最大メガバイト数は**Maximum available space in MB**を参照してください。もう一度**Next**を押してボリューム拡張ウィザードを完了します。
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_03.png)
+4. **This PC** で拡張されたドライブを確認します。
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
+
 ## 接続の管理
 
 ### ブロックストレージの接続
@@ -75,7 +135,7 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 
 ブロックストレージを他のリージョンに複製して利用できます。ブロックストレージがインスタンスに接続されている状態でも複製できますが、データの整合性と安定性を保障するためにインスタンスを終了するか、接続を解除してから複製することを推奨します。
 
-複製リクエスト後、複製状態および成否は[複製状況]で確認できます。
+複製リクエスト後、複製状態および成否は[複製結果]で確認できます。
 
 > [参考]
 > レプリケーション機能は一度きりであり、それ以降の元のブロックストレージの変動事項は反映されません。
