@@ -1,4 +1,11 @@
 ## Storage > Block Storage > Release Notes
+
+### May 28, 2024
+
+* You can create a snapshot for encrypted block storage.
+* You can perform cross-region replication of encrypted block storage.
+* Added the feature to change the block storage size.
+
 ### April 23, 2024
 
 * Ended the use of u2-only storage type in Korea (Pangyo) region.
