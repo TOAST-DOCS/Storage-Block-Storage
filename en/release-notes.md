@@ -1,11 +1,17 @@
 ## Storage > Block Storage > Release Notes
+
+### May 28, 2024
+
+* You can create a snapshot for encrypted block storage.
+* You can perform cross-region replication of encrypted block storage.
+* Added the feature to change the block storage size.
+
 ### April 23, 2024
 
 * Ended the use of u2-only storage type in Korea (Pangyo) region.
   
 ### August 29, 2023
 
-* Added a high-performance block storage type (Performance Optimized SSD).
 * Changed words such as volume and disk to **Block Storage**.
 
 ### May 30, 2023

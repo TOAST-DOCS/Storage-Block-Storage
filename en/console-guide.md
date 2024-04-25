@@ -18,10 +18,6 @@ You can create encrypted block storage by selecting **Encrypted HDD** or **Encry
 
 The policies for encrypted block storage are as follows.
 
-* You cannot create a snapshot from encrypted block storage.
-* You cannot create encrypted block storage from a snapshot.
-* You cannot create an image from an instance that is using encrypted root block storage.  
-* Encrypted block storage cannot be replicated into a different region.
 * Due to encryption and decryption, I/O performance may be reduced compared to general block storage types (**HDD**, **SSD**).
 * You cannot change the symmetric key ID that is registered when creating encrypted block storage. To change the symmetric key, you must use the key rotation feature of Secure Key Manager.
 * After selecting encrypted block storage, the **Rotate Key** button allows you to re-encrypt block storage encrypted with an older version of the key with a newer version of the key.
@@ -42,6 +38,68 @@ Check the following before deleting block storage:
 * You cannot delete block storage which has snapshots. Delete all snapshots of the block storage.
 
 Once deleted, block storage cannot be restored.
+
+
+## Change Block Storage Size
+
+You can change the size of block storage. You cannot decrease the size of block storage, only increase it.
+
+For block storage attached to an instance, you must extend the partition and file system as described below.
+
+### Linux Instance
+
+#### Extend Partition
+
+1. Check the partitions in block storage.
+
+        # sudo lsblk
+
+    If the partition does not exist, go to `Extend File System` below.
+
+2. Extend the partition.
+
+    For example, if you want to extend `partition 1`on the `/dev/vda` device, proceed as the following.
+
+        # sudo growpart /dev/vda 1
+
+3. Check the extended partition.
+
+        # sudo lsblk
+
+#### Extend File System
+
+1. Check the type of file system you want to extend.
+
+        # df -hT
+
+2. Depending on the type of file system, enter the command as follows to extend.
+ 
+    **[XFS file system]** For example, if you want to extend a file system mounted on ` /`, proceed as the following.
+
+        # sudo xfs_growfs -d /
+
+    **[Ext4 file system]** For example, if you want to extend the file system on the `/dev/vda` device, proceed as the following.
+
+        # sudo resize2fs /dev/vda    
+
+3. Check the extended file system.
+
+        # df -hT
+
+   
+### Windows Instance
+
+1. In **Run**, enter **diskmgmt.msc** and click **OK** to run the Disk Management utility.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_01.png)
+2. It will be marked as **Unallocated** for the size added to the block storage. Right-click the extended drive and click **Extend Volume...** to run the Extend Volume Wizard.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_02.png)
+3. In the Extend Volume Wizard, click **Next**. In **Select the amount of space in MB**, enter the number of megabytes to extend.
+
+    For the maximum number of megabytes you can enter, see **Maximum available space in MB**. Click **Next**again to complete the Extend Volume Wizard.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_03.png)
+4. Check the extended drive in **This PC**.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
+
 
 ## Manage Attachment
 
@@ -79,7 +137,7 @@ Create a read-only copy of the block storage. Although block storage snapshots c
 
 You can use block storage by replicating it to another region. Although block storage can be replicated while being attached to an instance, it is recommended that you stop the instance or detach the block storage from the instance and proceed with replication to ensure data consistency and reliability.
 
-After requesting replication, you can check the replication status and whether the replication is successful or not in **Replication Status**.
+After requesting replication, you can check the replication status and whether the replication is successful or not in **Replication Result**.
 
 > [Note]
 > The replication function is a one-time operation, and changes to the original block storage after the replication are not reflected.
