@@ -18,10 +18,6 @@ You can create encrypted block storage by selecting **Encrypted HDD** or **Encry
 
 The policies for encrypted block storage are as follows.
 
-* You cannot create a snapshot from encrypted block storage.
-* You cannot create encrypted block storage from a snapshot.
-* You cannot create an image from an instance that is using encrypted root block storage.  
-* Encrypted block storage cannot be replicated into a different region.
 * Due to encryption and decryption, I/O performance may be reduced compared to general block storage types (**HDD**, **SSD**).
 * You cannot change the symmetric key ID that is registered when creating encrypted block storage. To change the symmetric key, you must use the key rotation feature of Secure Key Manager.
 * After selecting encrypted block storage, the **Rotate Key** button allows you to re-encrypt block storage encrypted with an older version of the key with a newer version of the key.
