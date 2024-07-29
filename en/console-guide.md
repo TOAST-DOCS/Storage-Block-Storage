@@ -135,21 +135,28 @@ Create a read-only copy of the block storage. Although block storage snapshots c
 
 ## Replicate Block Storage
 
-You can use block storage by replicating it to another region. Although block storage can be replicated while being attached to an instance, it is recommended that you stop the instance or detach the block storage from the instance and proceed with replication to ensure data consistency and reliability.
+You can use block storage by replicating it. Although block storage can be replicated while being attached to an instance, it is recommended that you stop the instance or detach the block storage from the instance and proceed with replication to ensure data consistency and reliability.
 
 After requesting replication, you can check the replication status and whether the replication is successful or not in **Replication Result**.
 
 > [Note]
 > The replication function is a one-time operation, and changes to the original block storage after the replication are not reflected.
 
-<!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
+<!-- For newline -->
 
 > [Caution]
 > To proceed with replication, at least 100KB of free space in block storage is required.
 
+### Target Project
+
+Select a target project for which you want to create a replica.
+
+* Same project: Replicate to the same project
+* Different project: Replicate to another project to which you belong
+
 ### Region
 
-Select a region to replicate to other than the region you are currently using.
+Select a target region for which you want to create a replica.
 
 ### Block Storage Type
 
