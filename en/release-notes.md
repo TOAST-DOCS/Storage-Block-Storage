@@ -36,7 +36,7 @@
 
 ### March 28, 2023
 
-### Feature Updates
+#### Feature Updates
 
 * Changed API endpoint
 
