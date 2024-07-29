@@ -23,7 +23,7 @@
   
 ### August 29, 2023
 
-### Feature Updates
+#### Feature Updates
 
 * Changed Terms
     * Changed words such as volume and disk to **block storage**.
