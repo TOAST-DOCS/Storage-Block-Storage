@@ -39,6 +39,68 @@ Check the following before deleting block storage:
 
 Once deleted, block storage cannot be restored.
 
+
+## Change Block Storage Size
+
+You can change the size of block storage. You cannot decrease the size of block storage, only increase it.
+
+For block storage attached to an instance, you must extend the partition and file system as described below.
+
+### Linux Instance
+
+#### Extend Partition
+
+1. Check the partitions in block storage.
+
+        # sudo lsblk
+
+    If the partition does not exist, go to `Extend File System` below.
+
+2. Extend the partition.
+
+    For example, if you want to extend `partition 1`on the `/dev/vda` device, proceed as the following.
+
+        # sudo growpart /dev/vda 1
+
+3. Check the extended partition.
+
+        # sudo lsblk
+
+#### Extend File System
+
+1. Check the type of file system you want to extend.
+
+        # df -hT
+
+2. Depending on the type of file system, enter the command as follows to extend.
+ 
+    **[XFS file system]** For example, if you want to extend a file system mounted on ` /`, proceed as the following.
+
+        # sudo xfs_growfs -d /
+
+    **[Ext4 file system]** For example, if you want to extend the file system on the `/dev/vda` device, proceed as the following.
+
+        # sudo resize2fs /dev/vda    
+
+3. Check the extended file system.
+
+        # df -hT
+
+   
+### Windows Instance
+
+1. In **Run**, enter **diskmgmt.msc** and click **OK** to run the Disk Management utility.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_01.png)
+2. It will be marked as **Unallocated** for the size added to the block storage. Right-click the extended drive and click **Extend Volume...** to run the Extend Volume Wizard.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_02.png)
+3. In the Extend Volume Wizard, click **Next**. In **Select the amount of space in MB**, enter the number of megabytes to extend.
+
+    For the maximum number of megabytes you can enter, see **Maximum available space in MB**. Click **Next**again to complete the Extend Volume Wizard.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_03.png)
+4. Check the extended drive in **This PC**.
+![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
+
+
 ## Manage Attachment
 
 ### Attach Block Storage
@@ -73,21 +135,28 @@ Create a read-only copy of the block storage. Although block storage snapshots c
 
 ## Replicate Block Storage
 
-You can use block storage by replicating it to another region. Although block storage can be replicated while being attached to an instance, it is recommended that you stop the instance or detach the block storage from the instance and proceed with replication to ensure data consistency and reliability.
+You can use block storage by replicating it. Although block storage can be replicated while being attached to an instance, it is recommended that you stop the instance or detach the block storage from the instance and proceed with replication to ensure data consistency and reliability.
 
-After requesting replication, you can check the replication status and whether the replication is successful or not in **Replication Status**.
+After requesting replication, you can check the replication status and whether the replication is successful or not in **Replication Result**.
 
 > [Note]
 > The replication function is a one-time operation, and changes to the original block storage after the replication are not reflected.
 
-<!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
+<!-- For newline -->
 
 > [Caution]
 > To proceed with replication, at least 100KB of free space in block storage is required.
 
+### Target Project
+
+Select a target project for which you want to create a replica.
+
+* Same project: Replicate to the same project
+* Different project: Replicate to another project to which you belong
+
 ### Region
 
-Select a region to replicate to other than the region you are currently using.
+Select a target region for which you want to create a replica.
 
 ### Block Storage Type
 

@@ -506,6 +506,9 @@ X-Auth-Token: {tokenId}
 
 イメージ作成後、基本的な初期化作業のために100KBの空き容量が必要です。空き容量がそれ以下の場合、初期化作業に失敗する場合があります。
 
+> [注意]
+> 作成されたイメージのサイズは、ルートブロックストレージの実際の使用量より大きい場合があります。
+
 ```
 POST /v2/{tenantId}/volumes/{volumeId}/action
 X-Auth-Token: {tokenId}
