@@ -6,7 +6,7 @@ Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalo
 
 | Type | Region | Endpoint |
 |---|---|---|
-| volumev2 | Korea (Pangyo)<br>Korea (Pyeongchon)<br>Japan | https://kr1-api-block-storage.infrastructure.cloud.toast.com<br>https://kr2-api-block-storage.infrastructure.cloud.toast.com<br>https://jp1-api-block-storage.infrastructure.cloud.toast.com |
+| volumev2 | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region<br>Japan Region<br>US (California) Region | https://kr1-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.nhncloudservice.com<br>https://jp1-api-block-storage-infrastructure.nhncloudservice.com<br>https://us1-api-block-storage-infrastructure.nhncloudservice.com  |
 
 In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, so refrain from using them because they may be changed without prior notice.
 
@@ -428,7 +428,6 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | block storage status |
 | volume.description | Body | String | block storage description |
 | volume.multiattach | Body | Boolean | Attachable to many instances |
-| volume.consistencygroup_id | Body | UUID | block storage consistency group ID |
 | volume.name | Body | String | block storage name |
 | volume.bootable | Body | String | block storage bootable |
 | volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
@@ -505,6 +504,9 @@ This API does not return a response body.
 Create image from block storage. 
 
 At least 100KB of free space is required for basic initialization after image creation. The initialization operation may fail if the free space is less than this.
+
+> [Caution]
+> The size of the created image may be larger than the actual usage of the root block storage.
 
 ```
 POST /v2/{tenantId}/volumes/{volumeId}/action

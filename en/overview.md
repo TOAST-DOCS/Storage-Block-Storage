@@ -154,24 +154,25 @@ You can find a detailed description of each command with the Linux `man` command
 ```
 #!/bin/bash
 
-DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
+DEVICES=$(lsblk -d -o name,type | grep disk | grep -v vda | awk '{print $1}')
 
 for DEVICE_NAME in ${DEVICES[@]}
 do
-   MOUNT_DIR=/mnt/$DEVICE_NAME
+   MOUNT_DIR="/mnt/$DEVICE_NAME"
    FS_TYPE=xfs
 
-   mkdir -p $MOUNT_DIR
+   mkdir -p "$MOUNT_DIR"
 
-   echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
+   echo -e "n\np\n1\n\n\nw" | fdisk "/dev/$DEVICE_NAME"
    PART_NAME="/dev/${DEVICE_NAME}1"
-   mkfs -t $FS_TYPE $PART_NAME > /dev/null
+   mkfs -t $FS_TYPE "$PART_NAME" > /dev/null
 
-   UUID=`blkid $PART_NAME -o export | grep "^UUID=" | cut -d'=' -f 2`
+   UUID=$(blkid "$PART_NAME" -o export | grep "^UUID=" | cut -d'=' -f 2)
    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime,nofail 1 2" >> /etc/fstab
 
-   mount -a
 done
+
+mount -a
 ```
 
 
@@ -181,24 +182,25 @@ done
 ```
 #!/bin/bash
 
-DEVICES=(`lsblk -s -d -o name,type | grep disk | awk '{print $1}'`)
+DEVICES=$(lsblk -d -o name,type | grep disk | grep -v vda | awk '{print $1}')
 
 for DEVICE_NAME in ${DEVICES[@]}
 do
-   MOUNT_DIR=/mnt/$DEVICE_NAME
+   MOUNT_DIR="/mnt/$DEVICE_NAME"
    FS_TYPE=ext4
 
-   mkdir -p $MOUNT_DIR
+   mkdir -p "$MOUNT_DIR"
 
-   echo -e "n\np\n1\n\n\nw" | fdisk /dev/$DEVICE_NAME
+   echo -e "n\np\n1\n\n\nw" | fdisk "/dev/$DEVICE_NAME"
    PART_NAME="/dev/${DEVICE_NAME}1"
-   mkfs -t $FS_TYPE $PART_NAME > /dev/null
+   mkfs -t $FS_TYPE "$PART_NAME" > /dev/null
 
-   UUID=`blkid $PART_NAME -o export | grep "^UUID=" | cut -d'=' -f 2`
+   UUID=$(blkid "$PART_NAME" -o export | grep "^UUID=" | cut -d'=' -f 2)
    echo "UUID=$UUID $MOUNT_DIR $FS_TYPE defaults,nodev,noatime,nofail 1 2" >> /etc/fstab
 
-   mount -a
 done
+
+mount -a
 ```
 
 ### Windows
