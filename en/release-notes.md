@@ -1,5 +1,11 @@
 ## Storage > Block Storage > Release Notes
 
+### March 4, 2025
+
+#### Added Features
+
+* Added quotas to limit the maximum number of snapshots per block storage
+
 ### August 27, 2024
 
 #### Added Features
