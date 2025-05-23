@@ -175,7 +175,7 @@ Block storage where snapshots exist cannot be moved.
 
 ### Target project
 
-Enter the ID of the target project to which you want to move block storage. The project to be moved must be a project in the same organization.
+Enter the ID of the target project to which you want to move block storage. The target project must be a project in the same organization.
 
 ### Encryption Symmetric Key ID
 
