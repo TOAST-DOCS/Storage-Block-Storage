@@ -164,6 +164,23 @@ Select the type of block storage to use in the region to which to replicate. You
 
 Select the availability zone to use in the region to which to replicate. You can select an availability zone that is different from the availability zone being used in the current region.
 
+## Move Block Storage
+
+You can move block storage to another project in the same organization. The requester must have the appropriate permissions on both the source and target projects.
+
+> [Note]
+Block storage where snapshots exist cannot be moved.
+
+<!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
+
+### Target project
+
+Enter the ID of the target project to which you want to move block storage. The project to be moved must be a project in the same organization.
+
+### Encryption Symmetric Key ID
+
+If you're moving encrypted block storage, enter the encryption symmetric key ID that the target project will use.
+
 ## Troubleshooting Guide
 
 ### An issue where an instance boots from unintended block storage
