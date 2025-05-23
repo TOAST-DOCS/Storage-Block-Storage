@@ -1,5 +1,12 @@
 ## Storage > Block Storage > Release Notes
 
+### May 27, 2025
+
+#### Added Features
+
+* Added the feature to move block storage
+* Added the feature to set deletion policy when attaching block storage
+
 ### March 4, 2025
 
 #### Added Features
