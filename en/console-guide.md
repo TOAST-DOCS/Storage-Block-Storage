@@ -1,5 +1,7 @@
+<a id="console-guide"></a>
 ## Storage > Block Storage > Console Guide
 
+<a id="create"></a>
 ## Create Block Storage
 
 Create block storage to be attached to an instance.
@@ -10,6 +12,7 @@ To create empty block storage, select **Empty block storage, with no source** fo
 
 You can also create block storage from snapshots. In this case, the size of block storage must be the same as or larger than that of a snapshot. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
 
+<a id="create-encryption"></a>
 ### Encrypted Block Storage
 
 You can create encrypted block storage by selecting **Encrypted HDD** or **Encrypted SSD** from the block storage type. Encrypted block storage is encrypted using a symmetric key managed by NHN Cloud's Secure Key Manager service. Therefore, to create encrypted block storage, you must create a symmetric key in the Secure Key Manager service in advance.
@@ -28,6 +31,7 @@ Backup products allow you to prepare for data loss due to key deletion, and crea
 > [Caution]
 If the Secure Key Manager service deletes the symmetric key that you set for encrypted block storage and then detaches that block storage from the instance, it can't be decrypted again. You must manage symmetric keys carefully to avoid accidentally deleting them.
 
+<a id="delete"></a>
 ## Delete Block Storage
 
 Check the following before deleting block storage:
@@ -38,14 +42,17 @@ Check the following before deleting block storage:
 Once deleted, block storage cannot be restored.
 
 
+<a id="resize"></a>
 ## Change Block Storage Size
 
 You can change the size of block storage. You cannot decrease the size of block storage, only increase it.
 
 For block storage attached to an instance, you must extend the partition and file system as described below.
 
+<a id="resize-linux"></a>
 ### Linux Instance
 
+<a id="resize-linux-partition-extend"></a>
 #### Extend Partition
 
 1. Check the partitions in block storage.
@@ -64,6 +71,7 @@ For block storage attached to an instance, you must extend the partition and fil
 
         # sudo lsblk
 
+<a id="resize-linux-filesystem-extend"></a>
 #### Extend File System
 
 1. Check the type of file system you want to extend.
@@ -85,6 +93,7 @@ For block storage attached to an instance, you must extend the partition and fil
         # df -hT
 
    
+<a id="resize-windows"></a>
 ### Windows Instance
 
 1. In **Run**, enter **diskmgmt.msc** and click **OK** to run the Disk Management utility.
@@ -99,8 +108,10 @@ For block storage attached to an instance, you must extend the partition and fil
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
 
 
+<a id="attach-management"></a>
 ## Manage Attachment
 
+<a id="attach-management-attach"></a>
 ### Attach Block Storage
 
 Attach block storage to an instance. You can attach block storage while the instance is running. Block storage can only be attached to an instance in the same availability zone. When creating block storage, make sure that you create the block storage in the same availability zone as the instance to attach to.
@@ -110,6 +121,7 @@ If you attach empty block storage, it must be partitioned and formatted in the i
 > [Note]
 > Depending on the operating system, mounting may be automatically applied, requiring no further mounting process.
 
+<a id="attach-management-attach-1"></a>
 ### Detach Block Storage
 
 Detach unnecessary block storage from an instance. Note, however, root block storage cannot be detached.
@@ -127,10 +139,12 @@ You can detach block storage even while the instance is running. However, you mu
 
 Make the disk **Offline** in **Disk Management** and then detach it.
 
+<a id="snapshot-create"></a>
 ## Create Snapshots
 
 Create a read-only copy of the block storage. Although block storage snapshots can be created while the block storage is attached to an instance, it is recommended to detach it from the instance and create block storage snapshots to ensure data consistency and reliability.
 
+<a id="clone"></a>
 ## Replicate Block Storage
 
 You can use block storage by replicating it. Although block storage can be replicated while being attached to an instance, it is recommended that you stop the instance or detach the block storage from the instance and proceed with replication to ensure data consistency and reliability.
@@ -145,6 +159,7 @@ After requesting replication, you can check the replication status and whether t
 > [Caution]
 > To proceed with replication, at least 100KB of free space in block storage is required.
 
+<a id="clone-target-project"></a>
 ### Target Project
 
 Select a target project for which you want to create a replica.
@@ -152,18 +167,22 @@ Select a target project for which you want to create a replica.
 * Same project: Replicate to the same project
 * Different project: Replicate to another project to which you belong
 
+<a id="clone-region"></a>
 ### Region
 
 Select a target region for which you want to create a replica.
 
+<a id="clone-type"></a>
 ### Block Storage Type
 
 Select the type of block storage to use in the region to which to replicate. You can select a type that is different from the block storage type being used in the current region.
 
+<a id="clone-availability-zone"></a>
 ### Availability Zone
 
 Select the availability zone to use in the region to which to replicate. You can select an availability zone that is different from the availability zone being used in the current region.
 
+<a id="migrate"></a>
 ## Move Block Storage
 
 You can move block storage to another project in the same organization. The requester must have the appropriate permissions on both the source and target projects.
@@ -173,16 +192,20 @@ Block storage where snapshots exist cannot be moved.
 
 <!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
 
+<a id="migrate-target-project"></a>
 ### Target project
 
 Enter the ID of the target project to which you want to move block storage. The target project must be a project in the same organization.
 
+<a id="migrate-encryption"></a>
 ### Encryption Symmetric Key ID
 
 If you're moving encrypted block storage, enter the encryption symmetric key ID that the target project will use.
 
+<a id="troubleshooting"></a>
 ## Troubleshooting Guide
 
+<a id="troubleshooting-boot-issue"></a>
 ### An issue where an instance boots from unintended block storage
 
 The instance might boot with block storage additionally attached to the instance mounted on `/`. This usually happens when you attach block storage created with the instance's OS image to another instance additionally.
@@ -238,6 +261,7 @@ Use the following steps to solve the problem by making the file system UUIDs of 
 	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
 	</code></pre>
 
+<a id="troubleshooting-mount-failure"></a>
 ### An issue where an instance does not operate because the block storage mount fails
 
 If you set `/etc/fstab` incorrectly when adding block storage, the volume mount may fail during boot and the instance may enter emergency mode.
