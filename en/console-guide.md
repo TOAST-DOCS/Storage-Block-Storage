@@ -266,6 +266,6 @@ Use the following steps to solve the problem by making the file system UUIDs of 
 
 If you set `/etc/fstab` incorrectly when adding block storage, the volume mount may fail during boot and the instance may enter emergency mode.
 
-To prevent this situation, it is recommended to use the `nofail` option according to the [Block Storage Mounting Guide](/Storage/Block%20Storage/en/overview/#_4) when adding additional block storage in `/etc/fstab`.
+To prevent this situation, it is recommended to use the `nofail` option according to the [Block Storage Mounting Guide](/Storage/Block%20Storage/en/overview/#mount-block-storage) when adding additional block storage in `/etc/fstab`.
 
 If you have modified `/etc/fstab` incorrectly and your instance is not booting properly, please contact the Customer Center.
