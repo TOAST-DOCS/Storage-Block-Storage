@@ -1,3 +1,4 @@
+<a id="storage-block-storage-api-v2-guide"></a>
 ## Storage > Block Storage > API v2 Guide
 
 To use the API, API endpoint and token are required. Refer to [API usage preparations](/Compute/Compute/en/identity-api/) to prepare the information required to use the API.
@@ -10,13 +11,16 @@ Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalo
 
 In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, so refrain from using them because they may be changed without prior notice.
 
+<a id="block-storage-type"></a>
 ## Block Storage Type
+<a id="list-block-storage-types"></a>
 ### List Block Storage Types 
 ```
 GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-block-storage-types-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -25,6 +29,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="list-block-storage-types-request-response"></a>
 #### Response
 
 | Name | Type | Property | Description |
@@ -69,7 +74,9 @@ This API does not require a request body.
 
 ---
 
+<a id="block-storage"></a>
 ## Block Storage
+<a id="block-storage-status"></a>
 ### Block Storage Status
 Block storage is available in many statuses with operations defined for each status. See the following list of available statuses:  
 
@@ -96,6 +103,7 @@ Block storage is available in many statuses with operations defined for each sta
 | `retyping`| Changing block storage type |
 | `extending`| Extending block storage |
 
+<a id="list-block-storage"></a>
 ### List Block Storage 
 Return the list of block storage included to a current tenant. 
 
@@ -104,6 +112,7 @@ GET /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-block-storage-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -116,6 +125,7 @@ This API does not require a request body.
 | offset | Query | Integer | - | Start point of the list to return<br>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br>Return as much as the `limit` after block storage specified as the `marker` according to the sorting order |
 
+<a id="list-block-storage-request-response"></a>
 #### Response
 
 | Name | Type | Property | Description |
@@ -155,6 +165,7 @@ This API does not require a request body.
 
 ---
 
+<a id="list-block-storage-details"></a>
 ### List Block Storage Details 
 Return the list of block storage included to a current tenant. 
 
@@ -163,6 +174,7 @@ GET /v2/{tenantId}/volumes/detail
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-block-storage-details-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -175,6 +187,7 @@ This API does not require a request body.
 | offset | Query | Integer | - | Start point of the list to return <br/>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br/>Return as much as `limit` after block storage specified as the `marker` according to the sorting order |
 
+<a id="list-block-storage-details-request-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -261,6 +274,7 @@ This API does not require a request body.
 
 ---
 
+<a id="get-block-storage"></a>
 ### Get Block Storage 
 Return details of specified block storage.  
 ```
@@ -268,6 +282,7 @@ GET /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="get-block-storage-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -277,6 +292,7 @@ This API does not require a request body.
 | volumeId | URL | UUID | O | Block storage ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="get-block-storage-request-response"></a>
 #### Response
 
 | Name | Type | Format | Description                                           |
@@ -359,6 +375,7 @@ This API does not require a request body.
 
 ---
 
+<a id="create-block-storage"></a>
 ### Create Block Storage
 Create a new or empty block storage from snapshot. 
 
@@ -369,6 +386,7 @@ POST /v2/{tenantId}/volumes
 X-Auth-Token: {tokenId}
 ```
 
+<a id="create-block-storage-request"></a>
 #### Request
 
 | Name | Type | Format | Required | Description                        |
@@ -408,6 +426,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="create-block-storage-request-response"></a>
 #### Response
 
 | Name | Type | Property | Description |
@@ -477,6 +496,7 @@ X-Auth-Token: {tokenId}
 
 ---
 
+<a id="delete-block-storage"></a>
 ### Delete Block Storage 
 
 Delete specified block storage. Block storage that is attached or with snapshots created cannot be deleted. 
@@ -486,6 +506,7 @@ DELETE /v2/{tenantId}/volumes/{volumeId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="delete-block-storage-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -495,11 +516,13 @@ This API does not require a request body.
 | volumeId | URL | String | O | Block storage ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="delete-block-storage-request-response"></a>
 #### Response
 This API does not return a response body.
 
 ---
 
+<a id="create-image-with-block-storage"></a>
 ### Create Image with Block Storage
 Create image from block storage. 
 
@@ -513,6 +536,7 @@ POST /v2/{tenantId}/volumes/{volumeId}/action
 X-Auth-Token: {tokenId}
 ```
 
+<a id="create-image-with-block-storage-request"></a>
 #### Request
 
 | Name | Type | Format | Required | Description |
@@ -547,6 +571,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="create-image-with-block-storage-request-response"></a>
 #### Response
 
 | Name | Type | Property | Description |
@@ -609,7 +634,9 @@ X-Auth-Token: {tokenId}
 
 ---
 
+<a id="snapshot"></a>
 ## Snapshot
+<a id="snapshot-status"></a>
 ### Snapshot status
 Snapshots exist in various statuses, and each status defines its own set of permissible operations. See the following list of volume statuses.
 
@@ -625,6 +652,7 @@ Snapshots exist in various statuses, and each status defines its own set of perm
 | `restoring`| Restoring block storage from snapshot |
 | `error_deleting`| Error has occurred while deleting a snapshot |
 
+<a id="list-snapshots"></a>
 ### List Snapshots
 Returns the list of snapshots.
 
@@ -633,6 +661,7 @@ GET /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-snapshots-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -641,6 +670,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="list-snapshots-request-response"></a>
 #### Response
 
 | Name                 | Type | Format   | Description                                                  |
@@ -680,6 +710,7 @@ This API does not require a request body.
 
 ---
 
+<a id="list-snapshots-with-details"></a>
 ### List Snapshots with Details
 Returns a list of snapshot details.
 
@@ -688,6 +719,7 @@ GET /v2/{tenantId}/snapshots/detail
 X-Auth-Token: {tokenId}
 ```
 
+<a id="list-snapshots-with-details-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -696,6 +728,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="list-snapshots-with-details-request-response"></a>
 #### Response
 
 | Name                                                | Type | Format   | Description                                                  |
@@ -739,6 +772,7 @@ This API does not require a request body.
 
 ---
 
+<a id="view-snapshot"></a>
 ### View Snapshot
 Returns details of the specified snapshot.
 
@@ -747,6 +781,7 @@ GET /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="view-snapshot-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -756,6 +791,7 @@ This API does not require a request body.
 | snapshotId | URL | UUID | O | Snapshot ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="view-snapshot-request-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -797,6 +833,7 @@ This API does not require a request body.
 
 ---
 
+<a id="create-snapshot"></a>
 ### Create Snapshot
 Create snapshot for specified block storage. 
 
@@ -805,6 +842,7 @@ POST /v2/{tenantId}/snapshots
 X-Auth-Token: {tokenId}
 ```
 
+<a id="create-snapshot-request"></a>
 #### Request
 
 | Name | Type | Format | Required | Description                                       |
@@ -834,6 +872,7 @@ X-Auth-Token: {tokenId}
 </p>
 </details>
 
+<a id="create-snapshot-request-response"></a>
 #### Response
 
 | Name | Type | Format | Description |
@@ -871,6 +910,7 @@ X-Auth-Token: {tokenId}
 
 ---
 
+<a id="delete-snapshots"></a>
 ### Delete Snapshots
 Deletes a specified snapshot.
 
@@ -879,6 +919,7 @@ DELETE /v2/{tenantId}/snapshots/{snapshotId}
 X-Auth-Token: {tokenId}
 ```
 
+<a id="delete-snapshots-request"></a>
 #### Request
 This API does not require a request body.
 
@@ -888,5 +929,6 @@ This API does not require a request body.
 | snapshotId | URL | String | O | Snapshot ID |
 | tokenId | Header | String | O | Token ID |
 
+<a id="delete-snapshots-request-response"></a>
 #### Response
 This API does not return a response body.

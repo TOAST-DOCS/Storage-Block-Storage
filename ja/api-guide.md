@@ -1,7 +1,9 @@
+<a id="storage-block-storage-api-guide"></a>
 ## Storage > Block Storage > APIガイド
 
 APIは現在、韓国リージョンでのみ使用できます。
 
+<a id="prerequisites"></a>
 ## 事前準備
 
 ブロックストレージAPIを使用するには、アプリケーションキー(Appkey)とトークンが必要です。 [API Endpoint URL](/Compute/Instance/ja/api-guide/#api-endpoint-url)と[トークンAPI](/Compute/Instance/ja/api-guide/#api)を利用してアプリケーションキーとトークンを準備します。アプリケーションキーはAPI Endpoint URLに、トークンはRequest Headerに含めて使用します。
@@ -11,10 +13,12 @@ APIは現在、韓国リージョンでのみ使用できます。
 	GET https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/volumes?id={volumeId}
 
 
+<a id="block-storage-api"></a>
 ## ブロックストレージAPI
 
 ブロックストレージの作成、削除、照会機能を提供します。ブロックストレージをインスタンスに接続、解除する機能は[インスタンス追加機能API](/Compute/Instance/ja/api-guide/#_8)で提供されます。
 
+<a id="status-of-block-storage"></a>
 ### ブロックストレージの状態
 
 ブロックストレージは次の状態値を持ちます。
@@ -36,6 +40,7 @@ APIは現在、韓国リージョンでのみ使用できます。
 | downloading | イメージダウンロード中 |
 | uploading | イメージにアップロード中 |
 
+<a id="retrieve-block-storage"></a>
 ### ブロックストレージの情報の照会
 
 ブロックストレージの情報を照会します。
@@ -102,6 +107,7 @@ X-Auth-Token: {tokenId}
 | Status | Body | String | ブロックストレージの状態 |
 | Volume Type | Body | String | ブロックストレージの種類。 "General HDD"または"General SSD"のどちらか |
 
+<a id="create-block-storage"></a>
 ### ブロックストレージの作成
 新しいブロックストレージを作成します。
 
@@ -178,6 +184,7 @@ Content-Type: application/json;charset=UTF-8
 | Status | Body | String | ブロックストレージの状態 |
 | Volume Type | Body | String | ブロックストレージの種類。 "General HDD"または"General SSD"のどちらか。 |
 
+<a id="delete-block-storage"></a>
 ### ブロックストレージの削除
 ブロックストレージを削除します。 Statusが"available" "in-use" "error" "error_restoring"のブロックストレージのみ削除できます。
 

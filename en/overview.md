@@ -1,4 +1,4 @@
-<a id="overview"></a>
+<a id="storage-block-storage-overview"></a>
 ## Storage > Block Storage > Overview
 
 Additional block storage is available in addition to an instance's root block storage.
@@ -22,7 +22,7 @@ To use block storage, you need to do the following:
 Block storage can be attached while the instance is running. Attached block storage is an empty device, so you will need to partition, format, and mount it manually depending on the operating system of the instance before using it.
 
 
-<a id="usage"></a>
+<a id="use-empty-block-storage"></a>
 ## Use Empty Block Storage
 
 <a id="linux"></a>
@@ -32,7 +32,7 @@ Connect to the instance and take the following steps:
 
 > [Note] All commands in the following examples must be executed with the `root` privilege.
 
-<a id="partition-create"></a>
+<a id="create-a-partition"></a>
 #### Create a Partition
 When block storage is attached to an instance, it is registered as an empty device. Check the list of registered block storage with the Linux `lsblk` command.
 ```
@@ -86,7 +86,7 @@ Syncing disks.
 ```
 This completes the process to create a partition.
 
-<a id="partition-format"></a>
+<a id="format-the-partition"></a>
 #### Format the Partition
 To use the created partition, you need to format it. Find the partition to format with the `lsblk` command.
 ```
@@ -102,7 +102,7 @@ Now, format the `vdb1` partition. On Linux, use the `mkfs` command. When formatt
 # mkfs -t xfs /dev/vdb1
 ```
 
-<a id="mount"></a>
+<a id="mount-block-storage"></a>
 #### Mount Block Storage
 Block storage where a file system has been created can only be accessed after the mount process. You can mount the block storage with the simple `mount` command, but it will be unmounted when the instance reboots. This example explains how to mount block storage automatically during the instance boot process by adding block storage to be mounted to the `/etc/fstab` file.
 
@@ -215,7 +215,7 @@ mount -a
 
 There are two main ways to add a volume in Windows. The first is to use the GUI-based **Server Manager**, and the second is to use the CLI-based **PowerShell**. This article briefly introduces each method.
 
-<a id="server-manager"></a>
+<a id="add-a-volume-using-server-manager"></a>
 #### Add a Volume Using **Server Manager**
 Block storage attached to a Windows instance appears as an offline disk. To use this disk, you must bring it online and create a volume. The process of bring the disk online is as follows:
 
@@ -248,7 +248,7 @@ Now you can see that the disk has been added in Windows Explorer. For more detai
 > * GUID Partition Table (GPT): A new disk format for disks larger than 2TB.
 > By default, disks configured in **Server Manager** are in GPT format.
 
-<a id="powershell"></a>
+<a id="add-a-volume-using-powershell"></a>
 #### Add a Volume Using PowerShell
 You can also add volumes with PowerShell provided by Windows. Click **Start**, and then click on **Windows PowerShell**.
 
@@ -326,7 +326,7 @@ assign
 $Scriptblock | diskpart
 ```
 
-<a id="snapshot"></a>
+<a id="block-storage-snapshot"></a>
 ## Block Storage Snapshot
 
 The block storage snapshot feature allows users to back up block storage faster than directly copying data from the block storage. Although a block storage snapshot can be created while block storage is attached to the instance, it is recommended to detach it from the instance and create a block storage snapshot to ensure data consistency and reliability. To enhance reliability, unmount block storage before detaching it from the instance.
