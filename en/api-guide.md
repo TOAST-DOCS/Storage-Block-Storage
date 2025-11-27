@@ -1,7 +1,9 @@
+<a id="storage-block-storage-api-guide"></a>
 ## Storage > Block Storage > API Guide 
 
 API is currently available only in the Korea region.
 
+<a id="prerequisites"></a>
 ## Prerequisites 
 
 To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Instance/en/api-guide/#api-endpoint-url) and [Token API](/Compute/Instance/en/api-guide/#api). Include Appkey to API Endpoint URL and token to the Request Header.
@@ -11,10 +13,12 @@ For instance, retrieving block storage must be requested to the following URL:
 	GET https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/volumes?id={volumeId}
 
 
+<a id="block-storage-api"></a>
 ## Block Storage API
 
 Block storage can be created, deleted, and retrieved. Attaching/detaching block storage are available via [Additional Instance Functions API](/Compute/Instance/en/api-guide/#_8). 
 
+<a id="status-of-block-storage"></a>
 ### Status of Block Storage 
 
 Block storage has following status values: 
@@ -36,6 +40,7 @@ Block storage has following status values:
 | downloading | Downloading an image |
 | uploading | Uploading an image |
 
+<a id="retrieve-block-storage"></a>
 ### Retrieve Block Storage
 
 Retrieve information of block storage. 
@@ -102,6 +107,7 @@ This API does not require the request body.
 | Status | Body | String | Status of block storage |
 | Volume Type | Body | String | Type of block storage; one of "General HDD" or "General SSD" |
 
+<a id="create-block-storage"></a>
 ### Create Block Storage 
 Create new block storage. 
 
@@ -176,6 +182,7 @@ Content-Type: application/json;charset=UTF-8
 | Size | Body | Integer | Size of block storage (GB) |
 | Status | Body | String | Status of block storage |
 
+<a id="delete-block-storage"></a>
 ### Delete Block Storage 
 Delete block storage: the status, however, must be either "available", "in-use", "error", or "error-restoring". 
 
