@@ -15,8 +15,8 @@
 
 블록 스토리지를 사용하려면 다음 과정을 진행해야 합니다.
 
-1. [블록 스토리지를 생성](/Storage/Block%20Storage/ko/console-guide-ngsc/#create-block-storage합니다.
-2. 생성한 블록 스토리지를 [대상 인스턴스에 연결](/Storage/Block%20Storage/ko/console-guide-ngsc/#attach-block-storage합니다.
+1. [블록 스토리지를 생성](/Storage/Block%20Storage/ko/console-guide-ngsc/#create-block-storage)합니다.
+2. 생성한 블록 스토리지를 [대상 인스턴스에 연결](/Storage/Block%20Storage/ko/console-guide-ngsc/#attach-block-storage)합니다.
 3. 블록 스토리지 [파티션 작업, 포맷, 마운트](#use-empty-block-storage)하여 사용합니다.
 
 블록 스토리지는 인스턴스 실행 중에도 연결할 수 있습니다. 연결된 블록 스토리지는 빈 장치이므로 사용하기 전에 인스턴스의 운영체제에 따라 파티션 작업, 포맷, 마운트 작업을 직접 진행해야 합니다.

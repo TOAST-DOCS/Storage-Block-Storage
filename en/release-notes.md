@@ -113,7 +113,7 @@
 * Added Public APIs 
     * Block Storage, as well as Object Storage, could be enabled via APIs.  
     * Only limited features are available at the moment, but more features are to be included by adding more APIs in the near future.  
-    * See [API Guide for Block Storage](/Storage/Block%20Storage/en/api-guide/).
+    * See [API Guide for Block Storage](/Storage/Block%20Storage/en/public-api/).
 
 <a id="july-20-2017"></a>
 ### July 20, 2017
