@@ -112,7 +112,7 @@
 * Public API追加
     * Object Storageに続きBlock StorageをAPIで使用できます。
     * 現在、限定的な機能のみ利用できます。今後APIを追加して機能を拡張する予定です。
-    * [ブロックストレージAPIガイド](/Storage/Block%20Storage/ja/api-guide/)を参照してください。
+    * [ブロックストレージAPIガイド](/Storage/Block%20Storage/ja/public-api/)を参照してください。
 
 <a id="july-20-2017"></a>
 ### 2017. 7. 20.

@@ -123,19 +123,20 @@
 
 블록 스토리지의 읽기 전용 복사본을 만듭니다. 블록 스토리지가 인스턴스에 연결되어 있는 상태에서도 블록 스토리지 스냅숏을 생성할 수 있지만 데이터의 정합성과 안정성을 보장하려면 인스턴스에서 연결을 해제하고 블록 스토리지 스냅숏을 생성하기를 권장합니다.
 
+<a id="target-project"></a>
 ### 대상 프로젝트
 
 블록 스토리지를 이동할 대상 프로젝트의 ID를 입력합니다. 이동할 프로젝트는 동일 조직의 프로젝트여야 합니다.
 
-<a id="target-project"></a>
+<a id="encryption-symmetric-key-id"></a>
 ### 암호화 대칭 키 ID
 
 암호화 블록 스토리지를 이동할 경우 대상 프로젝트에서 사용할 암호화 대칭 키 ID를 입력합니다.
 
-<a id="move-block-storage"></a>
+<a id="troubleshooting-guide"></a>
 ## 문제 해결 가이드
 
-<a id="target-project"></a>
+<a id="an-issue-where-an-instance-boots-from-unintended-block-storage"></a>
 ### 의도하지 않은 블록 스토리지로 부팅되는 문제
 
 인스턴스에 추가로 연결한 블록 스토리지가 `/`에 마운트된 상태로 인스턴스가 부팅될 수 있습니다. 이 현상은 주로 인스턴스의 OS 이미지로 생성된 블록 스토리지를 다른 인스턴스에 추가로 연결할 때 발생합니다.
@@ -191,7 +192,7 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 	/dev/vdb1: UUID="0037c590-0545-4736-bcdc-d052681eb5f5" TYPE="xfs"
 	</code></pre>
 
-<a id="encryption-symmetric-key-id"></a>
+<a id="an-issue-where-an-instance-does-not-operate-because-the-block-storage-mount-fails"></a>
 ### 블록 스토리지의 마운트에 실패하여 인스턴스가 동작하지 않는 문제
 
 블록 스토리지를 추가할 때 `/etc/fstab`를 잘못 설정하였다면 부팅 과정에서 볼륨 마운트에 실패하고 인스턴스가 emergency mode로 진입할 수 있습니다.
