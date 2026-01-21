@@ -6,7 +6,7 @@ API is currently available only in the Korea region.
 <a id="prerequisites"></a>
 ## Prerequisites 
 
-To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Instance/en/api-guide/#api-endpoint-url) and [Token API](/Compute/Instance/en/api-guide/#api). Include Appkey to API Endpoint URL and token to the Request Header.
+To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Compute/en/identity-api/#check-api-endpoints) and [Token API](/Compute/Compute/en/identity-api/#obtain-a-token). Include Appkey to API Endpoint URL and token to the Request Header.
 
 For instance, retrieving block storage must be requested to the following URL:  
 
@@ -16,7 +16,7 @@ For instance, retrieving block storage must be requested to the following URL:
 <a id="block-storage-api"></a>
 ## Block Storage API
 
-Block storage can be created, deleted, and retrieved. Attaching/detaching block storage are available via [Additional Instance Functions API](/Compute/Instance/en/api-guide/#_8). 
+Block storage can be created, deleted, and retrieved. Attaching/detaching block storage are available via [Additional Instance Functions API](/Compute/Instance/en/public-api/#additional-instance-features). 
 
 <a id="status-of-block-storage"></a>
 ### Status of Block Storage 

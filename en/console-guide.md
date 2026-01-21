@@ -230,11 +230,11 @@ As shown above, if the file system UUID of the additionally attached block stora
 
 Use the following steps to solve the problem by making the file system UUIDs of the two block storage different.
 
-1. After stopping the instance, [detach the block storage](console-guide/#detach-block-storage) that is causing the problem (that is, the one that was mounted on `/` unexpectedly).
+1. After stopping the instance, [detach the block storage](./console-guide/#detach-block-storage) that is causing the problem (that is, the one that was mounted on `/` unexpectedly).
 
 2. Start the instance.
 
-3. When booting is complete, [attach the block storage](console-guide/#attach-block-storage) that is causing the problem.
+3. When booting is complete, [attach the block storage](./console-guide/#attach-block-storage) that is causing the problem.
 
 4. Use the command below to change the file system UUID of the block storage that is causing the problem. Execute the command below according to the type of block storage causing the problem. The type of block storage can be found with the `blkid` command.
 
