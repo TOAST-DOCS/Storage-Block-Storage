@@ -6,7 +6,7 @@ APIは現在、韓国リージョンでのみ使用できます。
 <a id="prerequisites"></a>
 ## 事前準備
 
-ブロックストレージAPIを使用するには、アプリケーションキー(Appkey)とトークンが必要です。 [API Endpoint URL](/Compute/Instance/ja/api-guide/#api-endpoint-url)と[トークンAPI](/Compute/Instance/ja/api-guide/#api)を利用してアプリケーションキーとトークンを準備します。アプリケーションキーはAPI Endpoint URLに、トークンはRequest Headerに含めて使用します。
+ブロックストレージAPIを使用するには、アプリケーションキー(Appkey)とトークンが必要です。 [API Endpoint URL](/Compute/Compute/ja/identity-api/#check-api-endpoints)と[トークンAPI](/Compute/Compute/ja/identity-api/#obtain-a-token)を利用してアプリケーションキーとトークンを準備します。アプリケーションキーはAPI Endpoint URLに、トークンはRequest Headerに含めて使用します。
 
 例えば、ブロックストレージの情報の照会は次のURLでリクエストする必要があります。
 
@@ -16,7 +16,7 @@ APIは現在、韓国リージョンでのみ使用できます。
 <a id="block-storage-api"></a>
 ## ブロックストレージAPI
 
-ブロックストレージの作成、削除、照会機能を提供します。ブロックストレージをインスタンスに接続、解除する機能は[インスタンス追加機能API](/Compute/Instance/ja/api-guide/#_8)で提供されます。
+ブロックストレージの作成、削除、照会機能を提供します。ブロックストレージをインスタンスに接続、解除する機能は[インスタンス追加機能API](/Compute/Instance/ja/public-api/#additional-instance-features)で提供されます。
 
 <a id="status-of-block-storage"></a>
 ### ブロックストレージの状態
