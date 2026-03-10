@@ -1,5 +1,6 @@
 ## Storage > Block Storage > Release Notes
 
+<a id="may-27-2025"></a>
 ### May 27, 2025
 
 #### Added Features
@@ -7,12 +8,14 @@
 * Added the feature to move block storage
 * Added the feature to set deletion policy when attaching block storage
 
+<a id="march-4-2025"></a>
 ### March 4, 2025
 
 #### Added Features
 
 * Added quotas to limit the maximum number of snapshots per block storage
 
+<a id="august-27-2024"></a>
 ### August 27, 2024
 
 #### Added Features
@@ -20,6 +23,7 @@
 * Added a feature to replicate block storage in the same region as a target region
 * Added a feature to replicate block storage in antoher project to which you belong
 
+<a id="may-28-2024"></a>
 ### May 28, 2024
 
 #### Added Features
@@ -28,12 +32,14 @@
 * You can perform cross-region replication of encrypted block storage.
 * Added the feature to change the block storage size.
 
+<a id="april-23-2024"></a>
 ### April 23, 2024
 
 #### Feature Updates
 
 * Ended the use of u2-only storage type in Korea (Pangyo) region.
   
+<a id="august-29-2023"></a>
 ### August 29, 2023
 
 #### Feature Updates
@@ -41,30 +47,35 @@
 * Changed Terms
     * Changed words such as volume and disk to **block storage**.
 
+<a id="may-30-2023"></a>
 ### May 30, 2023
 
 #### Added Features
 
 * Added the encrypted block storage type.
 
+<a id="march-28-2023"></a>
 ### March 28, 2023
 
 #### Feature Updates
 
 * Changed API endpoint
 
+<a id="september-27-2022"></a>
 ### September 27, 2022
 
 #### Feature Updates
 
 * Added a process to check snapshot integrity when running **Create Block Storage from a Snapshot**.
 
+<a id="march-29-2022"></a>
 ### March 29, 2022
 
 #### Added Features
 
 * Added the inter-region replication feature.
 
+<a id="may-26-2020"></a>
 ### May 26, 2020
 
 #### Added Features
@@ -72,18 +83,21 @@
 * Released Public API v2
     * Released Public API v2, which is compatible with Openstack API. 
 
+<a id="march-24-2020"></a>
 ### March 24, 2020
 
 #### Feature Updates
 
 * Increased the maximum size of block storage creation from 1TB to 2TB.
 
+<a id="november-26-2019"></a>
 ### November 26, 2019
 
 #### Feature Updates
 
 * Default disk is displayed on the list of block storages.
 
+<a id="january-29-2019"></a>
 ### January 29, 2019
 
 #### Added Features 
@@ -91,6 +105,7 @@
 * Updated not to select snapshots as the origin, when a block storage is created
 * Updated to choose availability zone and block type, when a block storage is created with snapshots
 
+<a id="september-21-2017"></a>
 ### September 21, 2017
 
 #### Added Features
@@ -98,14 +113,16 @@
 * Added Public APIs 
     * Block Storage, as well as Object Storage, could be enabled via APIs.  
     * Only limited features are available at the moment, but more features are to be included by adding more APIs in the near future.  
-    * See [API Guide for Block Storage](/Storage/Block%20Storage/en/api-guide/).
+    * See [API Guide for Block Storage](/Storage/Block%20Storage/en/public-api/).
 
+<a id="july-20-2017"></a>
 ### July 20, 2017
 
 #### Bug Fixes 
 
 * Fixed infrequent bugs in which creating a block storage was incomplete.  
 
+<a id="january-19-2017"></a>
 ### January 19, 2017
 
 #### Feature Updates 

@@ -1,9 +1,11 @@
 
+<a id="storage-block-storage-data-wiping-guide"></a>
 ## Storage > Block Storage > Data Wiping Guide
 
 This guide describes how to wipe out the data on block storage or NAS attached to an instance.
 You can wipe out data by using scrub (Linux) or Disk Wipe (Windows) that can apply the DoD 5220.22-M pattern, which is the KISA data wiping standard.
 
+<a id="linux-instance"></a>
 ## Linux Instance
 
 1. Install the scrub package.
@@ -30,6 +32,7 @@ You can wipe out data by using scrub (Linux) or Disk Wipe (Windows) that can app
             $ sudo scrub -p dod -X /home/ubuntu/nas/scrup
 
 
+<a id="windows-instance"></a>
 ## Windows Instance
 
 1. Download Disk Wipe from [https://www.diskwipe.org](https://www.diskwipe.org).

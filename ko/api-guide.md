@@ -1,20 +1,24 @@
+<a id="storage-block-storage-api-guide"></a>
 ## Storage > Block Storage > API 가이드
 
 API는 현재 한국 리전에서만 사용할 수 있습니다.
 
+<a id="prerequisites"></a>
 ## 사전 준비
 
-블록 스토리지 API를 사용하려면 앱키(Appkey)와 토큰이 필요합니다. [API Endpoint URL](/Compute/Instance/ko/api-guide/#api-endpoint-url)과 [토큰 API](/Compute/Instance/ko/api-guide/#api)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에, 토큰은 Request Header에 포함하여 사용합니다.
+블록 스토리지 API를 사용하려면 앱키(Appkey)와 토큰이 필요합니다. [API Endpoint URL](/Compute/Compute/ko/identity-api/#check-api-endpoints)과 [토큰 API](/Compute/Compute/ko/identity-api/#obtain-a-token)를 이용하여 앱키와 토큰을 준비합니다. 앱키는 API Endpoint URL에, 토큰은 Request Header에 포함하여 사용합니다.
 
 예를 들어, 블록 스토리지 정보 조회는 다음 URL로 요청해야 합니다.
 
 	GET https://api-compute.cloud.toast.com/compute/v1.0/appkeys/{appkey}/volumes?id={volumeId}
 
 
+<a id="block-storage-api"></a>
 ## 블록 스토리지 API
 
-블록 스토리지 생성, 삭제, 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결하고 해제하는 기능은 [인스턴스 추가 기능 API](/Compute/Instance/ko/api-guide/#_8)로 제공됩니다.
+블록 스토리지 생성, 삭제, 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결하고 해제하는 기능은 [인스턴스 추가 기능 API](/Compute/Instance/ko/public-api/#additional-instance-features)로 제공됩니다.
 
+<a id="status-of-block-storage"></a>
 ### 블록 스토리지 상태
 
 블록 스토리지는 다음과 같은 상탯값을 갖습니다.
@@ -36,6 +40,7 @@ API는 현재 한국 리전에서만 사용할 수 있습니다.
 | downloading | 이미지 다운로드 중 |
 | uploading | 이미지로 업로드 중 |
 
+<a id="retrieve-block-storage"></a>
 ### 블록 스토리지 정보 조회
 
 블록 스토리지의 정보를 조회합니다.
@@ -102,6 +107,7 @@ X-Auth-Token: {tokenId}
 | Status | Body | String | 블록 스토리지 상태 |
 | Volume Type | Body | String | 블록 스토리지 종류. "General HDD" 또는 "General SSD" 중 하나. |
 
+<a id="create-block-storage"></a>
 ### 블록 스토리지 생성
 새로운 블록 스토리지를 생성합니다.
 
@@ -178,6 +184,7 @@ Content-Type: application/json;charset=UTF-8
 | Status | Body | String | 블록 스토리지 상태 |
 | Volume Type | Body | String | 블록 스토리지 종류. "General HDD" 또는 "General SSD" 중 하나. |
 
+<a id="delete-block-storage"></a>
 ### 블록 스토리지 삭제
 블록 스토리지를 삭제합니다. Status가 "available" "in-use" "error" "error_restoring"인 블록 스토리지만 삭제할 수 있습니다.
 
