@@ -1,9 +1,11 @@
 
+<a id="storage-block-storage-data-wiping-guide"></a>
 ## Storage > Block Storage > 데이터 완전 삭제 가이드
 
 인스턴스에 연결된 블록 스토리지 및 NAS의 데이터를 완전히 삭제하는 방법을 소개합니다.
 KISA 데이터 완전 삭제 기준인 DoD 5220.22-M 패턴을 적용할 수 있는 scrub(Linux), Disk Wipe(Windows)를 이용해 데이터를 완전히 삭제할 수 있습니다.
 
+<a id="linux-instance"></a>
 ## Linux 인스턴스
 
 1. scrub 패키지를 설치합니다.
@@ -30,6 +32,7 @@ KISA 데이터 완전 삭제 기준인 DoD 5220.22-M 패턴을 적용할 수 있
             $ sudo scrub -p dod -X /home/ubuntu/nas/scrup
 
 
+<a id="windows-instance"></a>
 ## Windows 인스턴스
 
 1. [https://www.diskwipe.org](https://www.diskwipe.org)에서 Disk Wipe를 다운로드합니다.
