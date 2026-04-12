@@ -6,7 +6,7 @@ API is currently available only in the Korea region.
 <a id="prerequisites"></a>
 ## Prerequisites 
 
-To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Compute/en/identity-api/#check-api-endpoints) and [Token API](/Compute/Compute/en/identity-api/#obtain-a-token). Include Appkey to API Endpoint URL and token to the Request Header.
+Block Storage uses IaaS tokens for authentication and authorization when making API calls. The IaaS token is an authentication token used for NHN Cloud's OpenStack-based infrastructure services (IaaS). For more information on issuing and using IaaS tokens, please refer to the [IaaS Token](/nhncloud/en/public-api/iaas-token).
 
 For instance, retrieving block storage must be requested to the following URL:  
 
