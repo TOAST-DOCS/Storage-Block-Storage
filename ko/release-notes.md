@@ -1,4 +1,4 @@
-# Storage > Block Storage > 릴리스 노트
+## Storage > Block Storage > 릴리스 노트
 
 <a id="may-27-2026"></a>
 ## 2026. 05. 27.
