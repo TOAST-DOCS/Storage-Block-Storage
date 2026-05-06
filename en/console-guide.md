@@ -129,7 +129,7 @@ Detach unnecessary block storage from an instance. Note, however, root block sto
 You can detach block storage even while the instance is running. However, you must first unmount the block storage from the instance and detach the block storage in the console. Detaching while the block storage is mounted causes the following issues:
 
 1. Block storage data may be corrupted, resulting in data loss.
-2. When you add new block storage, the block storage name on the console and the block storage name on the instance appear different. You will need to restart the instance for the same block storage name to appear on the console and on the instance.
+2. When you add new block storage, the block storage name on the console and the block storage name on the instance appear different. You will need to reboot the instance for the same block storage name to appear on the console and on the instance.
 
 **Linux Instance**
 
