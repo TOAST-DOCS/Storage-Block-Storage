@@ -21,7 +21,7 @@ The policies for encrypted block storage are as follows.
 
 * Due to encryption and decryption, I/O performance may be reduced compared to general block storage types (**HDD**, **SSD**).
 * You cannot change the symmetric key ID that is registered when creating encrypted block storage. To change the symmetric key, you must use the key rotation feature of Secure Key Manager.
-* After selecting encrypted block storage, the **Rotate Key** button allows you to re-encrypt block storage encrypted with an older version of the key with a newer version of the key.
+* After selecting encrypted block storage, clicking **Rotate Key** button allows you to re-encrypt block storage encrypted with an older version of the key with a newer version of the key.
 
 > [Note]
 Backup products allow you to prepare for data loss due to key deletion, and create a replica for safe keeping.
@@ -80,11 +80,11 @@ For block storage attached to an instance, you must extend the partition and fil
 
 2. Depending on the type of file system, enter the command as follows to extend.
  
-    **[XFS file system]** For example, if you want to extend a file system mounted on ` /`, proceed as the following.
+    [XFS file system] For example, if you want to extend a file system mounted on ` /`, proceed as the following.
 
         # sudo xfs_growfs -d /
 
-    **[Ext4 file system]** For example, if you want to extend the file system on the `/dev/vda` device, proceed as the following.
+    [Ext4 file system] For example, if you want to extend the file system on the `/dev/vda` device, proceed as the following.
 
         # sudo resize2fs /dev/vda    
 
@@ -96,7 +96,7 @@ For block storage attached to an instance, you must extend the partition and fil
 <a id="windows-instance"></a>
 ### Windows Instance
 
-1. In **Run**, enter **diskmgmt.msc** and click **OK** to run the Disk Management utility.
+1. In **Run**, enter `diskmgmt.msc` and click **OK** to run the Disk Management utility.
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_01.png)
 2. It will be marked as **Unallocated** for the size added to the block storage. Right-click the extended drive and click **Extend Volume...** to run the Extend Volume Wizard.
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_02.png)
@@ -112,7 +112,7 @@ For block storage attached to an instance, you must extend the partition and fil
 ## Manage Attachment
 
 <a id="attach-block-storage"></a>
-### Attach Block Storage
+### Add Connections
 
 Attach block storage to an instance. You can attach block storage while the instance is running. Block storage can only be attached to an instance in the same availability zone. When creating block storage, make sure that you create the block storage in the same availability zone as the instance to attach to.
 
@@ -122,7 +122,7 @@ If you attach empty block storage, it must be partitioned and formatted in the i
 > Depending on the operating system, mounting may be automatically applied, requiring no further mounting process.
 
 <a id="detach-block-storage"></a>
-### Detach Block Storage
+### Detach
 
 Detach unnecessary block storage from an instance. Note, however, root block storage cannot be detached.
 
@@ -157,7 +157,7 @@ After requesting replication, you can check the replication status and whether t
 <!-- For newline -->
 
 > [Caution]
-> To proceed with replication, at least 100KB of free space in block storage is required.
+> To proceed with replication, 100 KB or more of free space in block storage is required.
 
 <a id="target-project"></a>
 ### Target Project
@@ -268,4 +268,4 @@ If you set `/etc/fstab` incorrectly when adding block storage, the volume mount 
 
 To prevent this situation, it is recommended to use the `nofail` option according to the [Block Storage Mounting Guide](/Storage/Block%20Storage/en/overview/#mount-block-storage) when adding additional block storage in `/etc/fstab`.
 
-If you have modified `/etc/fstab` incorrectly and your instance is not booting properly, please contact the Customer Center.
+If you have modified `/etc/fstab` incorrectly and your instance is not booting properly, please contact the Customer Support.
