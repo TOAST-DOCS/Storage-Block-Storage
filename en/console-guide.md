@@ -108,7 +108,7 @@ For block storage attached to an instance, you must extend the partition and fil
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
 
 <a id="attach-block-storage"></a>
-### Add Connections
+## Add Connections
 
 Attach block storage to an instance. You can attach block storage while the instance is running. Block storage can only be attached to an instance in the same availability zone. When creating block storage, make sure that you create the block storage in the same availability zone as the instance to attach to.
 
@@ -118,7 +118,7 @@ If you attach empty block storage, it must be partitioned and formatted in the i
 > Depending on the operating system, mounting may be automatically applied, requiring no further mounting process.
 
 <a id="detach-block-storage"></a>
-### Detach
+## Detach
 
 Detach unnecessary block storage from an instance. Note, however, root block storage cannot be detached.
 
