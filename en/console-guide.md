@@ -107,10 +107,6 @@ For block storage attached to an instance, you must extend the partition and fil
 4. Check the extended drive in **This PC**.
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
 
-
-<a id="manage-attachment"></a>
-## Manage Attachment
-
 <a id="attach-block-storage"></a>
 ### Add Connections
 
