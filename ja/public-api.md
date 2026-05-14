@@ -120,7 +120,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | テナントID                                                                                           |
 | tokenId | Header | String | O | トークンID                                                                                            |
 | sort | Query | String | - | ソートの基準になるブロックストレージフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は1000に設定                                                                 |
+| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は100、最大1000                                                                 |
 | offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のブロックストレージから返す                                               |
 | marker | Query | UUID | - | 返すブロックストレージの直前のブロックストレージID<br>ソート順序に応じて`marker`に指定されたブロックストレージ以降から`limit`分を返す                 |
 
@@ -180,7 +180,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | テナントID                                                                                           |
 | tokenId | Header | String | O | トークンID                                                                                            |
 | sort | Query | String | - | ソートの基準になるブロックストレージフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は1000に設定                                                                |
+| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は100、最大1000                                                                |
 | offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のブロックストレージから返す                                              |
 | marker | Query | UUID | - | 返すブロックストレージの直前のブロックストレージID<br>ソート順序に応じて`marker`に指定されたブロックストレージ以降から`limit`分を返す                |
 
@@ -658,6 +658,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
+| limit | Query | Integer | - | 返すスナップショットの個数<br>基本値は100、最大1000 |
 
 #### レスポンス
 
@@ -714,6 +715,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
+| limit | Query | Integer | - | 返すスナップショットの個数<br>基本値は100、最大1000 |
 
 #### レスポンス
 
