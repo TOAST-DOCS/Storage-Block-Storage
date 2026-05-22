@@ -1,7 +1,7 @@
 <a id="storage-block-storage-api-v2-guide"></a>
 ## Storage > Block Storage > API v2ガイド
 
-APIを使用するにはAPIエンドポイントとトークンなどが必要です。 [API使用準備](/Compute/Compute/ja/identity-api/)を参照してAPIを使用するのに必要な情報を準備します。
+Block Storageは、API呼び出し時の認証/認可のためにIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行及び使用に関する詳細は、[IaaSトークン](/nhncloud/ja/public-api/iaas-token) を参照してください。
 
 ブロックストレージAPIは`volumev2`タイプエンドポイントを利用します。正確なエンドポイントはトークン発行レスポンスの`serviceCatalog`を参照します。
 
@@ -120,7 +120,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | テナントID                                                                                           |
 | tokenId | Header | String | O | トークンID                                                                                            |
 | sort | Query | String | - | ソートの基準になるブロックストレージフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は1000に設定                                                                 |
+| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は100、最大1000                                                                 |
 | offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のブロックストレージから返す                                               |
 | marker | Query | UUID | - | 返すブロックストレージの直前のブロックストレージID<br>ソート順序に応じて`marker`に指定されたブロックストレージ以降から`limit`分を返す                 |
 
@@ -180,7 +180,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | テナントID                                                                                           |
 | tokenId | Header | String | O | トークンID                                                                                            |
 | sort | Query | String | - | ソートの基準になるブロックストレージフィールド名<br>`< key >[: < direction > ]`形式で記述<br>例) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は1000に設定                                                                |
+| limit | Query | Integer | - | 返すブロックストレージの個数<br>基本値は100、最大1000                                                                |
 | offset | Query | Integer | - | 返されるリストの開始点<br>全体リスト中、offset番目のブロックストレージから返す                                              |
 | marker | Query | UUID | - | 返すブロックストレージの直前のブロックストレージID<br>ソート順序に応じて`marker`に指定されたブロックストレージ以降から`limit`分を返す                |
 
@@ -658,6 +658,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
+| limit | Query | Integer | - | 返すスナップショットの個数<br>基本値は100、最大1000 |
 
 #### レスポンス
 
@@ -714,6 +715,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | テナントID |
 | tokenId | Header | String | O | トークンID |
+| limit | Query | Integer | - | 返すスナップショットの個数<br>基本値は100、最大1000 |
 
 #### レスポンス
 

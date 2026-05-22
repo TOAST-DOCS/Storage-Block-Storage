@@ -1,7 +1,7 @@
 <a id="storage-block-storage-api-v2-guide"></a>
 ## Storage > Block Storage > API v2 Guide
 
-To use the API, API endpoint and token are required. Refer to [API usage preparations](/Compute/Compute/en/identity-api/) to prepare the information required to use the API.
+Block Storage uses IaaS tokens for authentication and authorization when making API calls. The IaaS token is an authentication token used for NHN Cloud's OpenStack-based infrastructure services (IaaS). For more information on issuing and using IaaS tokens, please refer to the [IaaS Token](/nhncloud/en/public-api/iaas-token).
 
 Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalog` in the token issuance response for the valid endpoint.
 
@@ -120,7 +120,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | Block storage count to return <br>Default is 1000 |
+| limit | Query | Integer | - | Block storage count to return<br>Default is 100, up to max 1000 |
 | offset | Query | Integer | - | Start point of the list to return<br>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br>Return as much as the `limit` after block storage specified as the `marker` according to the sorting order |
 
@@ -180,7 +180,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | Block storage count to return<br>Default is 1000 |
+| limit | Query | Integer | - | Block storage count to return<br>Default is 100, up to max 1000 |
 | offset | Query | Integer | - | Start point of the list to return <br/>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br/>Return as much as `limit` after block storage specified as the `marker` according to the sorting order |
 
@@ -657,6 +657,7 @@ This API does not require a request body.
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
+| limit | Query | Integer | - | Number of snapshots to return<br>Default is 100, up to max 1000 |
 
 #### Response
 
@@ -713,6 +714,7 @@ This API does not require a request body.
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
+| limit | Query | Integer | - | Number of snapshots to return<br>Default is 100, up to max 1000 |
 
 #### Response
 

@@ -6,7 +6,7 @@ APIは現在、韓国リージョンでのみ使用できます。
 <a id="prerequisites"></a>
 ## 事前準備
 
-ブロックストレージAPIを使用するには、アプリケーションキー(Appkey)とトークンが必要です。 [API Endpoint URL](/Compute/Compute/ja/identity-api/#check-api-endpoints)と[トークンAPI](/Compute/Compute/ja/identity-api/#obtain-a-token)を利用してアプリケーションキーとトークンを準備します。アプリケーションキーはAPI Endpoint URLに、トークンはRequest Headerに含めて使用します。
+Block Storageは、API呼び出し時の認証/認可のためにIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行及び使用に関する詳細は、[IaaSトークン](/nhncloud/ja/public-api/iaas-token) を参照してください。
 
 例えば、ブロックストレージの情報の照会は次のURLでリクエストする必要があります。
 

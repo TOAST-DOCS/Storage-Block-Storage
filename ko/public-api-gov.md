@@ -1,7 +1,7 @@
 <a id="storage-block-storage-api-v2-guide"></a>
 ## Storage > Block Storage > API v2 가이드
 
-API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api-gov/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+Block Storage은(는) API 호출 시 인증/인가를 위해 IaaS 토큰을 사용합니다. IaaS 토큰은 NHN Cloud의 OpenStack 기반 인프라 서비스(IaaS)에서 사용하는 인증 토큰입니다. IaaS 토큰 발급 및 사용에 대한 자세한 내용은 [IaaS 토큰](/nhncloud/ko/public-api/iaas-token-gov) 을 참고하세요.
 
 블록 스토리지 API는 `volumev2` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
 
@@ -120,7 +120,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | 테넌트 ID                                                                                           |
 | tokenId | Header | String | O | 토큰 ID                                                                                            |
 | sort | Query | String | - | 정렬 기준이 될 블록 스토리지 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정                                                                 |
+| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 100, 최대 1000                                                                 |
 | offset | Query | Integer | - | 반환할 목록의 시작점<br>전체 목록 중 오프셋(offset) 번째 블록 스토리지부터 반환                                               |
 | marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit` 만큼 반환                 |
 
@@ -180,7 +180,7 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | 테넌트 ID                                                                                           |
 | tokenId | Header | String | O | 토큰 ID                                                                                            |
 | sort | Query | String | - | 정렬 기준이 될 블록 스토리지 필드 이름<br>`< key >[: < direction > ]` 형태로 기술<br>예) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 1000으로 설정                                                                 |
+| limit | Query | Integer | - | 반환할 블록 스토리지 개수<br>기본값은 100, 최대 1000                                                                 |
 | offset | Query | Integer | - | 반환할 목록의 시작점<br/>전체 목록 중 오프셋(offset) 번째 블록 스토리지부터 반환                                              |
 | marker | Query | UUID | - | 반환할 블록 스토리지의 직전 블록 스토리지 ID<br/>정렬 순서에 따라 `marker`로 지정된 블록 스토리지 이후부터 `limit` 만큼 반환                |
 
@@ -646,6 +646,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
+| limit | Query | Integer | - | 반환할 스냅숏 개수<br>기본값은 100, 최대 1000 |
 
 #### 응답
 
@@ -702,6 +703,7 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---|
 | tenantId | URL | String | O | 테넌트 ID |
 | tokenId | Header | String | O | 토큰 ID |
+| limit | Query | Integer | - | 반환할 스냅숏 개수<br>기본값은 100, 최대 1000 |
 
 #### 응답
 
