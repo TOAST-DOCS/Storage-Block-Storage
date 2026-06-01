@@ -120,7 +120,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | Block storage count to return<br>Default is 100, up to max 1000 |
+| limit | Query | Integer | - | Block storage count to return <br>Default is 1000 |
 | offset | Query | Integer | - | Start point of the list to return<br>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br>Return as much as the `limit` after block storage specified as the `marker` according to the sorting order |
 
@@ -180,7 +180,7 @@ This API does not require a request body.
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | sort | Query | String | - | Name of block storage field for sorting<br>Described in the`< key >[: < direction > ]` format<br>e.g.) `name:asc`, `created_at:desc` |
-| limit | Query | Integer | - | Block storage count to return<br>Default is 100, up to max 1000 |
+| limit | Query | Integer | - | Block storage count to return<br>Default is 1000 |
 | offset | Query | Integer | - | Start point of the list to return <br/>Return from the offset block storage out of the entire list |
 | marker | Query | UUID | - | ID of the previous block storage of block storage to return <br/>Return as much as `limit` after block storage specified as the `marker` according to the sorting order |
 
@@ -657,7 +657,6 @@ This API does not require a request body.
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| limit | Query | Integer | - | Number of snapshots to return<br>Default is 100, up to max 1000 |
 
 #### Response
 
@@ -714,7 +713,6 @@ This API does not require a request body.
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-| limit | Query | Integer | - | Number of snapshots to return<br>Default is 100, up to max 1000 |
 
 #### Response
 
