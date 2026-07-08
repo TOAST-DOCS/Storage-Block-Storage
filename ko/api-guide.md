@@ -1,10 +1,10 @@
 <a id="storage-block-storage-api-guide"></a>
-## Storage > Block Storage > API 가이드
+## Storage > Block Storage > API 가이드 { #storage-block-storage-api-guide }
 
 API는 현재 한국 리전에서만 사용할 수 있습니다.
 
 <a id="prerequisites"></a>
-## 사전 준비
+## 사전 준비 { #prerequisites }
 
 Block Storage은(는) API 호출 시 인증/인가를 위해 IaaS 토큰을 사용합니다. IaaS 토큰은 NHN Cloud의 OpenStack 기반 인프라 서비스(IaaS)에서 사용하는 인증 토큰입니다. IaaS 토큰 발급 및 사용에 대한 자세한 내용은 [IaaS 토큰](/nhncloud/ko/public-api/iaas-token) 을 참고하세요.
 
@@ -14,12 +14,12 @@ Block Storage은(는) API 호출 시 인증/인가를 위해 IaaS 토큰을 사�
 
 
 <a id="block-storage-api"></a>
-## 블록 스토리지 API
+## 블록 스토리지 API { #block-storage-api }
 
 블록 스토리지 생성, 삭제, 조회 기능을 제공합니다. 블록 스토리지를 인스턴스에 연결하고 해제하는 기능은 [인스턴스 추가 기능 API](/Compute/Instance/ko/public-api/#additional-instance-features)로 제공됩니다.
 
 <a id="status-of-block-storage"></a>
-### 블록 스토리지 상태
+### 블록 스토리지 상태 { #status-of-block-storage }
 
 블록 스토리지는 다음과 같은 상탯값을 갖습니다.
 
@@ -41,10 +41,11 @@ Block Storage은(는) API 호출 시 인증/인가를 위해 IaaS 토큰을 사�
 | uploading | 이미지로 업로드 중 |
 
 <a id="retrieve-block-storage"></a>
-### 블록 스토리지 정보 조회
+### 블록 스토리지 정보 조회 { #retrieve-block-storage }
 
 블록 스토리지의 정보를 조회합니다.
 
+<a id="method-url"></a>
 #### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/volumes?id={volumeId}
@@ -56,9 +57,11 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 | volumeId | Query | String | O | 조회할 블록 스토리지 ID. 없으면 모든 블록 스토리지의 정보를 조회합니다. |
 
+<a id="request-body"></a>
 #### Request Body
 이 API는 Request Body가 필요 없습니다.
 
+<a id="response-body"></a>
 #### Response Body
 ```json
 {
@@ -108,9 +111,10 @@ X-Auth-Token: {tokenId}
 | Volume Type | Body | String | 블록 스토리지 종류. "General HDD" 또는 "General SSD" 중 하나. |
 
 <a id="create-block-storage"></a>
-### 블록 스토리지 생성
+### 블록 스토리지 생성 { #create-block-storage }
 새로운 블록 스토리지를 생성합니다.
 
+<a id="create-block-storage-method-url"></a>
 #### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/volumes
@@ -122,6 +126,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | tokenId | Header | String | - | 토큰 ID |
 
+<a id="create-block-storage-request-body"></a>
 #### Request Body
 ```json
 {
@@ -147,6 +152,7 @@ Content-Type: application/json;charset=UTF-8
 | Metadata Key / Metadata Value | Body | String | O | 블록 스토리지에 기입하고자 하는 메타데이터 정보 |
 | Block Storage Name | Body | String | - | 블록 스토리지 이름 |
 
+<a id="create-block-storage-response-body"></a>
 #### Response Body
 ```json
 {
@@ -185,9 +191,10 @@ Content-Type: application/json;charset=UTF-8
 | Volume Type | Body | String | 블록 스토리지 종류. "General HDD" 또는 "General SSD" 중 하나. |
 
 <a id="delete-block-storage"></a>
-### 블록 스토리지 삭제
+### 블록 스토리지 삭제 { #delete-block-storage }
 블록 스토리지를 삭제합니다. Status가 "available" "in-use" "error" "error_restoring"인 블록 스토리지만 삭제할 수 있습니다.
 
+<a id="delete-block-storage-method-url"></a>
 #### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/volumes?id={volumeId}
@@ -198,9 +205,11 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | 토큰 ID |
 | volumeId | Query | String | - | 삭제할 블록 스토리지 ID |
 
+<a id="delete-block-storage-request-body"></a>
 #### Request Body
 이 API는 Request Body가 필요 없습니다.
 
+<a id="delete-block-storage-response-body"></a>
 #### Response Body
 ```json
 {

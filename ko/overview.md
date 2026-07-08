@@ -1,5 +1,5 @@
 <a id="storage-block-storage-overview"></a>
-## Storage > Block Storage > 개요
+## Storage > Block Storage > 개요 { #storage-block-storage-overview }
 
 인스턴스 루트 블록 스토리지 외에 추가 블록 스토리지를 사용할 수 있습니다.
 
@@ -23,10 +23,10 @@
 
 
 <a id="use-empty-block-storage"></a>
-## 빈 블록 스토리지 사용
+## 빈 블록 스토리지 사용 { #use-empty-block-storage }
 
 <a id="linux"></a>
-### Linux
+### Linux { #linux }
 
 인스턴스에 접속한 후 아래의 과정을 진행합니다.
 
@@ -211,7 +211,7 @@ mount -a
 ```
 
 <a id="windows"></a>
-### Windows
+### Windows { #windows }
 
 Windows에서 볼륨을 추가하는 방법은 크게 두 가지입니다. 첫 번째는 GUI 기반의 **서버 관리자**를 사용하는 것이고, 두 번째는 CLI 기반의 **PowerShell**을 사용하는 것입니다. 이 문서에서는 각각의 방법을 간략하게 소개합니다.
 
@@ -327,7 +327,7 @@ $Scriptblock | diskpart
 ```
 
 <a id="block-storage-snapshot"></a>
-## 블록 스토리지 스냅숏
+## 블록 스토리지 스냅숏 { #block-storage-snapshot }
 
 블록 스토리지 스냅숏 기능을 이용하면 사용자가 직접 블록 스토리지의 데이터를 복사하는 것보다 빠르게 블록 스토리지를 백업할 수 있습니다. 블록 스토리지가 인스턴스에 연결되어 있는 상태에서도 블록 스토리지 스냅숏을 생성할 수 있지만, 데이터의 정합성과 안정성을 보장하기 위해 인스턴스에서 연결을 해제하고 블록 스토리지 스냅숏을 생성하기를 권장합니다. 안정성 향상을 위해 블록 스토리지를 인스턴스에서 연결 해제하기 전에 마운트 해제(unmount)를 합니다.
 
@@ -337,6 +337,6 @@ $Scriptblock | diskpart
 블록 스토리지 스냅숏을 갖는 블록 스토리지는 삭제할 수 없습니다. 블록 스토리지를 삭제하려면 그 블록 스토리지의 모든 스냅숏을 삭제하시기 바랍니다.
 
 <a id="billing"></a>
-### 과금
+### 과금 { #billing }
 
 블록 스토리지는 생성한 순간부터 요금이 부과되며, 블록 스토리지 생성 시 설정된 `블록 스토리지 크기`에 따라 요금이 부과됩니다. 스냅숏의 경우 원본 블록 스토리지의 크기에 따라 요금이 부과됩니다.
