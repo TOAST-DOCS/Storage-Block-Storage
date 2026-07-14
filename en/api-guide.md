@@ -1,12 +1,12 @@
 <a id="storage-block-storage-api-guide"></a>
-## Storage > Block Storage > API Guide 
+## Storage > Block Storage > API Guide { #storage-block-storage-api-guide }
 
 API is currently available only in the Korea region.
 
 <a id="prerequisites"></a>
-## Prerequisites 
+## Prerequisites { #prerequisites }
 
-To use block storage API, Appkey and token are required: get them prepared through [API Endpoint URL](/Compute/Compute/en/identity-api/#check-api-endpoints) and [Token API](/Compute/Compute/en/identity-api/#obtain-a-token). Include Appkey to API Endpoint URL and token to the Request Header.
+Block Storage uses IaaS tokens for authentication and authorization when making API calls. The IaaS token is an authentication token used for NHN Cloud's OpenStack-based infrastructure services (IaaS). For more information on issuing and using IaaS tokens, please refer to the [IaaS Token](/nhncloud/en/public-api/iaas-token).
 
 For instance, retrieving block storage must be requested to the following URL:  
 
@@ -14,12 +14,12 @@ For instance, retrieving block storage must be requested to the following URL:
 
 
 <a id="block-storage-api"></a>
-## Block Storage API
+## Block Storage API { #block-storage-api }
 
 Block storage can be created, deleted, and retrieved. Attaching/detaching block storage are available via [Additional Instance Functions API](/Compute/Instance/en/public-api/#additional-instance-features). 
 
 <a id="status-of-block-storage"></a>
-### Status of Block Storage 
+### Status of Block Storage { #status-of-block-storage }
 
 Block storage has following status values: 
 
@@ -41,10 +41,11 @@ Block storage has following status values:
 | uploading | Uploading an image |
 
 <a id="retrieve-block-storage"></a>
-### Retrieve Block Storage
+### Retrieve Block Storage { #retrieve-block-storage }
 
 Retrieve information of block storage. 
 
+<a id="method-url"></a>
 #### Method, URL
 ```
 GET /v1.0/appkeys/{appkey}/volumes?id={volumeId}
@@ -56,9 +57,11 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | Token ID |
 | volumeId | Query | String | O | Block storage ID to retrieve: if unavailable, retrieve information of all block storages. |
 
+<a id="request-body"></a>
 #### Request Body
 This API does not require the request body. 
 
+<a id="response-body"></a>
 #### Response Body
 ```json
 {
@@ -108,9 +111,10 @@ This API does not require the request body.
 | Volume Type | Body | String | Type of block storage; one of "General HDD" or "General SSD" |
 
 <a id="create-block-storage"></a>
-### Create Block Storage 
+### Create Block Storage { #create-block-storage }
 Create new block storage. 
 
+<a id="create-block-storage-method-url"></a>
 #### Method, URL
 ```
 POST /v1.0/appkeys/{appkey}/volumes
@@ -122,6 +126,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | tokenId | Header | String | - | Token ID |
 
+<a id="create-block-storage-request-body"></a>
 #### Request Body
 ```json
 {
@@ -147,6 +152,7 @@ Content-Type: application/json;charset=UTF-8
 | Metadata Key / Metadata Value | Body | String | O | Metadata information wanted for block storage |
 | Block Storage Name | Body | String | - | Name of block storage |
 
+<a id="create-block-storage-response-body"></a>
 #### Response Body
 ```json
 {
@@ -183,9 +189,10 @@ Content-Type: application/json;charset=UTF-8
 | Status | Body | String | Status of block storage |
 
 <a id="delete-block-storage"></a>
-### Delete Block Storage 
+### Delete Block Storage { #delete-block-storage }
 Delete block storage: the status, however, must be either "available", "in-use", "error", or "error-restoring". 
 
+<a id="delete-block-storage-method-url"></a>
 #### Method, URL
 ```
 DELETE /v1.0/appkeys/{appkey}/volumes?id={volumeId}
@@ -196,9 +203,11 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | Token ID |
 | volumeId | Query | String | - | Block storage ID to delete |
 
+<a id="delete-block-storage-request-body"></a>
 #### Request Body
 This API does not require the request body. 
 
+<a id="delete-block-storage-response-body"></a>
 #### Response Body
 ```json
 {
