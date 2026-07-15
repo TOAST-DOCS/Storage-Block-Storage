@@ -1,8 +1,8 @@
 <a id="storage-block-storage-console-guide"></a>
-## Storage > Block Storage > 콘솔 사용 가이드
+## Storage > Block Storage > 콘솔 사용 가이드 { #storage-block-storage-console-guide }
 
 <a id="create-block-storage"></a>
-## 블록 스토리지 생성
+## 블록 스토리지 생성 { #create-block-storage }
 
 인스턴스에 연결할 블록 스토리지를 생성합니다.
 
@@ -13,7 +13,7 @@
 블록 스토리지의 스냅숏으로부터 블록 스토리지를 생성할 수도 있습니다. 스냅숏으로부터 블록 스토리지를 생성하는 경우, 블록 스토리지의 크기는 스냅숏의 크기와 같거나 더 커야 합니다. 크기를 더 크게 설정한다면 고객이 직접 기존 블록 스토리지의 파티션을 조정하거나 새로운 파티션을 추가하여 늘어난 저장 공간을 사용해야 합니다.
 
 <a id="delete-block-storage"></a>
-## 블록 스토리지 삭제
+## 블록 스토리지 삭제 { #delete-block-storage }
 
 블록 스토리지를 삭제하기 전에 다음 사항을 확인합니다.
 
@@ -23,14 +23,14 @@
 한번 삭제된 블록 스토리지는 다시 복구할 수 없습니다.
 
 <a id="change-block-storage-size"></a>
-## 블록 스토리지 크기 변경
+## 블록 스토리지 크기 변경 { #change-block-storage-size }
 
 블록 스토리지의 크기를 변경할 수 있습니다. 블록 스토리지의 크기는 줄일 수 없으며 늘릴 수만 있습니다.
 
 인스턴스에 연결된 블록 스토리지의 경우 아래를 참고하여 파티션과 파일 시스템을 확장해야 합니다.
 
 <a id="linux-instance"></a>
-### Linux 인스턴스
+### Linux 인스턴스 { #linux-instance }
 
 <a id="extend-partition"></a>
 #### 파티션 확장
@@ -74,7 +74,7 @@
 
    
 <a id="windows-instance"></a>
-### Windows 인스턴스
+### Windows 인스턴스 { #windows-instance }
 
 1. **Run**에서 `diskmgmt.msc`를 입력하고 **OK**를 클릭해 디스크 관리 유틸리티를 실행합니다.
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_01.png)
@@ -88,7 +88,7 @@
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
 
 <a id="attach-block-storage"></a>
-## 연결 추가
+## 연결 추가 { #attach-block-storage }
 
 인스턴스에 블록 스토리지를 연결합니다. 인스턴스가 실행 중일 때에도 연결할 수 있습니다. 블록 스토리지는 같은 가용성 영역에 있는 인스턴스에만 연결할 수 있습니다. 블록 스토리지를 생성할 때 연결할 인스턴스와 동일한 가용성 영역에서 블록 스토리지를 만듭니다.
 
@@ -98,7 +98,7 @@
 > 운영체제의 기능에 따라 자동으로 마운트되어 별도의 마운트 과정이 필요 없을 수도 있습니다.
 
 <a id="detach-block-storage"></a>
-## 연결 해제
+## 연결 해제 { #detach-block-storage }
 
 인스턴스에서 필요 없는 블록 스토리지를 연결 해제합니다. 단, 루트 블록 스토리지는 인스턴스에서 연결 해제할 수 없습니다.
 
@@ -116,15 +116,15 @@
 **디스크 관리**에서 해당 디스크를 **오프라인**으로 만든 후 연결 해제합니다.
 
 <a id="create-snapshots"></a>
-## 스냅숏 생성
+## 스냅숏 생성 { #create-snapshots }
 
 블록 스토리지의 읽기 전용 복사본을 만듭니다. 블록 스토리지가 인스턴스에 연결되어 있는 상태에서도 블록 스토리지 스냅숏을 생성할 수 있지만 데이터의 정합성과 안정성을 보장하려면 인스턴스에서 연결을 해제하고 블록 스토리지 스냅숏을 생성하기를 권장합니다.
 
 <a id="troubleshooting-guide"></a>
-## 문제 해결 가이드
+## 문제 해결 가이드 { #troubleshooting-guide }
 
 <a id="an-issue-where-an-instance-boots-from-unintended-block-storage"></a>
-### 의도하지 않은 블록 스토리지로 부팅되는 문제
+### 의도하지 않은 블록 스토리지로 부팅되는 문제 { #an-issue-where-an-instance-boots-from-unintended-block-storage }
 
 인스턴스에 추가로 연결한 블록 스토리지가 `/`에 마운트된 상태로 인스턴스가 부팅될 수 있습니다. 이 현상은 주로 인스턴스의 OS 이미지로 생성된 블록 스토리지를 다른 인스턴스에 추가로 연결할 때 발생합니다.
 
@@ -180,7 +180,7 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 	</code></pre>
 
 <a id="an-issue-where-an-instance-does-not-operate-because-the-block-storage-mount-fails"></a>
-### 블록 스토리지의 마운트에 실패하여 인스턴스가 동작하지 않는 문제
+### 블록 스토리지의 마운트에 실패하여 인스턴스가 동작하지 않는 문제 { #an-issue-where-an-instance-does-not-operate-because-the-block-storage-mount-fails }
 
 블록 스토리지를 추가할 때 `/etc/fstab`를 잘못 설정했다면 부팅 과정에서 볼륨 마운트에 실패하고 인스턴스가 emergency mode로 진입할 수 있습니다.
 
