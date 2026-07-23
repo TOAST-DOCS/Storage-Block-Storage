@@ -1,5 +1,5 @@
 <a id="storage-block-storage-api-v2-guide"></a>
-## Storage > Block Storage > API v2 가이드 { #storage-block-storage-api-v2-guide }
+## Storage > Block Storage > API v2 가이드
 
 API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api-ngoic/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
 
@@ -12,10 +12,10 @@ API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [AP
 API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
 
 <a id="block-storage-type"></a>
-## 블록 스토리지 타입 { #block-storage-type }
+## 블록 스토리지 타입
 
 <a id="list-block-storage-types"></a>
-### 블록 스토리지 타입 목록 보기 { #list-block-storage-types }
+### 블록 스토리지 타입 목록 보기
 ```
 GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
@@ -76,10 +76,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="block-storage"></a>
-## 블록 스토리지 { #block-storage }
+## 블록 스토리지
 
 <a id="block-storage-status"></a>
-### 블록 스토리지 상태 { #block-storage-status }
+### 블록 스토리지 상태
 블록 스토리지는 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
 
 | 상태 명 | 설명                              |
@@ -105,7 +105,7 @@ X-Auth-Token: {tokenId}
 | `extending`| 블록 스토리지를 확장하는 상태                |
 
 <a id="list-block-storage"></a>
-### 블록 스토리지 목록 보기 { #list-block-storage }
+### 블록 스토리지 목록 보기
 현재 테넌트에 속한 블록 스토리지 목록을 반환합니다.
 
 ```
@@ -167,7 +167,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="list-block-storage-details"></a>
-### 블록 스토리지 상세 목록 보기 { #list-block-storage-details }
+### 블록 스토리지 상세 목록 보기
 현재 테넌트에 속한 블록 스토리지 목록을 반환합니다.
 
 ```
@@ -272,7 +272,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="get-block-storage"></a>
-### 블록 스토리지 보기 { #get-block-storage }
+### 블록 스토리지 보기
 지정한 블록 스토리지의 상세 정보를 반환합니다.
 
 ```
@@ -371,7 +371,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-block-storage"></a>
-### 블록 스토리지 생성하기 { #create-block-storage }
+### 블록 스토리지 생성하기
 스냅숏으로부터 새로운 블록 스토리지를 생성하거나 빈 블록 스토리지를 생성합니다.
 
 블록 스토리지는 생성 직후 즉시 사용할 수 없습니다. 블록 스토리지 상태를 조회해서 `available` 상태인 것을 확인한 후 사용합니다.
@@ -487,7 +487,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-block-storage"></a>
-### 블록 스토리지 삭제하기 { #delete-block-storage }
+### 블록 스토리지 삭제하기
 
 지정한 블록 스토리지를 삭제합니다. 연결되어 있거나 스냅숏이 생성된 블록 스토리지는 삭제할 수 없습니다.
 
@@ -513,7 +513,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-image-with-block-storage"></a>
-### 블록 스토리지로 이미지 생성하기 { #create-image-with-block-storage }
+### 블록 스토리지로 이미지 생성하기
 블록 스토리지로부터 이미지를 생성합니다. 
 
 이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다. 남은 공간이 이보다 작을 경우 초기화 작업이 실패할 수 있습니다.
@@ -625,10 +625,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="snapshot"></a>
-## 스냅숏 { #snapshot }
+## 스냅숏
 
 <a id="snapshot-status"></a>
-### 스냅숏 상태 { #snapshot-status }
+### 스냅숏 상태
 스냅숏은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
 
 | 상태 명 | 설명                        |
@@ -644,7 +644,7 @@ X-Auth-Token: {tokenId}
 | `error_deleting`| 삭제 중 오류가 발생한 상태           |
 
 <a id="list-snapshots"></a>
-### 스냅숏 목록 보기 { #list-snapshots }
+### 스냅숏 목록 보기
 스냅숏 목록을 반환합니다.
 
 ```
@@ -702,7 +702,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="list-snapshots-with-details"></a>
-### 스냅숏 목록 상세 보기 { #list-snapshots-with-details }
+### 스냅숏 목록 상세 보기
 스냅숏 상세 정보 목록을 반환합니다.
 
 ```
@@ -764,7 +764,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="view-snapshot"></a>
-### 스냅숏 보기 { #view-snapshot }
+### 스냅숏 보기
 지정한 스냅숏의 상세 정보를 반환합니다.
 
 ```
@@ -825,7 +825,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-snapshot"></a>
-### 스냅숏 생성하기 { #create-snapshot }
+### 스냅숏 생성하기
 지정한 블록 스토리지의 스냅숏을 생성합니다.
 
 ```
@@ -902,7 +902,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-snapshots"></a>
-### 스냅숏 삭제하기 { #delete-snapshots }
+### 스냅숏 삭제하기
 지정한 스냅숏을 삭제합니다.
 
 ```

@@ -1,8 +1,8 @@
 <a id="storage-block-storage-console-guide"></a>
-## Storage > Block Storage > コンソール使用ガイド { #storage-block-storage-console-guide }
+## Storage > Block Storage > コンソール使用ガイド
 
 <a id="create-block-storage"></a>
-## ブロックストレージの作成 { #create-block-storage }
+## ブロックストレージの作成
 
 インスタンスに接続するブロックストレージを作成します。
 
@@ -13,7 +13,7 @@
 ブロックストレージのスナップショットからブロックストレージを作成することもできます。スナップショットからブロックストレージを作成する場合、ブロックストレージのサイズはスナップショットのサイズと同じかそれより大きくなければいけません。サイズをさらに大きく設定するには、お客様が直接既存ブロックストレージのパーティションを調整するか、新しいパーティションを追加し、増えた記憶領域を使用する必要があります。
 
 <a id="encrypted-block-storage"></a>
-### 暗号化ブロックストレージ { #encrypted-block-storage }
+### 暗号化ブロックストレージ
 
 ブロックストレージタイプで**Encrypted HDD**、**Encrypted SSD**を選択して暗号化ブロックストレージを作成できます。暗号化ブロックストレージはNHN CloudのSecure Key Managerサービスで管理する対称鍵を使用して暗号化されます。したがって、暗号化ブロックストレージを作成するには、事前にSecure Key Managerサービスで対称鍵を作成する必要があります。
 
@@ -32,7 +32,7 @@
 Secure Key Managerサービスで暗号化ブロックストレージに設定した対称鍵を削除した後、そのブロックストレージをインスタンスから接続解除すると、再度復号化することができません。対称鍵を誤って削除しないように注意して管理する必要があります。
 
 <a id="delete-block-storage"></a>
-## ブロックストレージの削除 { #delete-block-storage }
+## ブロックストレージの削除
 
 ブロックストレージを削除する前に、次の事項を確認します。
 
@@ -42,14 +42,14 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 一度削除されたブロックストレージは二度と復旧できません。
 
 <a id="change-block-storage-size"></a>
-## ブロックストレージサイズの変更 { #change-block-storage-size }
+## ブロックストレージサイズの変更
 
 ブロックストレージのサイズを変更できます。ブロックストレージのサイズは小さくすることはできず、大きくすることしかできません。
 
 インスタンスに接続されたブロックストレージの場合、下記を参考にしてパーティションとファイルシステムを拡張する必要があります。
 
 <a id="linux-instance"></a>
-### Linuxインスタンス { #linux-instance }
+### Linuxインスタンス
 
 <a id="extend-partition"></a>
 #### パーティション拡張
@@ -93,7 +93,7 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 
 
 <a id="windows-instance"></a>
-### Windowsインスタンス { #windows-instance }
+### Windowsインスタンス
 
 1. **Run**で`diskmgmt.msc`と入力し、**OK**をクリックしてディスク管理ユーティリティを実行します。
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_01.png)
@@ -107,7 +107,7 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 ![image.png](https://static.toastoven.net/prod_infrastructure/block_storage/windows_volume_extend_04.png)
 
 <a id="attach-block-storage"></a>
-## 接続追加 { #attach-block-storage }
+## 接続追加
 
 インスタンスにブロックストレージを接続します。インスタンスが実行中でも接続できます。ブロックストレージは同じアベイラビリティーゾーンにあるインスタンスにのみ接続できます。ブロックストレージを作成する際は、接続するインスタンスと同じアベイラビリティーゾーンでブロックストレージを作成します。
 
@@ -117,7 +117,7 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 > オペレーションシステムの機能によって自動的にマウントされ、別途マウントする必要がない場合もあります。
 
 <a id="detach-block-storage"></a>
-## 接続解除 { #detach-block-storage }
+## 接続解除
 
 インスタンスで必要ないブロックストレージの接続を解除します。ただし、ルートブロックストレージはインスタンスから接続解除できません。
 
@@ -135,12 +135,12 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 **ディスクの管理**で該当のディスクを**オフライン**にした後、接続を解除します。
 
 <a id="create-snapshots"></a>
-## スナップショットの作成 { #create-snapshots }
+## スナップショットの作成
 
 ブロックストレージの読み取り専用のコピーを作成します。ブロックストレージがインスタンスに接続されている状態でも、ブロックストレージのスナップショットを作成できますが、データの整合性と安定性を保障するには、インスタンスから接続を解除してブロックストレージのスナップショットを作成することを推奨します。
 
 <a id="replicate-block-storage"></a>
-## ブロックストレージ複製 { #replicate-block-storage }
+## ブロックストレージ複製
 
 ブロックストレージを複製して利用できます。ブロックストレージがインスタンスに接続されている状態でも複製できますが、データの整合性と安定性を確保するため、インスタンスを終了するか、接続を解除してから複製することを推奨します。
 
@@ -155,7 +155,7 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 > レプリケーションを進行するには、ブロックストレージ内に100KB以上の空き容量が必要です。
 
 <a id="target-project"></a>
-### 対象プロジェクト { #target-project }
+### 対象プロジェクト
 
 レプリカを作成する対象プロジェクトを選択します。
 
@@ -163,22 +163,22 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 * 他のプロジェクト:自分が所属する他のプロジェクトに複製
 
 <a id="region"></a>
-### リージョン { #region }
+### リージョン
 
 レプリカを作成する対象リージョンを選択します。
 
 <a id="block-storage-type"></a>
-### ブロックストレージタイプ { #block-storage-type }
+### ブロックストレージタイプ
 
 複製するリージョンで利用するブロックストレージタイプを選択します。現在のリージョンで利用中のブロックストレージタイプとは異なるタイプを選択できます。
 
 <a id="availability-zone"></a>
-### アベイラビリティゾーン { #availability-zone }
+### アベイラビリティゾーン
 
 複製するリージョンで利用するアベイラビリティゾーンを選択します。現在のリージョンで利用中のアベイラビリティゾーンとは異なるアベイラビリティゾーンを選択できます。
 
 <a id="move-block-storage"></a>
-## ブロックストレージ移動 { #move-block-storage }
+## ブロックストレージ移動
 
 ブロックストレージを同一組織内の他のプロジェクトに移動できます。リクエストを行うユーザーは、元のプロジェクトと移動先プロジェクトの両方に適切な権限が必要です。
 
@@ -188,20 +188,20 @@ Secure Key Managerサービスで暗号化ブロックストレージに設定�
 <!-- 改行のためのコメントであり、必ず含める必要があります。 -->
 
 <a id="move-block-storage-target-project"></a>
-### 対象プロジェクト { #move-block-storage-target-project }
+### 対象プロジェクト
 
 ブロックストレージを移動する対象プロジェクトのIDを入力します。移動先プロジェクトは同一組織内のプロジェクトでなければなりません。
 
 <a id="encryption-symmetric-key-id"></a>
-### 暗号化対称鍵ID { #encryption-symmetric-key-id }
+### 暗号化対称鍵ID
 
 暗号化されたブロックストレージを移動する場合、対象プロジェクトで使用する暗号化対称鍵IDを入力します。
 
 <a id="troubleshooting-guide"></a>
-## トラブルシューティング { #troubleshooting-guide }
+## トラブルシューティング
 
 <a id="an-issue-where-an-instance-boots-from-unintended-block-storage"></a>
-### 意図しないブロックストレージで起動する問題 { #an-issue-where-an-instance-boots-from-unintended-block-storage }
+### 意図しないブロックストレージで起動する問題
 
 インスタンスに追加で接続したブロックストレージが`/`にマウントされた状態でインスタンスが起動することがあります。この現象は、主にインスタンスのOSイメージで作成されたブロックストレージを他のインスタンスに追加で接続するときに発生します。
 
@@ -257,7 +257,7 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 	</code></pre>
 
 <a id="an-issue-where-an-instance-does-not-operate-because-the-block-storage-mount-fails"></a>
-### ブロックストレージのマウントに失敗してインスタンスが動作しない問題 { #an-issue-where-an-instance-does-not-operate-because-the-block-storage-mount-fails }
+### ブロックストレージのマウントに失敗してインスタンスが動作しない問題
 
 ブロックストレージを追加する時、`/etc/fstab`を誤って設定すると、起動過程でボリュームマウントに失敗し、インスタンスがemergency modeに入ることがあります。
 

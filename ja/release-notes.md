@@ -1,11 +1,11 @@
 <a id="storage-block-storage-release-notes"></a>
-## Storage > Block Storage > Release Notes { #storage-block-storage-release-notes }
+## Storage > Block Storage > Release Notes
 
 <a id="may-27-2026"></a>
-## 2026. 05. 27. { #may-27-2026 }
+## 2026. 05. 27.
 
 <a id="feature-updates"></a>
-### 機能改善・変更 { #feature-updates }
+### 機能改善・変更
 
 * ブロックストレージ接続情報の表記改善
 * 終了したインスタンスに接続されているブロックストレージも、どのインスタンスに接続されているかを確認できます。
@@ -15,151 +15,151 @@
 * 従来の**接続管理**ボタンが、**接続追加**と**接続解除**ボタンに分離されます。
 
 <a id="may-27-2025"></a>
-## 2025. 05. 27. { #may-27-2025 }
+## 2025. 05. 27.
 
 <a id="added-features"></a>
-### 機能追加 { #added-features }
+### 機能追加
 
 * ブロックストレージ移動機能が追加されます。
 * ブロックストレージ接続時の削除ポリシー設定機能が追加されます。
 
 <a id="march-4-2025"></a>
-## 2025. 03. 04. { #march-4-2025 }
+## 2025. 03. 04.
 
 <a id="march-4-2025-added-features"></a>
-### 機能追加 { #march-4-2025-added-features }
+### 機能追加
 
 * ブロックストレージあたりの最大スナップショット数を制限するクォーターが追加されます。
 
 <a id="august-27-2024"></a>
-## 2024. 08. 27. { #august-27-2024 }
+## 2024. 08. 27.
 
 <a id="august-27-2024-added-features"></a>
-### 機能追加 { #august-27-2024-added-features }
+### 機能追加
 
 * 同じリージョンを対象にブロックストレージを複製する機能が追加されます。
 * 自分が属する他のプロジェクト対象にブロックストレージを複製する機能が追加されます。
 
 <a id="may-28-2024"></a>
-## 2024. 05. 28. { #may-28-2024 }
+## 2024. 05. 28.
 
 <a id="may-28-2024-added-features"></a>
-### 機能追加 { #may-28-2024-added-features }
+### 機能追加
 
 * 暗号化ブロックストレージのスナップショット作成機能が追加されます。
 * 暗号化ブロックストレージのリージョン間複製機能が追加されます。
 * ブロックストレージのサイズ変更機能が追加されます。
 
 <a id="april-23-2024"></a>
-## 2024. 04. 23. { #april-23-2024 }
+## 2024. 04. 23.
 
 <a id="april-23-2024-feature-updates"></a>
-### 機能改善・変更 { #april-23-2024-feature-updates }
+### 機能改善・変更
 
 * 韓国(パンギョ)リージョンでu2専用ストレージタイプ利用が終了します。
 
 <a id="august-29-2023"></a>
-## 2023. 08. 29. { #august-29-2023 }
+## 2023. 08. 29.
 
 <a id="august-29-2023-feature-updates"></a>
-### 機能改善・変更 { #august-29-2023-feature-updates }
+### 機能改善・変更
 
 * 用語の変更
     * ボリューム、ディスクなどの用語を**ブロックストレージ**に変更しました。
 
 <a id="may-30-2023"></a>
-## 2023. 05. 30. { #may-30-2023 }
+## 2023. 05. 30.
 
 <a id="may-30-2023-added-features"></a>
-### 機能追加 { #may-30-2023-added-features }
+### 機能追加
 
 * 暗号化ブロックストレージタイプが追加されます。
 
 <a id="march-28-2023"></a>
-## 2023. 03. 28. { #march-28-2023 }
+## 2023. 03. 28.
 
 <a id="march-28-2023-feature-updates"></a>
-### 機能改善・変更 { #march-28-2023-feature-updates }
+### 機能改善・変更
 
 * APIエンドポイントが変更されます。
 
 <a id="september-27-2022"></a>
-## 2022. 09. 27. { #september-27-2022 }
+## 2022. 09. 27.
 
 <a id="september-27-2022-feature-updates"></a>
-### 機能改善・変更 { #september-27-2022-feature-updates }
+### 機能改善・変更
 
 * **スナップショットからブロックストレージ作成**の実行時、スナップショットの整合性確認手順が追加されます。
 
 <a id="march-29-2022"></a>
-## 2022. 03. 29. { #march-29-2022 }
+## 2022. 03. 29.
 
 <a id="march-29-2022-added-features"></a>
-### 機能追加 { #march-29-2022-added-features }
+### 機能追加
 
 * リージョン間の複製機能が追加されます。
 
 <a id="may-26-2020"></a>
-## 2020. 05. 26. { #may-26-2020 }
+## 2020. 05. 26.
 
 <a id="may-26-2020-added-features"></a>
-### 機能を追加 { #may-26-2020-added-features }
+### 機能を追加
 
 * Public API v2 リリース
     * Public API v2はOpenstack APIと互換性があります。
 
 <a id="march-24-2020"></a>
-## 2020. 03. 24. { #march-24-2020 }
+## 2020. 03. 24.
 
 <a id="march-24-2020-feature-updates"></a>
-### 機能改善・変更 { #march-24-2020-feature-updates }
+### 機能改善・変更
 
 * 作成できるブロックストレージの最大サイズが1TBから2TBに増加します。
 
 <a id="november-26-2019"></a>
-## 2019. 11. 26. { #november-26-2019 }
+## 2019. 11. 26.
 
 <a id="november-26-2019-feature-updates"></a>
-### 機能改善・変更 { #november-26-2019-feature-updates }
+### 機能改善・変更
 
 * 基本ディスクがブロックストレージリストに表示されます。
 
 <a id="january-29-2019"></a>
-## 2019. 01. 29. { #january-29-2019 }
+## 2019. 01. 29.
 
 <a id="january-29-2019-added-features"></a>
-### 機能改善・変更 { #january-29-2019-added-features }
+### 機能改善・変更
 
 * ブロックストレージの作成時、原本にスナップショットを選択できないように変更されます。
 * スナップショットでブロックストレージを作成時、アベイラビリティゾーンとブロックタイプを選択できるように変更されます。
 
 <a id="september-21-2017"></a>
-## 2017. 09. 21. { #september-21-2017 }
+## 2017. 09. 21.
 
 <a id="september-21-2017-added-features"></a>
-### 機能追加 { #september-21-2017-added-features }
+### 機能追加
 * Public API追加
     * Object Storageに続きBlock StorageをAPIで使用できます。
     * 現在、限定的な機能のみ利用できます。今後APIを追加して機能を拡張する予定です。
     * [ブロックストレージAPIガイド](/Storage/Block%20Storage/ja/public-api/)を参照してください。
 
 <a id="july-20-2017"></a>
-## 2017. 07. 20. { #july-20-2017 }
+## 2017. 07. 20.
 
 <a id="bug-fixes"></a>
-### バグ修正 { #bug-fixes }
+### バグ修正
 
 * ブロックストレージ作成時、断続的に作成が完了しないバグが修正されました。
 
 <a id="january-19-2017"></a>
-## 2017. 01. 19. { #january-19-2017 }
+## 2017. 01. 19.
 
 <a id="january-19-2017-feature-updates"></a>
-### 機能改善・変更 { #january-19-2017-feature-updates }
+### 機能改善・変更
 
 * ブロックストレージ接続管理機能に、同じゾーンのインスタンスにのみ接続ができることを明示しました。
 
 <a id="january-19-2017-bug-fixes"></a>
-### バグ修正 { #january-19-2017-bug-fixes }
+### バグ修正
 
 * スナップショットでブロックストレージを作成時、断続的に失敗する問題が修正されました。
