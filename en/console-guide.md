@@ -188,7 +188,7 @@ Block storage where snapshots exist cannot be moved.
 
 <!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
 
-<a id="target-project"></a>
+<a id="move-block-storage-target-project"></a>
 ### Target project
 
 Enter the ID of the target project to which you want to move block storage. The target project must be a project in the same organization.

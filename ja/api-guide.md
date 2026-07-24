@@ -45,6 +45,7 @@ Block Storageは、API呼び出し時の認証/認可のためにIaaSトーク�
 
 ブロックストレージの情報を照会します。
 
+<a id="method-url"></a>
 #### Method、 URL
 ```
 GET /v1.0/appkeys/{appkey}/volumes?id={volumeId}
@@ -56,9 +57,11 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | トークンID |
 | volumeId | Query | String | O | 照会するブロックストレージID。なければ全てのブロックストレージの情報を照会します。 |
 
+<a id="request-body"></a>
 #### Request Body
 このAPIはRequest Bodyが必要ありません。
 
+<a id="response-body"></a>
 #### Response Body
 ```json
 {
@@ -111,6 +114,7 @@ X-Auth-Token: {tokenId}
 ### ブロックストレージの作成
 新しいブロックストレージを作成します。
 
+<a id="create-block-storage-method-url"></a>
 #### Method、 URL
 ```
 POST /v1.0/appkeys/{appkey}/volumes
@@ -122,6 +126,7 @@ Content-Type: application/json;charset=UTF-8
 |--|--|--|--|--|
 | tokenId | Header | String | - | トークンID |
 
+<a id="create-block-storage-request-body"></a>
 #### Request Body
 ```json
 {
@@ -147,6 +152,7 @@ Content-Type: application/json;charset=UTF-8
 | Metadata Key / Metadata Value | Body | String | O | ブロックストレージに記入しようとするメタデータ情報 |
 | Block Storage Name | Body | String | - | ブロックストレージの名前 |
 
+<a id="create-block-storage-response-body"></a>
 #### Response Body
 ```json
 {
@@ -188,6 +194,7 @@ Content-Type: application/json;charset=UTF-8
 ### ブロックストレージの削除
 ブロックストレージを削除します。 Statusが"available" "in-use" "error" "error_restoring"のブロックストレージのみ削除できます。
 
+<a id="delete-block-storage-method-url"></a>
 #### Method、 URL
 ```
 DELETE /v1.0/appkeys/{appkey}/volumes?id={volumeId}
@@ -198,9 +205,11 @@ X-Auth-Token: {tokenId}
 | tokenId | Header | String | - | トークンID |
 | volumeId | Query | String | - | 削除するブロックストレージのID |
 
+<a id="delete-block-storage-request-body"></a>
 #### Request Body
 このAPIはRequest Bodyが必要ありません。
 
+<a id="delete-block-storage-response-body"></a>
 #### Response Body
 ```json
 {

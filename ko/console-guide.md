@@ -187,7 +187,7 @@ Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 �
 
 <!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
 
-<a id="target-project"></a>
+<a id="move-block-storage-target-project"></a>
 ### 대상 프로젝트
 
 블록 스토리지를 이동할 대상 프로젝트의 ID를 입력합니다. 이동할 프로젝트는 동일 조직의 프로젝트여야 합니다.
