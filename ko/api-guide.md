@@ -1,3 +1,5 @@
+<!-- pre-align:aligned sig=f4ad1bff928c -->
+
 <a id="storage-block-storage-api-guide"></a>
 ## Storage > Block Storage > API 가이드 { #storage-block-storage-api-guide }
 

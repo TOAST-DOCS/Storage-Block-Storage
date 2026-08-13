@@ -1,3 +1,5 @@
+<!-- pre-align:aligned sig=5282291a1b91 -->
+
 <a id="storage-block-storage-overview"></a>
 ## Storage > Block Storage > 概要 { #storage-block-storage-overview }
 
