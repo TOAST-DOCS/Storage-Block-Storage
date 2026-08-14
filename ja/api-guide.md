@@ -1,10 +1,10 @@
 <a id="storage-block-storage-api-guide"></a>
-## Storage > Block Storage > APIガイド
+## Storage > Block Storage > APIガイド { #storage-block-storage-api-guide }
 
 APIは現在、韓国リージョンでのみ使用できます。
 
 <a id="prerequisites"></a>
-## 事前準備
+## 事前準備 { #prerequisites }
 
 Block Storageは、API呼び出し時の認証/認可のためにIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行及び使用に関する詳細は、[IaaSトークン](/nhncloud/ja/public-api/iaas-token) を参照してください。
 
@@ -14,12 +14,12 @@ Block Storageは、API呼び出し時の認証/認可のためにIaaSトーク�
 
 
 <a id="block-storage-api"></a>
-## ブロックストレージAPI
+## ブロックストレージAPI { #block-storage-api }
 
 ブロックストレージの作成、削除、照会機能を提供します。ブロックストレージをインスタンスに接続、解除する機能は[インスタンス追加機能API](/Compute/Instance/ja/public-api/#additional-instance-features)で提供されます。
 
 <a id="status-of-block-storage"></a>
-### ブロックストレージの状態
+### ブロックストレージの状態 { #status-of-block-storage }
 
 ブロックストレージは次の状態値を持ちます。
 
@@ -41,7 +41,7 @@ Block Storageは、API呼び出し時の認証/認可のためにIaaSトーク�
 | uploading | イメージにアップロード中 |
 
 <a id="retrieve-block-storage"></a>
-### ブロックストレージの情報の照会
+### ブロックストレージの情報の照会 { #retrieve-block-storage }
 
 ブロックストレージの情報を照会します。
 
@@ -111,7 +111,7 @@ X-Auth-Token: {tokenId}
 | Volume Type | Body | String | ブロックストレージの種類。 "General HDD"または"General SSD"のどちらか |
 
 <a id="create-block-storage"></a>
-### ブロックストレージの作成
+### ブロックストレージの作成 { #create-block-storage }
 新しいブロックストレージを作成します。
 
 <a id="create-block-storage-method-url"></a>
@@ -191,7 +191,7 @@ Content-Type: application/json;charset=UTF-8
 | Volume Type | Body | String | ブロックストレージの種類。 "General HDD"または"General SSD"のどちらか。 |
 
 <a id="delete-block-storage"></a>
-### ブロックストレージの削除
+### ブロックストレージの削除 { #delete-block-storage }
 ブロックストレージを削除します。 Statusが"available" "in-use" "error" "error_restoring"のブロックストレージのみ削除できます。
 
 <a id="delete-block-storage-method-url"></a>
