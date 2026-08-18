@@ -1,3 +1,5 @@
+<!-- pre-align:aligned sig=4853fbdb9c19 -->
+
 <a id="storage-block-storage-release-notes"></a>
 ## Storage > Block Storage > Release Notes { #storage-block-storage-release-notes }
 

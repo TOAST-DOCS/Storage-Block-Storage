@@ -1,3 +1,5 @@
+<!-- pre-align:aligned sig=a7a51bd62a52 -->
+
 <a id="storage-block-storage-data-wiping-guide"></a>
 ## Storage > Block Storage > データ完全削除ガイド { #storage-block-storage-data-wiping-guide }
 
