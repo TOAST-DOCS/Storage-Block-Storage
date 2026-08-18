@@ -1,3 +1,5 @@
+<!-- pre-align:aligned sig=10ec624217b1 -->
+
 <a id="storage-block-storage-console-guide"></a>
 ## Storage > Block Storage > コンソール使用ガイド { #storage-block-storage-console-guide }
 
