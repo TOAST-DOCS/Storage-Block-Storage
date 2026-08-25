@@ -1,5 +1,7 @@
+<!-- pre-align:aligned sig=55424d42724d -->
+
 <a id="storage-block-storage-api-v2-guide"></a>
-## Storage > Block Storage > API v2 Guide
+## Storage > Block Storage > API v2 Guide { #storage-block-storage-api-v2-guide }
 
 Block Storage uses IaaS tokens for authentication and authorization when making API calls. The IaaS token is an authentication token used for NHN Cloud's OpenStack-based infrastructure services (IaaS). For more information on issuing and using IaaS tokens, please refer to the [IaaS Token](/nhncloud/en/public-api/iaas-token).
 
@@ -12,10 +14,10 @@ Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalo
 In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, so refrain from using them because they may be changed without prior notice.
 
 <a id="block-storage-type"></a>
-## Block Storage Type
+## Block Storage Type { #block-storage-type }
 
 <a id="list-block-storage-types"></a>
-### List Block Storage Types
+### List Block Storage Types { #list-block-storage-types }
 ```
 GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
@@ -76,10 +78,10 @@ This API does not require a request body.
 ---
 
 <a id="block-storage"></a>
-## Block Storage
+## Block Storage { #block-storage }
 
 <a id="block-storage-status"></a>
-### Block Storage Status
+### Block Storage Status { #block-storage-status }
 Block storage is available in many statuses with operations defined for each status. See the following list of available statuses:  
 
 | Status Name | Description                         |
@@ -106,7 +108,7 @@ Block storage is available in many statuses with operations defined for each sta
 | `extending`| Extending block storage |
 
 <a id="list-block-storage"></a>
-### List Block Storage
+### List Block Storage { #list-block-storage }
 Return the list of block storage included to a current tenant. 
 
 ```
@@ -168,7 +170,7 @@ This API does not require a request body.
 ---
 
 <a id="list-block-storage-details"></a>
-### List Block Storage Details
+### List Block Storage Details { #list-block-storage-details }
 Return the list of block storage included to a current tenant. 
 
 ```
@@ -277,7 +279,7 @@ This API does not require a request body.
 ---
 
 <a id="get-block-storage"></a>
-### Get Block Storage
+### Get Block Storage { #get-block-storage }
 Return details of specified block storage.  
 ```
 GET /v2/{tenantId}/volumes/{volumeId}
@@ -378,7 +380,7 @@ This API does not require a request body.
 ---
 
 <a id="create-block-storage"></a>
-### Create Block Storage
+### Create Block Storage { #create-block-storage }
 Create a new or empty block storage from snapshot. 
 
 Block storage is not immediately available after created. Query block storage status and check if it is `available`  first.  
@@ -499,7 +501,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-block-storage"></a>
-### Delete Block Storage
+### Delete Block Storage { #delete-block-storage }
 
 Delete specified block storage. Block storage that is attached or with snapshots created cannot be deleted. 
 
@@ -525,7 +527,7 @@ This API does not return a response body.
 ---
 
 <a id="create-image-with-block-storage"></a>
-### Create Image with Block Storage
+### Create Image with Block Storage { #create-image-with-block-storage }
 Create image from block storage. 
 
 At least 100KB of free space is required for basic initialization after image creation. The initialization operation may fail if the free space is less than this.
@@ -637,10 +639,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="snapshot"></a>
-## Snapshot
+## Snapshot { #snapshot }
 
 <a id="snapshot-status"></a>
-### Snapshot status
+### Snapshot status { #snapshot-status }
 Snapshots exist in various statuses, and each status defines its own set of permissible operations. See the following list of volume statuses.
 
 | Status Name | Description                     |
@@ -656,7 +658,7 @@ Snapshots exist in various statuses, and each status defines its own set of perm
 | `error_deleting`| Error has occurred while deleting a snapshot |
 
 <a id="list-snapshots"></a>
-### List Snapshots
+### List Snapshots { #list-snapshots }
 Returns the list of snapshots.
 
 ```
@@ -714,7 +716,7 @@ This API does not require a request body.
 ---
 
 <a id="list-snapshots-with-details"></a>
-### List Snapshots with Details
+### List Snapshots with Details { #list-snapshots-with-details }
 Returns a list of snapshot details.
 
 ```
@@ -776,7 +778,7 @@ This API does not require a request body.
 ---
 
 <a id="view-snapshot"></a>
-### View Snapshot
+### View Snapshot { #view-snapshot }
 Returns details of the specified snapshot.
 
 ```
@@ -837,7 +839,7 @@ This API does not require a request body.
 ---
 
 <a id="create-snapshot"></a>
-### Create Snapshot
+### Create Snapshot { #create-snapshot }
 Create snapshot for specified block storage. 
 
 ```
@@ -914,7 +916,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-snapshots"></a>
-### Delete Snapshots
+### Delete Snapshots { #delete-snapshots }
 Deletes a specified snapshot.
 
 ```

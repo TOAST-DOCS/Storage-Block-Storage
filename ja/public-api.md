@@ -1,5 +1,7 @@
+<!-- pre-align:aligned sig=55424d42724d -->
+
 <a id="storage-block-storage-api-v2-guide"></a>
-## Storage > Block Storage > API v2ガイド
+## Storage > Block Storage > API v2ガイド { #storage-block-storage-api-v2-guide }
 
 Block Storageは、API呼び出し時の認証/認可のためにIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行及び使用に関する詳細は、[IaaSトークン](/nhncloud/ja/public-api/iaas-token) を参照してください。
 
@@ -12,10 +14,10 @@ Block Storageは、API呼び出し時の認証/認可のためにIaaSトーク�
 APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、NHN Cloud内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
 
 <a id="block-storage-type"></a>
-## ブロックストレージタイプ
+## ブロックストレージタイプ { #block-storage-type }
 
 <a id="list-block-storage-types"></a>
-### ブロックストレージタイプリスト表示
+### ブロックストレージタイプリスト表示 { #list-block-storage-types }
 ```
 GET /v2/{tenantId}/types
 X-Auth-Token: {tokenId}
@@ -76,10 +78,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="block-storage"></a>
-## ブロックストレージ
+## ブロックストレージ { #block-storage }
 
 <a id="block-storage-status"></a>
-### ブロックストレージ状態
+### ブロックストレージ状態 { #block-storage-status }
 ブロックストレージはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
 
 | 状態名 | 説明                        |
@@ -106,7 +108,7 @@ X-Auth-Token: {tokenId}
 | `extending`| ブロックストレージを拡張している状態               |
 
 <a id="list-block-storage"></a>
-### ブロックストレージリスト表示
+### ブロックストレージリスト表示 { #list-block-storage }
 現在テナントに属しているブロックストレージリストを返します。
 
 ```
@@ -168,7 +170,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="list-block-storage-details"></a>
-### ブロックストレージ詳細リスト表示
+### ブロックストレージ詳細リスト表示 { #list-block-storage-details }
 現在テナントに属しているブロックストレージリストを返します。
 
 ```
@@ -276,7 +278,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="get-block-storage"></a>
-### ブロックストレージ表示
+### ブロックストレージ表示 { #get-block-storage }
 指定したブロックストレージの詳細情報を返します。
 
 ```
@@ -379,7 +381,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-block-storage"></a>
-### ブロックストレージを作成する
+### ブロックストレージを作成する { #create-block-storage }
 スナップショットから新しいブロックストレージを作成したり、空のブロックストレージを作成します。
 
 ブロックストレージは、作成直後は使用できません。ブロックストレージ状態を照会して`available`状態に変わったことを確認してから使用します。
@@ -500,7 +502,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-block-storage"></a>
-### ブロックストレージを削除する
+### ブロックストレージを削除する { #delete-block-storage }
 
 指定したブロックストレージを削除します。接続されていたり、スナップショットが作成されたブロックストレージは削除できません。
 
@@ -526,7 +528,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-image-with-block-storage"></a>
-### ブロックストレージでイメージを作成する
+### ブロックストレージでイメージを作成する { #create-image-with-block-storage }
 ブロックストレージからイメージを作成します。 
 
 イメージ作成後、基本的な初期化作業のために100KBの空き容量が必要です。空き容量がそれ以下の場合、初期化作業に失敗する場合があります。
@@ -638,10 +640,10 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="snapshot"></a>
-## スナップショット
+## スナップショット { #snapshot }
 
 <a id="snapshot-status"></a>
-### スナップショット状態
+### スナップショット状態 { #snapshot-status }
 スナップショットはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
 
 | 状態名 | 説明                     |
@@ -657,7 +659,7 @@ X-Auth-Token: {tokenId}
 | `error_deleting`| 削除中にエラーが発生した状態        |
 
 <a id="list-snapshots"></a>
-### スナップショットのリスト表示
+### スナップショットのリスト表示 { #list-snapshots }
 スナップショットのリストを返します。
 
 ```
@@ -715,7 +717,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="list-snapshots-with-details"></a>
-### スナップショットリスト詳細表示
+### スナップショットリスト詳細表示 { #list-snapshots-with-details }
 スナップショット詳細情報リストを返します。
 
 ```
@@ -777,7 +779,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="view-snapshot"></a>
-### スナップショット表示
+### スナップショット表示 { #view-snapshot }
 指定したスナップショットの詳細情報を返します。
 
 ```
@@ -838,7 +840,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="create-snapshot"></a>
-### スナップショットを作成する
+### スナップショットを作成する { #create-snapshot }
 指定したブロックストレージのスナップショットを作成します。
 
 ```
@@ -915,7 +917,7 @@ X-Auth-Token: {tokenId}
 ---
 
 <a id="delete-snapshots"></a>
-### スナップショットを削除する
+### スナップショットを削除する { #delete-snapshots }
 指定したスナップショットを削除します。
 
 ```

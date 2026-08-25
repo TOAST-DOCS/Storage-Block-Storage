@@ -1,11 +1,13 @@
+<!-- pre-align:aligned sig=a7a51bd62a52 -->
+
 <a id="storage-block-storage-data-wiping-guide"></a>
-## Storage > Block Storage > データ完全削除ガイド
+## Storage > Block Storage > データ完全削除ガイド { #storage-block-storage-data-wiping-guide }
 
 インスタンスに接続されたブロックストレージおよびNASのデータを完全に削除する方法を紹介します。
 KISAデータ完全削除基準でるDoD 5220.22-Mパターンを適用できるscrub(Linux), Disk Wipe(Windows)を利用してデータを完全に完全に削除できます。
 
 <a id="linux-instance"></a>
-## Linuxインスタンス
+## Linuxインスタンス { #linux-instance }
 
 1. scrubパッケージをインストールします。
     * Debian, Ubuntuインスタンス
@@ -32,7 +34,7 @@ KISAデータ完全削除基準でるDoD 5220.22-Mパターンを適用できる
 
 
 <a id="windows-instance"></a>
-## Windowsインスタンス
+## Windowsインスタンス { #windows-instance }
 
 1. [https://www.diskwipe.org](https://www.diskwipe.org)からDisk Wipeをダウンロードします。
 2. 管理者権限でDisk Wipeを実行してデータを完全に削除するドライブを選択した後、左上の**Wipe Disk**ボタンをクリックします。

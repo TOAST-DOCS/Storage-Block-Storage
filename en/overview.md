@@ -1,5 +1,7 @@
+<!-- pre-align:aligned sig=5282291a1b91 -->
+
 <a id="storage-block-storage-overview"></a>
-## Storage > Block Storage > Overview
+## Storage > Block Storage > Overview { #storage-block-storage-overview }
 
 Additional block storage is available in addition to an instance's root block storage.
 
@@ -23,10 +25,10 @@ Block storage can be attached while the instance is running. Attached block stor
 
 
 <a id="use-empty-block-storage"></a>
-## Use Empty Block Storage
+## Use Empty Block Storage { #use-empty-block-storage }
 
 <a id="linux"></a>
-### Linux
+### Linux { #linux }
 
 Connect to the instance and take the following steps:
 
@@ -211,7 +213,7 @@ mount -a
 ```
 
 <a id="windows"></a>
-### Windows
+### Windows { #windows }
 
 There are two main ways to add a volume in Windows. The first is to use the GUI-based **Server Manager**, and the second is to use the CLI-based **PowerShell**. This article briefly introduces each method.
 
@@ -327,7 +329,7 @@ $Scriptblock | diskpart
 ```
 
 <a id="block-storage-snapshot"></a>
-## Block Storage Snapshot
+## Block Storage Snapshot { #block-storage-snapshot }
 
 The block storage snapshot feature allows users to back up block storage faster than directly copying data from the block storage. Although a block storage snapshot can be created while block storage is attached to the instance, it is recommended to detach it from the instance and create a block storage snapshot to ensure data consistency and reliability. To enhance reliability, unmount block storage before detaching it from the instance.
 
@@ -337,6 +339,6 @@ A snapshot of block storage is read-only, so it cannot be used by attaching it d
 Block storage with block storage snapshots cannot be deleted. To delete block storage, delete all snapshots of the block storage.
 
 <a id="billing"></a>
-### Billing
+### Billing { #billing }
 
 Block storage is charged according to `the size of the block storage` set when it is created. Snapshot is charged according to the size of the original block storage.
