@@ -329,9 +329,9 @@ This API does not require a request body.
 | volume.created_at | Body | Datetime | Block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
 | volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volume.replication_status | Body | String | Block storage replication status |
-| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
-| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
-| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
+| volume.nhn_encryption            | Body | Object | Block storage encryption information |
+| volume.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volume.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 <details><summary>Example</summary>
 <p>
@@ -456,9 +456,9 @@ X-Auth-Token: {tokenId}
 | volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
 | volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volume.replication_status | Body | String | Block storage replication status |
-| volumes.nhn_encryption            | Body | Object | Block storage encryption information |
-| volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
-| volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
+| volume.nhn_encryption            | Body | Object | Block storage encryption information |
+| volume.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
+| volume.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
 <details><summary>Example</summary>
 <p>
@@ -678,17 +678,17 @@ This API does not require a request body.
 <a id="list-snapshots-response"></a>
 #### Response
 
-| Name                 | Type | Format   | Description                                                  |
-| -------------------- | ---- | -------- | ------------------------------------------------------------ |
-| snapshot             | Body | Array    | Information object of snapshot details                       |
-| snapshot.status      | Body | Enum     | Snapshot status                                              |
-| snapshot.description | Body | String   | Snapshot description                                         |
-| snapshot.created_at  | Body | Datetime | Snapshot creation time <br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
-| snapshot.metadata    | Body | Object   | Snapshot metadata object                                     |
-| snapshot.volume_id   | Body | UUID     | Original block storage ID of snapshot                               |
-| snapshot.size        | Body | Integer  | Original block storage size of snapshot (GB)                        |
-| snapshot.id          | Body | UUID     | Snapshot ID                                                  |
-| snapshot.name        | Body | String   | Snapshot name                                                |
+| Name | Type | Format | Description |
+|---|---|---|---|
+| snapshots | Body | Array | Snapshot info object list |
+| snapshots.status | Body | Enum | Snapshot status |
+| snapshots.description | Body | String | Snapshot description |
+| snapshots.created_at | Body | Datetime | Snapshot creation time <br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshots.metadata | Body | Object | Snapshot metadata object |
+| snapshots.volume_id | Body | UUID | Original block storage ID of snapshot |
+| snapshots.size | Body | Integer | Original block storage size of snapshot (GB) |
+| snapshots.id | Body | UUID | Snapshot ID |
+| snapshots.name | Body | String | Snapshot name |
 
 <details><summary>Example</summary>
 <p>
@@ -736,19 +736,19 @@ This API does not require a request body.
 <a id="list-snapshots-with-details-response"></a>
 #### Response
 
-| Name                                                | Type | Format   | Description                                                  |
-| --------------------------------------------------- | ---- | -------- | ------------------------------------------------------------ |
-| snapshot                                            | Body | Array    | Information object of snapshot details                       |
-| snapshot.status                                     | Body | Enum     | Snapshot status                                              |
-| snapshot.description                                | Body | String   | Snapshot description                                         |
-| snapshot.os-extended-snapshot-attributes:progress   | Body | String   | Progress of snapshot creation                                |
-| snapshot.created_at                                 | Body | Datetime | Snapshot creation time In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
-| snapshot.metadata                                   | Body | Object   | Snapshot metadata object                                     |
-| snapshot.volume_id                                  | Body | UUID     | Original block storage ID of snapshot                               |
-| snapshot.os-extended-snapshot-attributes:project_id | Body | String   | Tenant ID                                                    |
-| snapshot.size                                       | Body | Integer  | Original block storage size of snapshot (GB)                        |
-| snapshot.id                                         | Body | UUID     | Snapshot ID                                                  |
-| snapshot.name                                       | Body | String   | Snapshot name                                                |
+| Name | Type | Format | Description |
+|---|---|---|---|
+| snapshots | Body | Array | Snapshot Details Object List |
+| snapshots.status | Body | Enum | Snapshot status |
+| snapshots.description | Body | String | Snapshot description |
+| snapshots.os-extended-snapshot-attributes:progress | Body | String | Snapshot creation progress |
+| snapshots.created_at | Body | Datetime | Snapshot creation time<br>In the `YYYY-MM-DDThh:mm:ss.SSSSSS` format |
+| snapshots.metadata | Body | Object | Snapshot metadata object |
+| snapshots.volume_id | Body | UUID | Original block storage ID of snapshot |
+| snapshots.os-extended-snapshot-attributes:project_id | Body | String | Tenant ID |
+| snapshots.size | Body | Integer | Original block storage size of snapshot (GB) |
+| snapshots.id | Body | UUID | Snapshot ID |
+| snapshots.name | Body | String | Snapshot name |
 
 <details><summary>Example</summary>
 <p>
