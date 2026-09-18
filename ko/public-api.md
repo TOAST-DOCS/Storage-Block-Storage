@@ -1,15 +1,33 @@
 <!-- pre-align:aligned sig=55424d42724d -->
 
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
+{% set ep_domain = {"ninc":"ninc.go.kr","ngsc":"ngsc.go.kr","ngovc":"ngovc.com","ngoic":"ngoic.com"} %}
 <a id="storage-block-storage-api-v2-guide"></a>
 ## Storage > Block Storage > API v2 가이드 { #storage-block-storage-api-v2-guide }
 
+{% if "public" in build_flags %}
 Block Storage은(는) API 호출 시 인증/인가를 위해 IaaS 토큰을 사용합니다. IaaS 토큰은 NHN Cloud의 OpenStack 기반 인프라 서비스(IaaS)에서 사용하는 인증 토큰입니다. IaaS 토큰 발급 및 사용에 대한 자세한 내용은 [IaaS 토큰](/nhncloud/ko/public-api/iaas-token) 을 참고하세요.
+{% elif "gov" in build_flags %}
+Block Storage은(는) API 호출 시 인증/인가를 위해 IaaS 토큰을 사용합니다. IaaS 토큰은 NHN Cloud의 OpenStack 기반 인프라 서비스(IaaS)에서 사용하는 인증 토큰입니다. IaaS 토큰 발급 및 사용에 대한 자세한 내용은 [IaaS 토큰](/nhncloud/ko/public-api/iaas-token-gov) 을 참고하세요.
+{% else %}
+API를 사용하려면 API 엔드포인트와 토큰 등이 필요합니다. [API 사용 준비](/Compute/Compute/ko/identity-api-$[ f ]$/)를 참고하여 API 사용에 필요한 정보를 준비합니다.
+{% endif %}
 
 블록 스토리지 API는 `volumev2` 타입 엔드포인트를 이용합니다. 정확한 엔드포인트는 토큰 발급 응답의 `serviceCatalog`를 참조합니다.
 
+{% if "public" in build_flags %}
 | 타입 | 리전 | 엔드포인트 |
 |---|---|---|
 | volumev2 | 한국(판교) 리전<br>한국(평촌) 리전<br>한국(광주) 리전<br>일본 리전 | https://kr1-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr3-api-block-storage-infrastructure.nhncloudservice.com<br>https://jp1-api-block-storage-infrastructure.nhncloudservice.com |
+{% elif "gov" in build_flags %}
+| 타입      | 리전 | 엔드포인트 |
+|---------|---|---|
+| volumev2 | 한국(판교) 리전<br>한국(평촌) 리전 | https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.gov-nhncloudservice.com |
+{% else %}
+| 타입      | 리전 | 엔드포인트 |
+|---------|---|---|
+| volumev2 | 한국(대구) 리전 | https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$ |
+{% endif %}
 
 API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
 
@@ -84,14 +102,25 @@ X-Auth-Token: {tokenId}
 ### 블록 스토리지 상태 { #block-storage-status }
 블록 스토리지는 다양한 상태를 가지며 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
 
+{% if "public" in build_flags %}
 | 상태 명 | 설명                         |
 |--|----------------------------|
 | `creating` | 생성 중인 상태                   |
+{% else %}
+| 상태 명 | 설명                              |
+|--|---------------------------------|
+| `creating` | 생성 중인 상태                        |
+{% endif %}
 | `available` | 블록 스토리지가 생성되어 연결할 준비가 된 상태      |
 | `attaching`| 블록 스토리지가 인스턴스에 연결 중인 상태         |
 | `detaching`| 블록 스토리지가 연결 해제 중인 상태            |
 | `in-use`| 블록 스토리지가 인스턴스에 연결된 상태           |
+{% if "public" in build_flags %}
 | `reserved`| 종료된 인스턴스의 루트 블록 스토리지 상태         |
+{% elif "gov" in build_flags %}
+| `reserved`| 종료된 인스턴스의 루트 블록 스토리지 상태         |
+{% else %}
+{% endif %}
 | `maintenance`| 블록 스토리지가 다른 호스트 장비로 이전 중인 상태    |
 | `deleting`| 블록 스토리지를 삭제 중인 상태               |
 | `awaiting-transfer`| 블록 스토리지가 전송을 기다리는 상태            |
@@ -99,8 +128,13 @@ X-Auth-Token: {tokenId}
 | `error_deleting`| 블록 스토리지 삭제 시 오류가 발생한 상태         |
 | `backing-up`| 블록 스토리지가 백업 중인 상태               |
 | `restoring-backup`| 블록 스토리지가 백업본에서 복구 중인 상태         |
+{% if "public" in build_flags %}
 | `error_backing-up`| 백업 중 오류가 발생한 상태            |
 | `error_restoring`| 복구 중 오류가 발생한 상태            |
+{% else %}
+| `error_backing-up`| 백업 중 오류가 발생한 상태                 |
+| `error_restoring`| 복구 중 오류가 발생한 상태                 |
+{% endif %}
 | `error_extending`| 블록 스토리지 확장 중 오류가 발생한 상태         |
 | `downloading`| 블록 스토리지 생성 시 지정한 이미지를 다운로드하는 상태 |
 | `uploading`| 이미지 생성 시 블록 스토리지의 이미지를 업로드하는 상태 |
@@ -150,11 +184,23 @@ X-Auth-Token: {tokenId}
       "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -194,6 +240,7 @@ X-Auth-Token: {tokenId}
 <a id="list-block-storage-details-response"></a>
 #### 응답
 
+{% if "public" in build_flags %}
 | 이름 | 종류 | 형식 | 설명 |
 |---|---|---|---|
 | volumes | Body | Array | 블록 스토리지 상세 정보 객체 목록 |
@@ -224,10 +271,45 @@ X-Auth-Token: {tokenId}
 | volumes.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volumes.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volumes.replication_status | Body | String | 블록 스토리지 복제 상태 |
+{% else %}
+| 이름 | 종류 | 형식 | 설명                                                                       |
+|---|---|---|--------------------------------------------------------------------------|
+| volumes | Body | Array | 블록 스토리지 상세 정보 객체 목록                                                      |
+| volumes.attachments | Body | Object | 블록 스토리지 연결 정보 객체                                                         |
+| volumes.attachments.server_id | Body | UUID | 블록 스토리지가 연결된 인스턴스 ID                                                     |
+| volumes.attachments.attachment_id | Body | UUID | 블록 스토리지 연결 ID                                                            |
+| volumes.attachments.volume_id | Body | UUID | 블록 스토리지 ID                                                               |
+| volumes.attachments.device | Body | String | 인스턴스 내 장치 이름                                                             |
+| volumes.attachments.id | Body | String | 블록 스토리지 ID                                                               |
+| volumes.links | Body | Object | 블록 스토리지 리소스 링크 참조 객체                                                     |
+| volumes.availability_zone | Body | String | 블록 스토리지 가용성 영역                                                           |
+| volumes.encrypted | Body | Boolean | 블록 스토리지 암호화 여부                                                           |
+| volumes.os-volume-replication:extended_status | Body | String | 블록 스토리지 확장 상태                                                            |
+| volumes.volume_type | Body | String | 블록 스토리지 타입 이름                                                            |
+| volumes.snapshot_id | Body | UUID | 블록 스토리지 생성 시 지정한 스냅숏 ID                                                  |
+| volumes.id | Body | UUID | 블록 스토리지 ID                                                               |
+| volumes.size | Body | Integer | 블록 스토리지 크기(GB)                                                           |
+| volumes.user_id | Body | String | 블록 스토리지 소유주 ID                                                           |
+| volumes.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID                                                                   |
+| volumes.metadata | Body | Object | 블록 스토리지 메타데이터 객체                                                         |
+| volumes.status | Body | Enum | 블록 스토리지 상태                                                               |
+| volumes.description | Body | String | 블록 스토리지 설명                                                               |
+| volumes.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음                             |
+| volumes.source_volid | Body | UUID | 블록 스토리지 생성 시 지정한 블록 스토리지 ID                                              |
+| volumes.consistencygroup_id | Body | UUID | 블록 스토리지  그룹 ID                                                           |
+| volumes.name | Body | String | 블록 스토리지 이름                                                               |
+| volumes.bootable | Body | String | 블록 스토리지 부팅 가능 여부                                                         |
+| volumes.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태                        |
+| volumes.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터                                                           |
+| volumes.replication_status | Body | String | 블록 스토리지 복제 상태                                                            |
+{% endif %}
 | volumes.volumes_links  | Body | Object | 페이지 매김(페이지네이션)을 위한 정보 객체(다음 목록을 가리키는 경로)<br>`limit`, `offset`을 추가한 경우 반환 |
+{% if "public" in build_flags %}
 | volumes.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
 | volumes.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
+{% else %}
+{% endif %}
 
 <details><summary>예시</summary>
 <p>
@@ -239,11 +321,23 @@ X-Auth-Token: {tokenId}
       "attachments": [],
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -299,6 +393,7 @@ X-Auth-Token: {tokenId}
 <a id="get-block-storage-response"></a>
 #### 응답
 
+{% if "public" in build_flags %}
 | 이름 | 종류 | 형식 | 설명                                           |
 |---|---|---|----------------------------------------------|
 | volume | Body | Object | 블록 스토리지 상세 정보 객체                                  |
@@ -332,6 +427,38 @@ X-Auth-Token: {tokenId}
 | volume.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
 | volume.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
 | volume.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
+{% else %}
+| 이름 | 종류 | 형식 | 설명                                            |
+|---|---|---|-----------------------------------------------|
+| volume | Body | Object | 블록 스토리지 상세 정보 객체                              |
+| volume.attachments | Body | Object | 블록 스토리지 연결 정보 객체                              |
+| volume.attachments.server_id | Body | UUID | 블록 스토리지가 연결된 인스턴스 ID                          |
+| volume.attachments.attachment_id | Body | UUID | 블록 스토리지 연결 ID                                 |
+| volume.attachments.volume_id | Body | UUID | 블록 스토리지 ID                                    |
+| volume.attachments.device | Body | String | 인스턴스 내 장치 이름                                  |
+| volume.attachments.id | Body | String | 블록 스토리지 ID                                    |
+| volume.links | Body | Object | 블록 스토리지 리소스 링크 참조 객체                          |
+| volume.availability_zone | Body | String | 블록 스토리지 가용성 영역                                |
+| volume.encrypted | Body | Boolean | 블록 스토리지 암호화 여부                                |
+| volume.os-volume-replication:extended_status | Body | String | 블록 스토리지 확장 상태                                 |
+| volume.volume_type | Body | String | 블록 스토리지 타입 이름                                 |
+| volume.snapshot_id | Body | UUID | 블록 스토리지 생성 시 지정한 스냅숏 ID                       |
+| volume.id | Body | UUID | 블록 스토리지 ID                                    |
+| volume.size | Body | Integer | 블록 스토리지 크기(GB)                                |
+| volume.user_id | Body | String | 블록 스토리지 소유주 ID                                |
+| volume.os-vol-tenant-attr:tenant_id | Body | String | 테넌트 ID                                        |
+| volume.metadata | Body | Object | 블록 스토리지 메타데이터 객체                              |
+| volume.status | Body | Enum | 블록 스토리지 상태                                    |
+| volume.description | Body | String | 블록 스토리지 설명                                    |
+| volume.multiattach | Body | Boolean | 다중 연결 가능 여부<br>`true`면 여러 인스턴스에 동시에 연결할 수 있음  |
+| volume.source_volid | Body | UUID | 블록 스토리지 생성 시 지정한 블록 스토리지 ID                   |
+| volume.consistencygroup_id | Body | UUID | 블록 스토리지 컨시스턴시(일관성) 그룹 ID                      |
+| volume.name | Body | String | 블록 스토리지 이름                                    |
+| volume.bootable | Body | String | 블록 스토리지 부팅 가능 여부                              |
+| volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터                                |
+| volume.replication_status | Body | String | 블록 스토리지 복제 상태                                 |
+{% endif %}
 
 <details><summary>예시</summary>
 <p>
@@ -342,11 +469,23 @@ X-Auth-Token: {tokenId}
     "attachments": [],
     "links": [
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+        "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
         "rel": "self"
       },
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+        "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
         "rel": "bookmark"
       }
     ],
@@ -393,10 +532,17 @@ X-Auth-Token: {tokenId}
 <a id="create-block-storage-request"></a>
 #### 요청
 
+{% if "public" in build_flags %}
 | 이름 | 종류 | 형식 | 필수 | 설명                        |
 |---|---|---|---|---------------------------|
 | tenantId | URL | String | O | 테넌트 ID                    |
 | tokenId | Header | String | O | 토큰 ID                     |
+{% else %}
+| 이름 | 종류 | 형식 | 필수 | 설명                             |
+|---|---|---|---|--------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                         |
+| tokenId | Header | String | O | 토큰 ID                          |
+{% endif %}
 | volume | Body | Object | O | 블록 스토리지 생성 요청 객체               |
 | volume.size | Body | Integer | O | 블록 스토리지 크기(GB)                 |
 | volume.description | Body | String | - | 블록 스토리지 설명                     |
@@ -405,9 +551,12 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | - | 블록 스토리지 타입 이름                  |
 | volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID, 생략하면 빈 블록 스토리지가 생성됨 |
 | volume.metadata | Body | Object | - | 블록 스토리지 메타데이터 객체               |
+{% if "public" in build_flags %}
 | volume.nhn_encryption            | Body | Object | - | 블록 스토리지 암호화 정보 |
 | volume.nhn_encryption.skm_appkey | Body | String | - | Secure Key Manager 상품의 앱키 |
 | volume.nhn_encryption.skm_key_id | Body | String | - | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
+{% else %}
+{% endif %}
 
 <details><summary>예시</summary>
 <p>
@@ -451,14 +600,21 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | 블록 스토리지 상태 |
 | volume.description | Body | String | 블록 스토리지 설명 |
 | volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
+{% if "public" in build_flags %}
+{% else %}
+| volume.consistencygroup_id | Body | UUID | 블록 스토리지 컨시스턴시 그룹 ID |
+{% endif %}
 | volume.name | Body | String | 블록 스토리지 이름 |
 | volume.bootable | Body | String | 블록 스토리지 부팅 가능 여부 |
 | volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volume.replication_status | Body | String | 블록 스토리지 복제 상태 |
+{% if "public" in build_flags %}
 | volume.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
 | volume.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
 | volume.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
+{% else %}
+{% endif %}
 
 <details><summary>예시</summary>
 <p>
@@ -470,10 +626,22 @@ X-Auth-Token: {tokenId}
     "user_id": "94acd5b4d2bf47dda734e34a113f96ff",
     "attachments": [],
     "links": [{
+{% if "public" in build_flags %}
       "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% elif "gov" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% else %}
+      "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% endif %}
       "rel": "self"
     }, {
+{% if "public" in build_flags %}
       "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% elif "gov" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% else %}
+      "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% endif %}
       "rel": "bookmark"
     }],
     "availability_zone": "kr-pub-a",
@@ -528,7 +696,7 @@ X-Auth-Token: {tokenId}
 
 <a id="create-image-with-block-storage"></a>
 ### 블록 스토리지로 이미지 생성하기 { #create-image-with-block-storage }
-블록 스토리지로부터 이미지를 생성합니다. 
+블록 스토리지로부터 이미지를 생성합니다.
 
 이미지 생성 이후 기본적인 초기화 작업을 위해 최소 100KB의 여유 공간이 필요합니다. 남은 공간이 이보다 작을 경우 초기화 작업이 실패할 수 있습니다.
 
@@ -645,6 +813,7 @@ X-Auth-Token: {tokenId}
 ### 스냅숏 상태 { #snapshot-status }
 스냅숏은 다양한 상태를 가지며, 상태에 따라 취할 수 있는 동작이 정해져 있습니다. 가능한 상태 목록은 다음과 같습니다.
 
+{% if "public" in build_flags %}
 | 상태 명 | 설명                      |
 |--|-------------------------|
 | `creating` | 생성 중인 상태                |
@@ -656,6 +825,19 @@ X-Auth-Token: {tokenId}
 | `unmanaging`| 스냅숏에 대한 관리 모드가 해제 중인 상태 |
 | `restoring`| 스냅숏으로부터 블록 스토리지를 복원 중인 상태    |
 | `error_deleting`| 삭제 중 오류가 발생한 상태         |
+{% else %}
+| 상태 명 | 설명                        |
+|--|---------------------------|
+| `creating` | 생성 중인 상태                  |
+| `available` | 스냅숏이 생성되어 사용할 준비가 된 상태    |
+| `backing-up`| 스냅숏이 백업 중인 상태             |
+| `deleting`| 스냅숏이 삭제 중인 상태             |
+| `error`| 생성 중 오류가 발생한 상태           |
+| `deleted`| 삭제된 상태                    |
+| `unmanaging`| 스냅숏에 대한 관리 모드가 해제 중인 상태   |
+| `restoring`| 스냅숏으로부터 블록 스토리지를 복원 중인 상태 |
+| `error_deleting`| 삭제 중 오류가 발생한 상태           |
+{% endif %}
 
 <a id="list-snapshots"></a>
 ### 스냅숏 목록 보기 { #list-snapshots }
@@ -850,15 +1032,28 @@ X-Auth-Token: {tokenId}
 <a id="create-snapshot-request"></a>
 #### 요청
 
+{% if "public" in build_flags %}
 | 이름 | 종류 | 형식 | 필수 | 설명                                        |
 |---|---|---|---|-------------------------------------------|
 | tenantId | URL | String | O | 테넌트 ID                                    |
 | tokenId | Header | String | O | 토큰 ID                                     |
 | snapshot | Body | Object | O | 스냅숏 생성 요청 객체                              |
+{% else %}
+| 이름 | 종류 | 형식 | 필수 | 설명                                             |
+|---|---|---|---|------------------------------------------------|
+| tenantId | URL | String | O | 테넌트 ID                                         |
+| tokenId | Header | String | O | 토큰 ID                                          |
+| snapshot | Body | Object | O | 스냅숏 생성 요청 객체                                   |
+{% endif %}
 | snapshot.volume_id | Body | UUID | O | 원본 블록 스토리지 ID                                  |
 | snapshot.force | Body | Boolean | - | 강제 스냅숏 생성 여부<br>`true`면 블록 스토리지가 연결되어도 스냅숏을 생성 |
+{% if "public" in build_flags %}
 | snapshot.description | Body | String | - | 스냅숏 설명                                    |
 | snapshot.name | Body | String | - | 스냅숏 이름                                    |
+{% else %}
+| snapshot.description | Body | String | - | 스냅숏 설명                                         |
+| snapshot.name | Body | String | - | 스냅숏 이름                                         |
+{% endif %}
 
 <details><summary>예시</summary>
 <p>
@@ -937,3 +1132,8 @@ X-Auth-Token: {tokenId}
 <a id="delete-snapshots-response"></a>
 #### 응답
 이 API는 응답 본문을 반환하지 않습니다.
+{% if "public" in build_flags %}
+{% elif "gov" in build_flags %}
+{% else %}
+
+{% endif %}
