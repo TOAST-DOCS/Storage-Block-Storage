@@ -147,11 +147,11 @@ X-Auth-Token: {tokenId}
       "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570",
       "links": [
         {
-          "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+          "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
           "rel": "bookmark"
         }
       ],
@@ -233,11 +233,11 @@ X-Auth-Token: {tokenId}
       "attachments": [],
       "links": [
         {
-          "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+          "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+          "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
           "rel": "bookmark"
         }
       ],
@@ -333,11 +333,11 @@ X-Auth-Token: {tokenId}
     "attachments": [],
     "links": [
       {
-        "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+        "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
         "rel": "bookmark"
       }
     ],
@@ -456,10 +456,10 @@ X-Auth-Token: {tokenId}
     "user_id": "94acd5b4d2bf47dda734e34a113f96ff",
     "attachments": [],
     "links": [{
-      "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
       "rel": "self"
     }, {
-      "href": "https://kr1-api-block-storage-infrastructure.gncloud.go.kr/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+      "href": "https://kr4-api-block-storage-infrastructure.ngsc.go.kr/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
       "rel": "bookmark"
     }],
     "availability_zone": "kr-pub-a",
