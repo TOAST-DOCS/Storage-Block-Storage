@@ -1,4 +1,4 @@
-<!-- pre-align:aligned sig=10ec624217b1 -->
+<!-- pre-align:aligned sig=f722b0e8e1ad -->
 
 <a id="storage-block-storage-console-guide"></a>
 ## Storage > Block Storage > 콘솔 사용 가이드 { #storage-block-storage-console-guide }
