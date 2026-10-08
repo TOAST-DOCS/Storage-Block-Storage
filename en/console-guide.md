@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=10ec624217b1 -->
 
 <a id="storage-block-storage-console-guide"></a>
@@ -12,7 +14,8 @@ Block storage can be created with empty storage containing no data, or by snapsh
 
 To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For block storage type, choose either **HDD** or **SSD**, based on the required I/O performance.
 
-You can also create block storage from snapshots. In this case, the size of block storage must be the same as or larger than that of a snapshot. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
+You can also create block storage from snapshots. In this case, the block storage size must be the same as or larger than the snapshot size. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
+{% if "public" in build_flags %}
 
 <a id="encrypted-block-storage"></a>
 ### Encrypted Block Storage { #encrypted-block-storage }
@@ -32,6 +35,8 @@ Backup products allow you to prepare for data loss due to key deletion, and crea
 
 > [Caution]
 If the Secure Key Manager service deletes the symmetric key that you set for encrypted block storage and then detaches that block storage from the instance, it can't be decrypted again. You must manage symmetric keys carefully to avoid accidentally deleting them.
+{% else %}
+{% endif %}
 
 <a id="delete-block-storage"></a>
 ## Delete Block Storage { #delete-block-storage }
@@ -142,6 +147,8 @@ Make the disk **Offline** in **Disk Management** and then detach it.
 
 Create a read-only copy of the block storage. Although block storage snapshots can be created while the block storage is attached to an instance, it is recommended to detach it from the instance and create block storage snapshots to ensure data consistency and reliability.
 
+{% if "public" in build_flags %}
+
 <a id="replicate-block-storage"></a>
 ## Replicate Block Storage { #replicate-block-storage }
 
@@ -200,6 +207,68 @@ Enter the ID of the target project to which you want to move block storage. The 
 
 If you're moving encrypted block storage, enter the encryption symmetric key ID that the target project will use.
 
+{% elif "gov" in build_flags %}
+
+<a id="replicate-block-storage"></a>
+## Replicate Block Storage { #replicate-block-storage }
+
+You can use block storage by replicating it. Although block storage can be replicated while being attached to an instance, we recommend that you stop the instance or detach the block storage and proceed with replication to ensure data consistency and reliability.
+
+After requesting replication, you can check the replication status and success in **Replication Result**.
+
+> [Note]
+> The replication function is a one-time operation, and changes to the original block storage after the replication are not reflected.
+
+<!-- This comment is for line breaks and must be included. -->
+
+> [Caution]
+> To proceed with replication, at least 100KB of free space in block storage is required.
+
+<a id="target-project"></a>
+### Target project { #target-project }
+
+Select the target project in which to create the replica.
+
+* Same project: Replicate to the same project
+* Different project: Replicate to a different project that you belong to
+
+<a id="region"></a>
+### Region { #region }
+
+Select a target region to create a replica in.
+
+<a id="block-storage-type"></a>
+### Block Storage Type { #block-storage-type }
+
+Select the type of block storage to use in the region to which to replicate. You can select a type that is different from the block storage type being used in the current region.
+
+<a id="availability-zone"></a>
+### Availability Zone { #availability-zone }
+
+Select the availability zone to use in the region to which to replicate. You can select an availability zone that is different from the availability zone being used in the current region.
+
+<a id="move-block-storage"></a>
+## Move block storage { #move-block-storage }
+
+You can move block storage to another project in the same organization. The requester must have the appropriate permissions on both the source and target projects.
+
+> [Note]
+Block storage where snapshots exist cannot be moved.
+
+<!-- This comment is for line break purposes and must be included. -->
+
+<a id="move-block-storage-target-project"></a>
+### Target project { #move-block-storage-target-project }
+
+Enter the ID of the target project to move the block storage to. The target project must be a project in the same organization.
+
+<a id="encryption-symmetric-key-id"></a>
+### Encryption Symmetric Key ID { #encryption-symmetric-key-id }
+
+If you're moving encrypted block storage, enter the encryption symmetric key ID that the target project will use.
+
+{% else %}
+{% endif %}
 <a id="troubleshooting-guide"></a>
 ## Troubleshooting Guide { #troubleshooting-guide }
 
@@ -228,11 +297,11 @@ As shown above, if the file system UUID of the additionally attached block stora
 
 Use the following steps to solve the problem by making the file system UUIDs of the two block storage different.
 
-1. After stopping the instance, [detach the block storage](./console-guide/#detach-block-storage) that is causing the problem (that is, the one that was mounted on `/` unexpectedly).
+1. After stopping the instance, [detach the block storage](#detach-block-storage) that is causing the problem (that is, the one that was mounted on `/` unexpectedly).
 
 2. Start the instance.
 
-3. When booting is complete, [attach the block storage](./console-guide/#attach-block-storage) that is causing the problem.
+3. When booting is complete, [attach the block storage](#attach-block-storage) that is causing the problem.
 
 4. Use the command below to change the file system UUID of the block storage that is causing the problem. Execute the command below according to the type of block storage causing the problem. The type of block storage can be found with the `blkid` command.
 
@@ -266,4 +335,10 @@ If you set `/etc/fstab` incorrectly when adding block storage, the volume mount 
 
 To prevent this situation, it is recommended to use the `nofail` option according to the [Block Storage Mounting Guide](/Storage/Block%20Storage/en/overview/#mount-block-storage) when adding additional block storage in `/etc/fstab`.
 
-If you have modified `/etc/fstab` incorrectly and your instance is not booting properly, please contact the Customer Support.
+If you have modified `/etc/fstab` incorrectly and your instance is not booting properly, contact Customer Support.
+{% if "public" in build_flags %}
+
+{% elif "gov" in build_flags %}
+{% else %}
+
+{% endif %}
