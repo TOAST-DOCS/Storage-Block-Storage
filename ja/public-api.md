@@ -1,15 +1,40 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=55424d42724d -->
+
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
+{% set ep_domain = {"ninc":"ninc.go.kr","ngsc":"ngsc.go.kr","ngovc":"ngovc.com","ngoic":"ngoic.com"} %}
 
 <a id="storage-block-storage-api-v2-guide"></a>
 ## Storage > Block Storage > API v2ガイド { #storage-block-storage-api-v2-guide }
 
-Block Storageは、API呼び出し時の認証/認可のためにIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行及び使用に関する詳細は、[IaaSトークン](/nhncloud/ja/public-api/iaas-token) を参照してください。
+{% if "public" in build_flags %}
+Block StorageはAPIを呼び出す際の認証/認可にIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行および使用の詳細については、[IaaSトークン](/nhncloud/ja/public-api/iaas-token)を参照してください。
+{% elif "gov" in build_flags %}
+Block StorageはAPIを呼び出す際の認証/認可にIaaSトークンを使用します。IaaSトークンは、NHN CloudのOpenStackベースのインフラサービス(IaaS)で使用する認証トークンです。IaaSトークンの発行および使用の詳細については、[IaaSトークン](/nhncloud/ja/public-api/iaas-token-gov)を参照してください。
+{% else %}
+APIを使用するには、APIエンドポイントとトークンなどが必要です。[API使用の準備](/Compute/Compute/ja/identity-api/)を参照して、API使用に必要な情報を準備します。
+{% endif %}
 
 ブロックストレージAPIは`volumev2`タイプエンドポイントを利用します。正確なエンドポイントはトークン発行レスポンスの`serviceCatalog`を参照します。
+
+{% if "public" in build_flags %}
 
 | タイプ | リージョン | エンドポイント |
 |---|---|---|
 | volumev2 | 韓国(パンギョ)リージョン<br>韓国(ピョンチョン)リージョン<br>韓国(クァンジュ)リージョン<br>日本リージョン | https://kr1-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr3-api-block-storage-infrastructure.nhncloudservice.com<br>https://jp1-api-block-storage-infrastructure.nhncloudservice.com |
+
+{% elif "gov" in build_flags %}
+
+| タイプ      | リージョン | エンドポイント |
+|---------|---|---|
+| volumev2 | 韓国(パンギョ)リージョン<br>韓国(ピョンチョン)リージョン | https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.gov-nhncloudservice.com |
+{% else %}
+
+| タイプ      | リージョン | エンドポイント |
+|---------|---|---|
+| volumev2 | 韓国(大邱)リージョン | https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$ |
+{% endif %}
 
 APIレスポンスにガイドに明示されていないフィールドが表示される場合があります。それらのフィールドは、NHN Cloud内部用途で使用され、事前に告知せずに変更する場合があるため使用しないでください。
 
@@ -84,14 +109,32 @@ X-Auth-Token: {tokenId}
 ### ブロックストレージ状態 { #block-storage-status }
 ブロックストレージはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
 
+{% if "public" in build_flags %}
+
 | 状態名 | 説明                        |
 |--|----------------------------|
 | `creating` | 作成中の状態                  |
+{% else %}
+
+| 状態名 | 説明 |
+|--|---------------------------------|
+| `creating` | 作成中の状態 |
+{% endif %}
+
 | `available` | ブロックストレージが作成され、接続する準備ができた状態     |
 | `attaching`| ブロックストレージがインスタンスに接続中の状態        |
 | `detaching`| ブロックストレージが接続解除中の状態           |
 | `in-use`| ブロックストレージがインスタンスに接続された状態          |
+{% if "public" in build_flags %}
+
 | `reserved`| 終了したインスタンスのルートブロックストレージ状態        |
+{% elif "gov" in build_flags %}
+
+| `reserved`| 終了したインスタンスのルートブロックストレージの状態         |
+{% else %}
+
+{% endif %}
+
 | `maintenance`| ブロックストレージが他のホスト機器に移行される状態   |
 | `deleting`| ブロックストレージが削除中の状態              |
 | `awaiting-transfer`| ブロックストレージが転送待機中の状態           |
@@ -99,8 +142,16 @@ X-Auth-Token: {tokenId}
 | `error_deleting`| ブロックストレージ削除時にエラーが発生した状態        |
 | `backing-up`| ブロックストレージがバックアップ中の状態              |
 | `restoring-backup`| ブロックストレージがバックアップから復旧中の状態        |
+{% if "public" in build_flags %}
+
 | `error_backing-up`| バックアップ中にエラーが発生した状態           |
 | `error_restoring`| 復旧中にエラーが発生した状態           |
+{% else %}
+
+| `error_backing-up`| バックアップ中にエラーが発生した状態 |
+| `error_restoring`| 復元中にエラーが発生した状態                 |
+{% endif %}
+
 | `error_extending`| ブロックストレージ拡張中にエラーが発生した状態        |
 | `downloading`| ブロックストレージ作成時、指定したイメージをダウンロードしている状態 |
 | `uploading`| イメージ作成時、ブロックストレージのイメージをアップロードしている状態 |
@@ -150,11 +201,23 @@ X-Auth-Token: {tokenId}
       "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570",
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -194,6 +257,8 @@ X-Auth-Token: {tokenId}
 <a id="list-block-storage-details-response"></a>
 #### レスポンス
 
+{% if "public" in build_flags %}
+
 | 名前 | 種類 | 形式 | 説明 |
 |---|---|---|---|
 | volumes | Body | Array | ブロックストレージ詳細情報オブジェクトリスト |
@@ -224,10 +289,49 @@ X-Auth-Token: {tokenId}
 | volumes.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | volumes.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
 | volumes.replication_status | Body | String | ブロックストレージ複製状態 |
+{% else %}
+
+| 名前 | 種類 | 形式 | 説明                                                                       |
+|---|---|---|--------------------------------------------------------------------------|
+| volumes | Body | Array | ブロックストレージ詳細情報オブジェクトのリスト                                                      |
+| volumes.attachments | Body | Object | ブロックストレージ接続情報オブジェクト                                                         |
+| volumes.attachments.server_id | Body | UUID | ブロックストレージが接続されているインスタンスID                                                     |
+| volumes.attachments.attachment_id | Body | UUID | ブロックストレージ接続ID                                                            |
+| volumes.attachments.volume_id | Body | UUID | ブロックストレージID                                                               |
+| volumes.attachments.device | Body | String | インスタンス内のデバイス名                                                             |
+| volumes.attachments.id | Body | String | ブロックストレージID                                                               |
+| volumes.links | Body | Object | ブロックストレージリソースリンク参照オブジェクト                                                     |
+| volumes.availability_zone | Body | String | ブロックストレージのアベイラビリティゾーン                                                           |
+| volumes.encrypted | Body | Boolean | ブロックストレージの暗号化の有無                                                           |
+| volumes.os-volume-replication:extended_status | Body | String | ブロックストレージの拡張ステータス                                                            |
+| volumes.volume_type | Body | String | ブロックストレージタイプ名                                                            |
+| volumes.snapshot_id | Body | UUID | ブロックストレージ作成時に指定したスナップショットID                                                  |
+| volumes.id | Body | UUID | ブロックストレージID                                                               |
+| volumes.size | Body | Integer | ブロックストレージのサイズ（GB）                                                           |
+| volumes.user_id | Body | String | ブロックストレージオーナーID                                                           |
+| volumes.os-vol-tenant-attr:tenant_id | Body | String | テナントID                                                                   |
+| volumes.metadata | Body | Object | ブロックストレージのメタデータオブジェクト                                                         |
+| volumes.status | Body | Enum | ブロックストレージのステータス                                                               |
+| volumes.description | Body | String | ブロックストレージの説明                                                              |
+| volumes.multiattach | Body | Boolean | 複数接続が可能かどうか<br>`true`の場合、複数のインスタンスに同時に接続できます                             |
+| volumes.source_volid | Body | UUID | ブロックストレージ作成時に指定したブロックストレージID                                              |
+| volumes.consistencygroup_id | Body | UUID | ブロックストレージグループID                                                           |
+| volumes.name | Body | String | ブロックストレージの名前                                                               |
+| volumes.bootable | Body | String | ブロックストレージの起動可否                                                         |
+| volumes.created_at | Body | Datetime | ブロックストレージの作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式                        |
+| volumes.os-volume-replication:driver_data | Body | String | ブロックストレージの複製データ                                                           |
+| volumes.replication_status | Body | String | ブロックストレージの複製ステータス                                                            |
+{% endif %}
+
 | volumes.volumes_links  | Body | Object | ページネーション用の情報オブジェクト(次のリストを指すパス)<br>`limit`、`offset`を追加した場合に返す |
+{% if "public" in build_flags %}
+
 | volumes.nhn_encryption            | Body | Object | ブロックストレージの暗号化情報 |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵バージョン |
 | volumes.nhn_encryption.skm_key_id | Body | String | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
+
+{% else %}
+{% endif %}
 
 <details><summary>例</summary>
 <p>
@@ -239,11 +343,23 @@ X-Auth-Token: {tokenId}
       "attachments": [],
       "links": [
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
           "rel": "self"
         },
         {
+{% if "public" in build_flags %}
           "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -299,6 +415,8 @@ X-Auth-Token: {tokenId}
 <a id="get-block-storage-response"></a>
 #### レスポンス
 
+{% if "public" in build_flags %}
+
 | 名前 | 種類 | 形式 | 説明                                          |
 |---|---|---|----------------------------------------------|
 | volume | Body | Object | ブロックストレージ詳細情報オブジェクト                                 |
@@ -334,6 +452,40 @@ X-Auth-Token: {tokenId}
 | volume.nhn_encryption.skm_key_id | Body | String | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
 
 
+{% else %}
+
+| 名前 | 種類 | 形式 | 説明                                            |
+|---|---|---|-----------------------------------------------|
+| volume | Body | Object | ブロックストレージ詳細情報オブジェクト                              |
+| volume.attachments | Body | Object | ブロックストレージ接続情報オブジェクト                              |
+| volume.attachments.server_id | Body | UUID | ブロックストレージが接続されているインスタンスID                          |
+| volume.attachments.attachment_id | Body | UUID | ブロックストレージ接続ID                                 |
+| volume.attachments.volume_id | Body | UUID | ブロックストレージID                                    |
+| volume.attachments.device | Body | String | インスタンス内のデバイス名                                  |
+| volume.attachments.id | Body | String | ブロックストレージID                                    |
+| volume.links | Body | Object | ブロックストレージリソースリンク参照オブジェクト                          |
+| volume.availability_zone | Body | String | ブロックストレージアベイラビリティゾーン                                |
+| volume.encrypted | Body | Boolean | ブロックストレージの暗号化有無                                |
+| volume.os-volume-replication:extended_status | Body | String | ブロックストレージ拡張ステータス                                 |
+| volume.volume_type | Body | String | ブロックストレージタイプ名                                 |
+| volume.snapshot_id | Body | UUID | ブロックストレージ作成時に指定したスナップショットID                       |
+| volume.id | Body | UUID | ブロックストレージID                                    |
+| volume.size | Body | Integer | ブロックストレージのサイズ(GB)                                |
+| volume.user_id | Body | String | ブロックストレージオーナーID                                |
+| volume.os-vol-tenant-attr:tenant_id | Body | String | テナントID                                        |
+| volume.metadata | Body | Object | ブロックストレージメタデータオブジェクト                              |
+| volume.status | Body | Enum | ブロックストレージのステータス                                    |
+| volume.description | Body | String | ブロックストレージの説明                                    |
+| volume.multiattach | Body | Boolean | 複数接続の可否<br>`true`の場合、複数のインスタンスに同時に接続できます  |
+| volume.source_volid | Body | UUID | ブロックストレージ作成時に指定したブロックストレージID                   |
+| volume.consistencygroup_id | Body | UUID | ブロックストレージコンシステンシー(整合性)グループID                      |
+| volume.name | Body | String | ブロックストレージ名 |
+| volume.bootable | Body | String | ブロックストレージの起動可否 |
+| volume.created_at | Body | Datetime | ブロックストレージの作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.os-volume-replication:driver_data | Body | String | ブロックストレージの複製データ |
+| volume.replication_status | Body | String | ブロックストレージの複製ステータス |
+{% endif %}
+
 <details><summary>例</summary>
 <p>
 
@@ -343,11 +495,23 @@ X-Auth-Token: {tokenId}
     "attachments": [],
     "links": [
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+        "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
         "rel": "self"
       },
       {
+{% if "public" in build_flags %}
         "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+        "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
         "rel": "bookmark"
       }
     ],
@@ -394,10 +558,20 @@ X-Auth-Token: {tokenId}
 <a id="create-block-storage-request"></a>
 #### リクエスト
 
+{% if "public" in build_flags %}
+
 | 名前 | 種類 | 形式 | 必須 | 説明                       |
 |---|---|---|---|---------------------------|
 | tenantId | URL | String | O | テナントID                    |
 | tokenId | Header | String | O | トークンID                     |
+{% else %}
+
+| 名前 | 種類 | 形式 | 必須 | 説明                             |
+|---|---|---|---|--------------------------------|
+| tenantId | URL | String | O | テナントID                         |
+| tokenId | Header | String | O | トークンID                          |
+{% endif %}
+
 | volume | Body | Object | O | ブロックストレージ作成リクエストオブジェクト              |
 | volume.size | Body | Integer | O | ブロックストレージサイズ(GB)                 |
 | volume.description | Body | String | - | ブロックストレージの説明                    |
@@ -406,9 +580,14 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | - | ブロックストレージタイプ名                 |
 | volume.snapshot_id | Body | UUID | - | 原本スナップショットID。省略すると空のブロックストレージが作成される。 |
 | volume.metadata | Body | Object | - | ブロックストレージメタデータオブジェクト              |
+{% if "public" in build_flags %}
+
 | volume.nhn_encryption            | Body | Object | - | ブロックストレージ暗号化情報 |
 | volume.nhn_encryption.skm_appkey | Body | String | - | Secure Key Manager商品のアプリケーションキー |
 | volume.nhn_encryption.skm_key_id | Body | String | - | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
+
+{% else %}
+{% endif %}
 
 <details><summary>例</summary>
 <p>
@@ -452,14 +631,26 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | ブロックストレージの状態 |
 | volume.description | Body | String | ブロックストレージの説明 |
 | volume.multiattach | Body | Boolean | 複数のインスタンスへの接続可否 |
+{% if "public" in build_flags %}
+
+{% else %}
+
+| volume.consistencygroup_id | Body | UUID | ブロックストレージのコンシステンシーグループID |
+{% endif %}
+
 | volume.name | Body | String | ブロックストレージ名 |
 | volume.bootable | Body | String | ブロックストレージ起動可否 |
 | volume.created_at | Body | Datetime | ブロックストレージ作成日時<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`の形式 |
 | volume.os-volume-replication:driver_data | Body | String | ブロックストレージ複製データ |
 | volume.replication_status | Body | String | ブロックストレージ複製状態 |
+{% if "public" in build_flags %}
+
 | volume.nhn_encryption            | Body | Object | ブロックストレージの暗号化情報 |
 | volume.nhn_encryption.skm_key_version | Body | Integer | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵バージョン |
 | volume.nhn_encryption.skm_key_id | Body | String | 暗号化ブロックストレージの作成に使用するSecure Key Managerの対称鍵ID |
+
+{% else %}
+{% endif %}
 
 <details><summary>例</summary>
 <p>
@@ -471,10 +662,22 @@ X-Auth-Token: {tokenId}
     "user_id": "94acd5b4d2bf47dda734e34a113f96ff",
     "attachments": [],
     "links": [{
+{% if "public" in build_flags %}
       "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% elif "gov" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% else %}
+      "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% endif %}
       "rel": "self"
     }, {
+{% if "public" in build_flags %}
       "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% elif "gov" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% else %}
+      "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% endif %}
       "rel": "bookmark"
     }],
     "availability_zone": "kr-pub-a",
@@ -646,6 +849,8 @@ X-Auth-Token: {tokenId}
 ### スナップショット状態 { #snapshot-status }
 スナップショットはさまざまな状態があり、状態によって行える動作が決められています。可能な状態リストは次のとおりです。
 
+{% if "public" in build_flags %}
+
 | 状態名 | 説明                     |
 |--|-------------------------|
 | `creating` | 作成中の状態               |
@@ -657,6 +862,21 @@ X-Auth-Token: {tokenId}
 | `unmanaging`| スナップショットの管理モードが解除中の状態 |
 | `restoring`| スナップショットからブロックストレージを復元中の状態   |
 | `error_deleting`| 削除中にエラーが発生した状態        |
+
+{% else %}
+
+| 状態名 | 説明                        |
+|--|---------------------------|
+| `creating` | 作成中の状態                  |
+| `available` | スナップショットが作成され、使用できる状態    |
+| `backing-up`| スナップショットがバックアップ中の状態             |
+| `deleting`| スナップショットが削除中の状態             |
+| `error`| 作成中にエラーが発生した状態           |
+| `deleted`| 削除された状態                    |
+| `unmanaging`| スナップショットの管理モードが解除中の状態   |
+| `restoring`| スナップショットからブロックストレージを復元中の状態 |
+| `error_deleting`| 削除中にエラーが発生した状態           |
+{% endif %}
 
 <a id="list-snapshots"></a>
 ### スナップショットのリスト表示 { #list-snapshots }
@@ -851,15 +1071,34 @@ X-Auth-Token: {tokenId}
 <a id="create-snapshot-request"></a>
 #### リクエスト
 
+{% if "public" in build_flags %}
+
 | 名前 | 種類 | 形式 | 必須 | 説明                                       |
 |---|---|---|---|-------------------------------------------|
 | tenantId | URL | String | O | テナントID                                    |
 | tokenId | Header | String | O | トークンID                                     |
 | snapshot | Body | Object | O | スナップショット作成リクエストオブジェクト                             |
+{% else %}
+
+| 名前 | 種類 | 形式 | 必須 | 説明                                             |
+|---|---|---|---|------------------------------------------------|
+| tenantId | URL | String | O | テナントID                                         |
+| tokenId | Header | String | O | トークンID                                          |
+| snapshot | Body | Object | O | スナップショット作成リクエストオブジェクト                                   |
+{% endif %}
+
 | snapshot.volume_id | Body | UUID | O | 原本ブロックストレージID                                  |
 | snapshot.force | Body | Boolean | - | 強制的にスナップショットを作成するかどうか<br>`true`の場合、ブロックストレージが接続されていてもスナップショットを作成 |
+{% if "public" in build_flags %}
+
 | snapshot.description | Body | String | - | スナップショットの説明                                   |
 | snapshot.name | Body | String | - | スナップショットの名前                                   |
+
+{% else %}
+
+| snapshot.description | Body | String | - | スナップショットの説明                                         |
+| snapshot.name | Body | String | - | スナップショット名 |
+{% endif %}
 
 <details><summary>例</summary>
 <p>
@@ -938,3 +1177,8 @@ X-Auth-Token: {tokenId}
 <a id="delete-snapshots-response"></a>
 #### レスポンス
 このAPIはレスポンス本文を返しません。
+{% if "public" in build_flags %}
+{% elif "gov" in build_flags %}
+{% else %}
+
+{% endif %}
