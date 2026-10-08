@@ -1,6 +1,6 @@
 <!-- machine_translated: true -->
 
-<!-- pre-align:aligned sig=10ec624217b1 -->
+<!-- pre-align:aligned sig=f722b0e8e1ad -->
 
 <a id="storage-block-storage-console-guide"></a>
 ## Storage > Block Storage > コンソール使用ガイド { #storage-block-storage-console-guide }
