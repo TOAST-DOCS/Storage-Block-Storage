@@ -1,15 +1,40 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=55424d42724d -->
+
+{% set f = (build_flags | select("in", ["public","gov","ncgn","ninc","ngsc","ngovc","ngoic"]) | list | first) %}
+{% set ep_domain = {"ninc":"ninc.go.kr","ngsc":"ngsc.go.kr","ngovc":"ngovc.com","ngoic":"ngoic.com"} %}
 
 <a id="storage-block-storage-api-v2-guide"></a>
 ## Storage > Block Storage > API v2 Guide { #storage-block-storage-api-v2-guide }
 
-Block Storage uses IaaS tokens for authentication and authorization when making API calls. The IaaS token is an authentication token used for NHN Cloud's OpenStack-based infrastructure services (IaaS). For more information on issuing and using IaaS tokens, please refer to the [IaaS Token](/nhncloud/en/public-api/iaas-token).
+{% if "public" in build_flags %}
+Block Storage uses the IaaS token for authentication/authorization when making API calls. The IaaS token is the authentication token used by NHN Cloud's OpenStack-based infrastructure service (IaaS). For more information on issuing and using IaaS tokens, see the [IaaS token](/nhncloud/en/public-api/iaas-token).
+{% elif "gov" in build_flags %}
+Block Storage uses the IaaS token for authentication/authorization when making API calls. The IaaS token is the authentication token used by NHN Cloud's OpenStack-based infrastructure service (IaaS). For more information on issuing and using IaaS tokens, see the [IaaS token](/nhncloud/en/public-api/iaas-token-gov).
+{% else %}
+To use the API, API endpoint and token are required. Refer to [API usage preparations](/Compute/Compute/en/identity-api/) to prepare the information required to use the API.
+{% endif %}
 
 Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalog` in the token issuance response for the valid endpoint.
+
+{% if "public" in build_flags %}
 
 | Type | Region | Endpoint |
 |---|---|---|
 | volumev2 | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region<br>Korea (Gwangju) Region<br>Japan Region | https://kr1-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr3-api-block-storage-infrastructure.nhncloudservice.com<br>https://jp1-api-block-storage-infrastructure.nhncloudservice.com |
+
+{% elif "gov" in build_flags %}
+
+| Type | Region | Endpoint |
+|---------|---|---|
+| volumev2 | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region | https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.gov-nhncloudservice.com |
+{% else %}
+
+| type | Region | endpoint |
+|---------|---|---|
+| volumev2 | Korea (Daegu) Region | https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$ |
+{% endif %}
 
 In each API response, you may find fields that are not specified within this guide. Those fields are for NHN Cloud internal usage, so refrain from using them because they may be changed without prior notice.
 
@@ -84,14 +109,32 @@ This API does not require a request body.
 ### Block Storage Status { #block-storage-status }
 Block storage is available in many statuses with operations defined for each status. See the following list of available statuses:  
 
+{% if "public" in build_flags %}
+
 | Status Name | Description                         |
 |--|----------------------------|
 | `creating` | Creating a volume                    |
+{% else %}
+
+| Status Name | Description |
+|--|--|
+| `creating` | Volume being created |
+{% endif %}
+
 | `available` | Block storage is created and ready for attachment |
 | `attaching`| Attaching block storage to an instance |
 | `detaching` | Detaching block storage |
 | `in-use`| block storage is attached to an instance |
+{% if "public" in build_flags %}
+
 | `reserved`| Status of root block storage for terminated instances       |
+{% elif "gov" in build_flags %}
+
+| `reserved`| Status of root block storage of a terminated instance         |
+{% else %}
+
+{% endif %}
+
 | `maintenance`| block storage is migrating to another host equipment |
 | `deleting`| Deleting block storage |
 | `awaiting-transfer`| block storage is waiting for transfer |
@@ -99,8 +142,16 @@ Block storage is available in many statuses with operations defined for each sta
 | `error_deleting`| Error occurred while deleting block storage |
 | `backing-up`| Backing up block storage |
 | `restoring-backup`| Restoring block storage from backup |
+{% if "public" in build_flags %}
+
 | `error_backing-up`| Error occurred while backing up |
 | `error_restoring`| Error occurred while restoring |
+{% else %}
+
+| `error_backing-up`| An error occurred during backup                 |
+| `error_restoring`| An error occurred while recovering                 |
+{% endif %}
+
 | `error_extending`| Error occurred while extending block storage |
 | `downloading`| Downloading specified image while creating block storage |
 | `uploading`| Uploading block storage image while creating an image |
@@ -150,11 +201,23 @@ This API does not require a request body.
       "id": "90712f4f-2faa-4e4f-8eb1-9313a8595570",
       "links": [
         {
-          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% if "public" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% endif %}
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% if "public" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/90712f4f-2faa-4e4f-8eb1-9313a8595570",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -194,6 +257,8 @@ This API does not require a request body.
 <a id="list-block-storage-details-response"></a>
 #### Response
 
+{% if "public" in build_flags %}
+
 | Name | Type | Format | Description |
 |---|---|---|---|
 | volumes | Body | Array | List of detail block storage information objects |
@@ -224,11 +289,50 @@ This API does not require a request body.
 | volumes.created_at | Body | Datetime | Time of block storage creation <br>In the format of `YYYY-MM-DDThh:mm:ss.SSSSSS` |
 | volumes.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volumes.replication_status | Body | String | Block storage replication status |
+{% else %}
+
+| Name | Type | Format | Description |
+|---|---|---|---|
+| volumes | Body | Array | Block storage details object list |
+| volumes.attachments | Body | Object | Block storage attachment info object |
+| volumes.attachments.server_id | Body | UUID | ID of the instance to which the block storage is attached |
+| volumes.attachments.attachment_id | Body | UUID | Block storage attachment ID |
+| volumes.attachments.volume_id | Body | UUID | Block storage ID |
+| volumes.attachments.device | Body | String | Device name in the instance |
+| volumes.attachments.id | Body | String | Block storage ID |
+| volumes.links | Body | Object | Block storage resource link reference object |
+| volumes.availability_zone | Body | String | Block storage availability area |
+| volumes.encrypted | Body | Boolean | Whether block storage is encrypted |
+| volumes.os-volume-replication:extended_status | Body | String | Block storage extended status |
+| volumes.volume_type | Body | String | Block storage type name |
+| volumes.snapshot_id | Body | UUID | Snapshot ID specified when creating the block storage |
+| volumes.id | Body | UUID | Block storage ID |
+| volumes.size | Body | Integer | Block storage size (GB) |
+| volumes.user_id | Body | String | Block storage owner ID |
+| volumes.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
+| volumes.metadata | Body | Object | Block storage metadata object |
+| volumes.status | Body | Enum | Block storage status |
+| volumes.description | Body | String | Block storage description |
+| volumes.multiattach | Body | Boolean | Whether multiple attachments are available<br>If `true`, you can attach multiple instances simultaneously |
+| volumes.source_volid | Body | UUID | Block storage ID specified when creating the block storage |
+| volumes.consistencygroup_id | Body | UUID | Block storage group ID |
+| volumes.name | Body | String | Block storage name                                                               |
+| volumes.bootable | Body | String | Whether block storage is bootable                                                         |
+| volumes.created_at | Body | Datetime | Block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` format                        |
+| volumes.os-volume-replication:driver_data | Body | String | Block storage replication data                                                           |
+| volumes.replication_status | Body | String | Block storage replication status                                                            |
+{% endif %}
+
 | volumes.volumes_links  | Body | Object | Information object (pointing to the next list) for pagination <br>Return when`limit` and `offset` are added |
+{% if "public" in build_flags %}
+
 | volumes.nhn_encryption            | Body | Object | Block storage encryption information |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
 | volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
+
+{% else %}
+{% endif %}
 
 <details><summary>Example</summary>
 <p>
@@ -240,11 +344,23 @@ This API does not require a request body.
       "attachments": [],
       "links": [
         {
-          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% if "public" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
           "rel": "self"
         },
         {
-          "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% if "public" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+          "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+          "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
           "rel": "bookmark"
         }
       ],
@@ -299,6 +415,8 @@ This API does not require a request body.
 <a id="get-block-storage-response"></a>
 #### Response
 
+{% if "public" in build_flags %}
+
 | Name | Type | Format | Description                                           |
 |---|---|---|----------------------------------------------|
 | volume | Body | Object | Detail information object of block storage |
@@ -333,6 +451,40 @@ This API does not require a request body.
 | volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
 | volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
 
+{% else %}
+
+| Name | Type | Format | Description |
+|---|---|---|---|
+| volume | Body | Object | Block storage details object |
+| volume.attachments | Body | Object | Block storage attachment info object |
+| volume.attachments.server_id | Body | UUID | ID of the instance to which the block storage is attached |
+| volume.attachments.attachment_id | Body | UUID | Block storage attachment ID |
+| volume.attachments.volume_id | Body | UUID | Block storage ID |
+| volume.attachments.device | Body | String | Device name within the instance |
+| volume.attachments.id | Body | String | Block storage ID |
+| volume.links | Body | Object | Block storage resource link reference object |
+| volume.availability_zone | Body | String | Block storage availability area |
+| volume.encrypted | Body | Boolean | Whether block storage is encrypted |
+| volume.os-volume-replication:extended_status | Body | String | Block storage extended status |
+| volume.volume_type | Body | String | Block storage type name |
+| volume.snapshot_id | Body | UUID | Snapshot ID specified when creating the block storage |
+| volume.id | Body | UUID | Block storage ID |
+| volume.size | Body | Integer | Block storage size (GB) |
+| volume.user_id | Body | String | Block storage owner ID |
+| volume.os-vol-tenant-attr:tenant_id | Body | String | Tenant ID |
+| volume.metadata | Body | Object | Block storage metadata object |
+| volume.status | Body | Enum | Block storage status |
+| volume.description | Body | String | Block storage description |
+| volume.multiattach | Body | Boolean | Whether multiple attachments are available<br>If `true`, you can attach multiple instances simultaneously |
+| volume.source_volid | Body | UUID | Block storage ID specified when creating the block storage |
+| volume.consistencygroup_id | Body | UUID | Block storage consistency group ID |
+| volume.name | Body | String | Block storage name                                    |
+| volume.bootable | Body | String | Whether block storage is bootable                              |
+| volume.created_at | Body | Datetime | Block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` |
+| volume.os-volume-replication:driver_data | Body | String | Block storage replication data                                |
+| volume.replication_status | Body | String | Block storage replication status                                 |
+{% endif %}
+
 <details><summary>Example</summary>
 <p>
 
@@ -342,11 +494,23 @@ This API does not require a request body.
     "attachments": [],
     "links": [
       {
-        "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% if "public" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+        "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
         "rel": "self"
       },
       {
-        "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% if "public" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% elif "gov" in build_flags %}
+        "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% else %}
+        "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/6cdebe3eb0094910bc41f1d42ebe4cb7/volumes/17975e9d-1533-40db-bd02-2072cd2ccb7f",
+{% endif %}
         "rel": "bookmark"
       }
     ],
@@ -393,10 +557,20 @@ X-Auth-Token: {tokenId}
 <a id="create-block-storage-request"></a>
 #### Request
 
+{% if "public" in build_flags %}
+
 | Name | Type | Format | Required | Description                        |
 |---|---|---|---|---------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
+{% else %}
+
+| Name | Type | Format | Required | Description |
+|---|---|---|---|---|
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+{% endif %}
+
 | volume | Body | Object | O | Object requesting of creating block storage |
 | volume.size | Body | Integer | O | Block storage size (GB) |
 | volume.description | Body | String | - | Block storage description |
@@ -405,9 +579,14 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | - | Block storage type name |
 | volume.snapshot_id | Body | UUID | - | Original snapshot ID: if left blank, empty block storage is created |
 | volume.metadata | Body | Object | - | Block storage metadata object |
+{% if "public" in build_flags %}
+
 | volume.nhn_encryption            | Body | Object | - | Block storage encryption information |
 | volume.nhn_encryption.skm_appkey | Body | String | - | Appkeys for Secure Key Manager |
 | volume.nhn_encryption.skm_key_id | Body | String | - | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
+
+{% else %}
+{% endif %}
 
 <details><summary>Example</summary>
 <p>
@@ -451,14 +630,26 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | block storage status |
 | volume.description | Body | String | block storage description |
 | volume.multiattach | Body | Boolean | Attachable to many instances |
+{% if "public" in build_flags %}
+
+{% else %}
+
+| volume.consistencygroup_id | Body | UUID | Block storage consistency group ID |
+{% endif %}
+
 | volume.name | Body | String | block storage name |
 | volume.bootable | Body | String | block storage bootable |
 | volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
 | volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volume.replication_status | Body | String | Block storage replication status |
+{% if "public" in build_flags %}
+
 | volumes.nhn_encryption            | Body | Object | Block storage encryption information |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
 | volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
+
+{% else %}
+{% endif %}
 
 <details><summary>Example</summary>
 <p>
@@ -470,10 +661,22 @@ X-Auth-Token: {tokenId}
     "user_id": "94acd5b4d2bf47dda734e34a113f96ff",
     "attachments": [],
     "links": [{
-      "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% if "public" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% elif "gov" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% else %}
+      "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/v2/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% endif %}
       "rel": "self"
     }, {
-      "href": "https://kr1-api-block-storage.infrastructure.cloud.toast.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% if "public" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% elif "gov" in build_flags %}
+      "href": "https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% else %}
+      "href": "https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$/c0e5e63026e449e6b7e94c779021d150/volumes/87882cf4-ca05-4ef2-b598-b93b2caf041e",
+{% endif %}
       "rel": "bookmark"
     }],
     "availability_zone": "kr-pub-a",
@@ -645,6 +848,8 @@ X-Auth-Token: {tokenId}
 ### Snapshot status { #snapshot-status }
 Snapshots exist in various statuses, and each status defines its own set of permissible operations. See the following list of volume statuses.
 
+{% if "public" in build_flags %}
+
 | Status Name | Description                     |
 |--|-------------------------|
 | `creating` | Creating a snapshot |
@@ -656,6 +861,21 @@ Snapshots exist in various statuses, and each status defines its own set of perm
 | `unmanaging`| Snapshot has been released from the management mode |
 | `restoring`| Restoring block storage from snapshot |
 | `error_deleting`| Error has occurred while deleting a snapshot |
+
+{% else %}
+
+| Status Name | description |
+|--|---------------------------|
+| `creating` | Being created |
+| `available` | Snapshot created and ready to use |
+| `backing-up` | Snapshot is being backed up |
+| `deleting` | Snapshot is being deleted |
+| `error` | An error occurred during creation |
+| `deleted` | Deleted |
+| `unmanaging` | Admin mode for snapshots being turned off |
+| `restoring` | Restoring block storage from a snapshot |
+| `error_deleting` | An error occurred while deleting |
+{% endif %}
 
 <a id="list-snapshots"></a>
 ### List Snapshots { #list-snapshots }
@@ -850,15 +1070,34 @@ X-Auth-Token: {tokenId}
 <a id="create-snapshot-request"></a>
 #### Request
 
+{% if "public" in build_flags %}
+
 | Name | Type | Format | Required | Description                                       |
 |---|---|---|---|-------------------------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | snapshot | Body | Object | O | Object requesting of creating snapshot |
+{% else %}
+
+| Name | Type | Format | Required | Description |
+|---|---|---|---|---|
+| tenantId | URL | String | O | Tenant ID |
+| tokenId | Header | String | O | Token ID |
+| snapshot | Body | Object | O | Snapshot creation request object |
+{% endif %}
+
 | snapshot.volume_id | Body | UUID | O | Original block storage ID |
 | snapshot.force | Body | Boolean | - | Forced to create snapshot or not<br>With`true`, snapshot is created even if block storage is attached |
+{% if "public" in build_flags %}
+
 | snapshot.description | Body | String | - | Snapshot description |
 | snapshot.name | Body | String | - | Snapshot name |
+
+{% else %}
+
+| snapshot.description | Body | String | - | Snapshot description |
+| snapshot.name | Body | String | - | Snapshot name |
+{% endif %}
 
 <details><summary>Example</summary>
 <p>
@@ -937,3 +1176,8 @@ This API does not require a request body.
 <a id="delete-snapshots-response"></a>
 #### Response
 This API does not return a response body.
+{% if "public" in build_flags %}
+{% elif "gov" in build_flags %}
+{% else %}
+
+{% endif %}
