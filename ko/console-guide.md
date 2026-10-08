@@ -13,6 +13,7 @@
 빈 블록 스토리지를 생성하려면 **Block Storage 소스**를 **소스 없음, 빈 Block Storage**로 선택합니다. 빈 블록 스토리지는 인스턴스에 연결 후, 파티션을 나누고 포맷한 후에 사용해야 합니다. 블록 스토리지 사용법은 [블록 스토리지 개요 > 빈 블록 스토리지 사용](/Storage/Block%20Storage/ko/overview/#use-empty-block-storage)을 참고합니다. 빈 블록 스토리지가 위치할 가용성 영역(availability zone)은 생성할 블록 스토리지를 연결할 인스턴스가 있는 가용성 영역을 사용합니다. 블록 스토리지 타입은 필요한 I/O 성능에 따라 **HDD**나 **SSD** 중 하나를 선택합니다.
 
 블록 스토리지의 스냅숏으로부터 블록 스토리지를 생성할 수도 있습니다. 스냅숏으로부터 블록 스토리지를 생성하는 경우, 블록 스토리지의 크기는 스냅숏의 크기와 같거나 더 커야 합니다. 크기를 더 크게 설정한다면 고객이 직접 기존 블록 스토리지의 파티션을 조정하거나 새로운 파티션을 추가하여 늘어난 저장 공간을 사용해야 합니다.
+{% if "public" in build_flags %}
 
 <a id="encrypted-block-storage"></a>
 ### 암호화 블록 스토리지 { #encrypted-block-storage }
@@ -32,6 +33,8 @@
 
 > [주의]
 Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 대칭 키를 삭제한 뒤, 해당 블록 스토리지를 인스턴스에서 연결 해제하면 다시 복호화할 수 없습니다. 대칭 키를 실수로 삭제하지 않도록 주의하여 관리해야 합니다.
+{% else %}
+{% endif %}
 
 <a id="delete-block-storage"></a>
 ## 블록 스토리지 삭제 { #delete-block-storage }
@@ -80,20 +83,20 @@ Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 �
         # df -hT
 
 2. 파일 시스템의 유형에 따라 아래의 명령어를 입력해 확장합니다.
- 
+
     [XFS 파일 시스템] 예를 들어 `/`에 마운트된 파일 시스템을 확장하려는 경우 아래와 같습니다.
 
         # sudo xfs_growfs -d /
 
     [Ext4 파일 시스템] 예를 들어 `/dev/vda` 디바이스의 파일 시스템을 확장하려는 경우 아래와 같습니다.
 
-        # sudo resize2fs /dev/vda    
+        # sudo resize2fs /dev/vda
 
 3. 확장된 파일 시스템을 확인합니다.
 
         # df -hT
 
-   
+
 <a id="windows-instance"></a>
 ### Windows 인스턴스 { #windows-instance }
 
@@ -141,6 +144,7 @@ Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 �
 
 블록 스토리지의 읽기 전용 복사본을 만듭니다. 블록 스토리지가 인스턴스에 연결되어 있는 상태에서도 블록 스토리지 스냅숏을 생성할 수 있지만 데이터의 정합성과 안정성을 보장하려면 인스턴스에서 연결을 해제하고 블록 스토리지 스냅숏을 생성하기를 권장합니다.
 
+{% if "public" in build_flags %}
 <a id="replicate-block-storage"></a>
 ## 블록 스토리지 복제 { #replicate-block-storage }
 
@@ -199,6 +203,67 @@ Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 �
 
 암호화 블록 스토리지를 이동할 경우 대상 프로젝트에서 사용할 암호화 대칭 키 ID를 입력합니다.
 
+{% elif "gov" in build_flags %}
+<a id="replicate-block-storage"></a>
+## 블록 스토리지 복제 { #replicate-block-storage }
+
+블록 스토리지를 복제하여 이용할 수 있습니다. 블록 스토리지가 인스턴스에 연결되어 있는 상태에서도 복제할 수 있지만, 데이터의 정합성과 안정성을 보장하려면 인스턴스를 종료하거나 연결을 해제하고 복제하기를 권장합니다.
+
+복제 요청 후, 복제 상태 및 성공 여부는 **복제 결과**에서 확인할 수 있습니다.
+
+> [참고]
+> 복제 기능은 일회성이며 그 이후 원본 블록 스토리지의 변동 사항은 반영되지 않습니다.
+
+<!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
+
+> [주의]
+> 복제를 진행하려면 블록 스토리지 내 100KB 이상의 여유 공간이 필요합니다.
+
+<a id="target-project"></a>
+### 대상 프로젝트 { #target-project }
+
+복제본을 생성할 대상 프로젝트를 선택합니다.
+
+* 동일 프로젝트: 동일한 프로젝트로 복제
+* 다른 프로젝트: 자신이 속한 다른 프로젝트로 복제
+
+<a id="region"></a>
+### 리전 { #region }
+
+복제본을 생성할 대상 리전을 선택합니다.
+
+<a id="block-storage-type"></a>
+### 블록 스토리지 타입 { #block-storage-type }
+
+복제할 리전에서 이용할 블록 스토리지 타입을 선택합니다. 현재 리전에서 이용 중인 블록 스토리지 타입과 다른 타입을 선택할 수 있습니다.
+
+<a id="availability-zone"></a>
+### 가용성 영역 { #availability-zone }
+
+복제할 리전에서 이용할 가용성 영역을 선택합니다. 현재 리전에서 이용 중인 가용성 영역과 다른 가용성 영역을 선택할 수 있습니다.
+
+<a id="move-block-storage"></a>
+## 블록 스토리지 이동 { #move-block-storage }
+
+블록 스토리지를 동일 조직의 다른 프로젝트로 이동할 수 있습니다. 요청자는 원본 프로젝트와 대상 프로젝트 모두에 적절한 권한이 있어야 합니다.
+
+> [참고]
+스냅숏이 존재하는 블록 스토리지는 이동할 수 없습니다.
+
+<!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
+
+<a id="move-block-storage-target-project"></a>
+### 대상 프로젝트 { #move-block-storage-target-project }
+
+블록 스토리지를 이동할 대상 프로젝트의 ID를 입력합니다. 이동할 프로젝트는 동일 조직의 프로젝트여야 합니다.
+
+<a id="encryption-symmetric-key-id"></a>
+### 암호화 대칭 키 ID { #encryption-symmetric-key-id }
+
+암호화 블록 스토리지를 이동할 경우 대상 프로젝트에서 사용할 암호화 대칭 키 ID를 입력합니다.
+
+{% else %}
+{% endif %}
 <a id="troubleshooting-guide"></a>
 ## 문제 해결 가이드 { #troubleshooting-guide }
 
@@ -227,11 +292,11 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 
 다음 절차를 따라 두 블록 스토리지의 파일 시스템 UUID를 다르게 하여 문제를 해결합니다.
 
-1. 인스턴스를 중지한 후, 문제를 일으키는(즉, `/`로 잘못 마운트되던) [블록 스토리지의 연결을 해제](./console-guide/#detach-block-storage)합니다.
+1. 인스턴스를 중지한 후, 문제를 일으키는(즉, `/`로 잘못 마운트되던) [블록 스토리지의 연결을 해제](#detach-block-storage)합니다.
 
 2. 인스턴스를 시작합니다.
 
-3. 부팅이 완료되면 문제를 일으키는 [블록 스토리지를 다시 연결](./console-guide/#attach-block-storage)합니다.
+3. 부팅이 완료되면 문제를 일으키는 [블록 스토리지를 다시 연결](#attach-block-storage)합니다.
 
 4. 아래 명령어로 문제를 일으키는 블록 스토리지의 파일 시스템 UUID를 교체합니다. 문제를 일으키는 블록 스토리지의 타입에 따라 아래 명령어를 실행합니다. 블록 스토리지의 타입은 `blkid` 명령어로 확인할 수 있습니다.
 
@@ -266,3 +331,9 @@ UUID=6cd50e51-cfc6-40b9-9ec5-f32fa2e4ff02 /                       xfs     defaul
 이러한 상황을 방지하려면 추가 블록 스토리지를 `/etc/fstab`에 등록할 경우에는 [블록 스토리지 마운트 가이드](/Storage/Block%20Storage/ko/overview/#mount-block-storage)에 따라 `nofail` 옵션을 사용하는 것을 권장합니다.
 
 만약 `/etc/fstab`를 잘못 수정하여 인스턴스가 정상적으로 부팅되지 않는다면 고객지원으로 문의하세요.
+{% if "public" in build_flags %}
+
+{% elif "gov" in build_flags %}
+{% else %}
+
+{% endif %}
