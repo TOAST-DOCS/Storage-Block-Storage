@@ -1,4 +1,4 @@
-<!-- pre-align:aligned sig=10ec624217b1 -->
+<!-- pre-align:aligned sig=f722b0e8e1ad -->
 
 <a id="storage-block-storage-console-guide"></a>
 ## Storage > Block Storage > 콘솔 사용 가이드 { #storage-block-storage-console-guide }
@@ -204,8 +204,8 @@ Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 �
 암호화 블록 스토리지를 이동할 경우 대상 프로젝트에서 사용할 암호화 대칭 키 ID를 입력합니다.
 
 {% elif "gov" in build_flags %}
-<a id="replicate-block-storage"></a>
-## 블록 스토리지 복제 { #replicate-block-storage }
+<a id="replicate-block-storage-2"></a>
+## 블록 스토리지 복제 { #replicate-block-storage-2 }
 
 블록 스토리지를 복제하여 이용할 수 있습니다. 블록 스토리지가 인스턴스에 연결되어 있는 상태에서도 복제할 수 있지만, 데이터의 정합성과 안정성을 보장하려면 인스턴스를 종료하거나 연결을 해제하고 복제하기를 권장합니다.
 
@@ -219,31 +219,31 @@ Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 �
 > [주의]
 > 복제를 진행하려면 블록 스토리지 내 100KB 이상의 여유 공간이 필요합니다.
 
-<a id="target-project"></a>
-### 대상 프로젝트 { #target-project }
+<a id="replicate-block-storage-2-target-project"></a>
+### 대상 프로젝트 { #replicate-block-storage-2-target-project }
 
 복제본을 생성할 대상 프로젝트를 선택합니다.
 
 * 동일 프로젝트: 동일한 프로젝트로 복제
 * 다른 프로젝트: 자신이 속한 다른 프로젝트로 복제
 
-<a id="region"></a>
-### 리전 { #region }
+<a id="replicate-block-storage-2-region"></a>
+### 리전 { #replicate-block-storage-2-region }
 
 복제본을 생성할 대상 리전을 선택합니다.
 
-<a id="block-storage-type"></a>
-### 블록 스토리지 타입 { #block-storage-type }
+<a id="replicate-block-storage-2-block-storage-type"></a>
+### 블록 스토리지 타입 { #replicate-block-storage-2-block-storage-type }
 
 복제할 리전에서 이용할 블록 스토리지 타입을 선택합니다. 현재 리전에서 이용 중인 블록 스토리지 타입과 다른 타입을 선택할 수 있습니다.
 
-<a id="availability-zone"></a>
-### 가용성 영역 { #availability-zone }
+<a id="replicate-block-storage-2-availability-zone"></a>
+### 가용성 영역 { #replicate-block-storage-2-availability-zone }
 
 복제할 리전에서 이용할 가용성 영역을 선택합니다. 현재 리전에서 이용 중인 가용성 영역과 다른 가용성 영역을 선택할 수 있습니다.
 
-<a id="move-block-storage"></a>
-## 블록 스토리지 이동 { #move-block-storage }
+<a id="move-block-storage-2"></a>
+## 블록 스토리지 이동 { #move-block-storage-2 }
 
 블록 스토리지를 동일 조직의 다른 프로젝트로 이동할 수 있습니다. 요청자는 원본 프로젝트와 대상 프로젝트 모두에 적절한 권한이 있어야 합니다.
 
@@ -252,13 +252,13 @@ Secure Key Manager 서비스에서 암호화 블록 스토리지에 설정한 �
 
 <!-- 개행을 위한 주석이므로 필수로 포함되어야 합니다. -->
 
-<a id="move-block-storage-target-project"></a>
-### 대상 프로젝트 { #move-block-storage-target-project }
+<a id="move-block-storage-2-move-block-storage-target-project"></a>
+### 대상 프로젝트 { #move-block-storage-2-move-block-storage-target-project }
 
 블록 스토리지를 이동할 대상 프로젝트의 ID를 입력합니다. 이동할 프로젝트는 동일 조직의 프로젝트여야 합니다.
 
-<a id="encryption-symmetric-key-id"></a>
-### 암호화 대칭 키 ID { #encryption-symmetric-key-id }
+<a id="move-block-storage-2-encryption-symmetric-key-id"></a>
+### 암호화 대칭 키 ID { #move-block-storage-2-encryption-symmetric-key-id }
 
 암호화 블록 스토리지를 이동할 경우 대상 프로젝트에서 사용할 암호화 대칭 키 ID를 입력합니다.
 
