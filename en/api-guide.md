@@ -189,6 +189,7 @@ Content-Type: application/json;charset=UTF-8
 | Block Storage Name | Body | String | Name of block storage |
 | Size | Body | Integer | Size of block storage (GB) |
 | Status | Body | String | Status of block storage |
+| Volume Type | Body | String | Type of block storage. One of "General HDD" or "General SSD". |
 
 <a id="delete-block-storage"></a>
 ### Delete Block Storage { #delete-block-storage }
