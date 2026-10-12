@@ -19,18 +19,14 @@ To use the API, API endpoint and token are required. Refer to [API usage prepara
 Block Storage API uses the `volumev2` type endpoint. Refer to the `serviceCatalog` in the token issuance response for the valid endpoint.
 
 {% if "public" in build_flags %}
-
 | Type | Region | Endpoint |
 |---|---|---|
 | volumev2 | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region<br>Korea (Gwangju) Region<br>Japan Region | https://kr1-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.nhncloudservice.com<br>https://kr3-api-block-storage-infrastructure.nhncloudservice.com<br>https://jp1-api-block-storage-infrastructure.nhncloudservice.com |
-
 {% elif "gov" in build_flags %}
-
 | Type | Region | Endpoint |
 |---------|---|---|
 | volumev2 | Korea (Pangyo) Region<br>Korea (Pyeongchon) Region | https://kr1-api-block-storage-infrastructure.gov-nhncloudservice.com<br>https://kr2-api-block-storage-infrastructure.gov-nhncloudservice.com |
 {% else %}
-
 | type | Region | endpoint |
 |---------|---|---|
 | volumev2 | Korea (Daegu) Region | https://kr4-api-block-storage-infrastructure.$[ ep_domain[f] ]$ |
@@ -110,31 +106,24 @@ This API does not require a request body.
 Block storage is available in many statuses with operations defined for each status. See the following list of available statuses:  
 
 {% if "public" in build_flags %}
-
 | Status Name | Description                         |
 |--|----------------------------|
 | `creating` | Creating a volume                    |
-{% else %}
-
+{%- else %}
 | Status Name | Description |
 |--|--|
 | `creating` | Volume being created |
-{% endif %}
-
+{%- endif %}
 | `available` | Block storage is created and ready for attachment |
 | `attaching`| Attaching block storage to an instance |
 | `detaching` | Detaching block storage |
 | `in-use`| block storage is attached to an instance |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | `reserved`| Status of root block storage for terminated instances       |
-{% elif "gov" in build_flags %}
-
+{%- elif "gov" in build_flags %}
 | `reserved`| Status of root block storage of a terminated instance         |
-{% else %}
-
-{% endif %}
-
+{%- else %}
+{%- endif %}
 | `maintenance`| block storage is migrating to another host equipment |
 | `deleting`| Deleting block storage |
 | `awaiting-transfer`| block storage is waiting for transfer |
@@ -142,16 +131,13 @@ Block storage is available in many statuses with operations defined for each sta
 | `error_deleting`| Error occurred while deleting block storage |
 | `backing-up`| Backing up block storage |
 | `restoring-backup`| Restoring block storage from backup |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | `error_backing-up`| Error occurred while backing up |
 | `error_restoring`| Error occurred while restoring |
-{% else %}
-
+{%- else %}
 | `error_backing-up`| An error occurred during backup                 |
 | `error_restoring`| An error occurred while recovering                 |
-{% endif %}
-
+{%- endif %}
 | `error_extending`| Error occurred while extending block storage |
 | `downloading`| Downloading specified image while creating block storage |
 | `uploading`| Uploading block storage image while creating an image |
@@ -258,7 +244,6 @@ This API does not require a request body.
 #### Response
 
 {% if "public" in build_flags %}
-
 | Name | Type | Format | Description |
 |---|---|---|---|
 | volumes | Body | Array | List of detail block storage information objects |
@@ -289,8 +274,7 @@ This API does not require a request body.
 | volumes.created_at | Body | Datetime | Time of block storage creation <br>In the format of `YYYY-MM-DDThh:mm:ss.SSSSSS` |
 | volumes.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volumes.replication_status | Body | String | Block storage replication status |
-{% else %}
-
+{%- else %}
 | Name | Type | Format | Description |
 |---|---|---|---|
 | volumes | Body | Array | Block storage details object list |
@@ -321,16 +305,12 @@ This API does not require a request body.
 | volumes.created_at | Body | Datetime | Block storage creation time<br>`YYYY-MM-DDThh:mm:ss.SSSSSS` format                        |
 | volumes.os-volume-replication:driver_data | Body | String | Block storage replication data                                                           |
 | volumes.replication_status | Body | String | Block storage replication status                                                            |
-{% endif %}
-
+{%- endif %}
 | volumes.volumes_links  | Body | Object | Information object (pointing to the next list) for pagination <br>Return when`limit` and `offset` are added |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | volumes.nhn_encryption            | Body | Object | Block storage encryption information |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
 | volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
-
-
 {% else %}
 {% endif %}
 
@@ -416,7 +396,6 @@ This API does not require a request body.
 #### Response
 
 {% if "public" in build_flags %}
-
 | Name | Type | Format | Description                                           |
 |---|---|---|----------------------------------------------|
 | volume | Body | Object | Detail information object of block storage |
@@ -450,9 +429,7 @@ This API does not require a request body.
 | volumes.nhn_encryption            | Body | Object | Block storage encryption information |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
 | volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
-
 {% else %}
-
 | Name | Type | Format | Description |
 |---|---|---|---|
 | volume | Body | Object | Block storage details object |
@@ -558,19 +535,16 @@ X-Auth-Token: {tokenId}
 #### Request
 
 {% if "public" in build_flags %}
-
 | Name | Type | Format | Required | Description                        |
 |---|---|---|---|---------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-{% else %}
-
+{%- else %}
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
-{% endif %}
-
+{%- endif %}
 | volume | Body | Object | O | Object requesting of creating block storage |
 | volume.size | Body | Integer | O | Block storage size (GB) |
 | volume.description | Body | String | - | Block storage description |
@@ -579,12 +553,10 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | - | Block storage type name |
 | volume.snapshot_id | Body | UUID | - | Original snapshot ID: if left blank, empty block storage is created |
 | volume.metadata | Body | Object | - | Block storage metadata object |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | volume.nhn_encryption            | Body | Object | - | Block storage encryption information |
 | volume.nhn_encryption.skm_appkey | Body | String | - | Appkeys for Secure Key Manager |
 | volume.nhn_encryption.skm_key_id | Body | String | - | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
-
 {% else %}
 {% endif %}
 
@@ -630,24 +602,19 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | block storage status |
 | volume.description | Body | String | block storage description |
 | volume.multiattach | Body | Boolean | Attachable to many instances |
-{% if "public" in build_flags %}
-
-{% else %}
-
+{%- if "public" in build_flags %}
+{%- else %}
 | volume.consistencygroup_id | Body | UUID | Block storage consistency group ID |
-{% endif %}
-
+{%- endif %}
 | volume.name | Body | String | block storage name |
 | volume.bootable | Body | String | block storage bootable |
 | volume.created_at | Body | Datetime | block storage creation time<br>In the`YYYY-MM-DDThh:mm:ss.SSSSSS` format |
 | volume.os-volume-replication:driver_data | Body | String | Block storage replication data |
 | volume.replication_status | Body | String | Block storage replication status |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | volumes.nhn_encryption            | Body | Object | Block storage encryption information |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | Symmetric key version of Secure Key Manager to be used to create encrypted block storage |
 | volumes.nhn_encryption.skm_key_id | Body | String | Symmetric key ID of Secure Key Manager to be used to create encrypted block storage |
-
 {% else %}
 {% endif %}
 
@@ -849,7 +816,6 @@ X-Auth-Token: {tokenId}
 Snapshots exist in various statuses, and each status defines its own set of permissible operations. See the following list of volume statuses.
 
 {% if "public" in build_flags %}
-
 | Status Name | Description                     |
 |--|-------------------------|
 | `creating` | Creating a snapshot |
@@ -861,9 +827,7 @@ Snapshots exist in various statuses, and each status defines its own set of perm
 | `unmanaging`| Snapshot has been released from the management mode |
 | `restoring`| Restoring block storage from snapshot |
 | `error_deleting`| Error has occurred while deleting a snapshot |
-
 {% else %}
-
 | Status Name | description |
 |--|---------------------------|
 | `creating` | Being created |
@@ -1071,30 +1035,24 @@ X-Auth-Token: {tokenId}
 #### Request
 
 {% if "public" in build_flags %}
-
 | Name | Type | Format | Required | Description                                       |
 |---|---|---|---|-------------------------------------------|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | snapshot | Body | Object | O | Object requesting of creating snapshot |
-{% else %}
-
+{%- else %}
 | Name | Type | Format | Required | Description |
 |---|---|---|---|---|
 | tenantId | URL | String | O | Tenant ID |
 | tokenId | Header | String | O | Token ID |
 | snapshot | Body | Object | O | Snapshot creation request object |
-{% endif %}
-
+{%- endif %}
 | snapshot.volume_id | Body | UUID | O | Original block storage ID |
 | snapshot.force | Body | Boolean | - | Forced to create snapshot or not<br>With`true`, snapshot is created even if block storage is attached |
-{% if "public" in build_flags %}
-
+{%- if "public" in build_flags %}
 | snapshot.description | Body | String | - | Snapshot description |
 | snapshot.name | Body | String | - | Snapshot name |
-
 {% else %}
-
 | snapshot.description | Body | String | - | Snapshot description |
 | snapshot.name | Body | String | - | Snapshot name |
 {% endif %}
