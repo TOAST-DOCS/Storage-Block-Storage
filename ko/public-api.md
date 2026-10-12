@@ -106,21 +106,21 @@ X-Auth-Token: {tokenId}
 | 상태 명 | 설명                         |
 |--|----------------------------|
 | `creating` | 생성 중인 상태                   |
-{% else %}
+{%- else %}
 | 상태 명 | 설명                              |
 |--|---------------------------------|
 | `creating` | 생성 중인 상태                        |
-{% endif %}
+{%- endif %}
 | `available` | 블록 스토리지가 생성되어 연결할 준비가 된 상태      |
 | `attaching`| 블록 스토리지가 인스턴스에 연결 중인 상태         |
 | `detaching`| 블록 스토리지가 연결 해제 중인 상태            |
 | `in-use`| 블록 스토리지가 인스턴스에 연결된 상태           |
-{% if "public" in build_flags %}
+{%- if "public" in build_flags %}
 | `reserved`| 종료된 인스턴스의 루트 블록 스토리지 상태         |
-{% elif "gov" in build_flags %}
+{%- elif "gov" in build_flags %}
 | `reserved`| 종료된 인스턴스의 루트 블록 스토리지 상태         |
-{% else %}
-{% endif %}
+{%- else %}
+{%- endif %}
 | `maintenance`| 블록 스토리지가 다른 호스트 장비로 이전 중인 상태    |
 | `deleting`| 블록 스토리지를 삭제 중인 상태               |
 | `awaiting-transfer`| 블록 스토리지가 전송을 기다리는 상태            |
@@ -128,13 +128,13 @@ X-Auth-Token: {tokenId}
 | `error_deleting`| 블록 스토리지 삭제 시 오류가 발생한 상태         |
 | `backing-up`| 블록 스토리지가 백업 중인 상태               |
 | `restoring-backup`| 블록 스토리지가 백업본에서 복구 중인 상태         |
-{% if "public" in build_flags %}
+{%- if "public" in build_flags %}
 | `error_backing-up`| 백업 중 오류가 발생한 상태            |
 | `error_restoring`| 복구 중 오류가 발생한 상태            |
-{% else %}
+{%- else %}
 | `error_backing-up`| 백업 중 오류가 발생한 상태                 |
 | `error_restoring`| 복구 중 오류가 발생한 상태                 |
-{% endif %}
+{%- endif %}
 | `error_extending`| 블록 스토리지 확장 중 오류가 발생한 상태         |
 | `downloading`| 블록 스토리지 생성 시 지정한 이미지를 다운로드하는 상태 |
 | `uploading`| 이미지 생성 시 블록 스토리지의 이미지를 업로드하는 상태 |
@@ -271,7 +271,7 @@ X-Auth-Token: {tokenId}
 | volumes.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volumes.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volumes.replication_status | Body | String | 블록 스토리지 복제 상태 |
-{% else %}
+{%- else %}
 | 이름 | 종류 | 형식 | 설명                                                                       |
 |---|---|---|--------------------------------------------------------------------------|
 | volumes | Body | Array | 블록 스토리지 상세 정보 객체 목록                                                      |
@@ -302,9 +302,9 @@ X-Auth-Token: {tokenId}
 | volumes.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태                        |
 | volumes.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터                                                           |
 | volumes.replication_status | Body | String | 블록 스토리지 복제 상태                                                            |
-{% endif %}
+{%- endif %}
 | volumes.volumes_links  | Body | Object | 페이지 매김(페이지네이션)을 위한 정보 객체(다음 목록을 가리키는 경로)<br>`limit`, `offset`을 추가한 경우 반환 |
-{% if "public" in build_flags %}
+{%- if "public" in build_flags %}
 | volumes.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
 | volumes.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
 | volumes.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
@@ -537,12 +537,12 @@ X-Auth-Token: {tokenId}
 |---|---|---|---|---------------------------|
 | tenantId | URL | String | O | 테넌트 ID                    |
 | tokenId | Header | String | O | 토큰 ID                     |
-{% else %}
+{%- else %}
 | 이름 | 종류 | 형식 | 필수 | 설명                             |
 |---|---|---|---|--------------------------------|
 | tenantId | URL | String | O | 테넌트 ID                         |
 | tokenId | Header | String | O | 토큰 ID                          |
-{% endif %}
+{%- endif %}
 | volume | Body | Object | O | 블록 스토리지 생성 요청 객체               |
 | volume.size | Body | Integer | O | 블록 스토리지 크기(GB)                 |
 | volume.description | Body | String | - | 블록 스토리지 설명                     |
@@ -551,7 +551,7 @@ X-Auth-Token: {tokenId}
 | volume.volume_type | Body | String | - | 블록 스토리지 타입 이름                  |
 | volume.snapshot_id | Body | UUID | - | 원본 스냅숏 ID, 생략하면 빈 블록 스토리지가 생성됨 |
 | volume.metadata | Body | Object | - | 블록 스토리지 메타데이터 객체               |
-{% if "public" in build_flags %}
+{%- if "public" in build_flags %}
 | volume.nhn_encryption            | Body | Object | - | 블록 스토리지 암호화 정보 |
 | volume.nhn_encryption.skm_appkey | Body | String | - | Secure Key Manager 상품의 앱키 |
 | volume.nhn_encryption.skm_key_id | Body | String | - | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
@@ -600,16 +600,16 @@ X-Auth-Token: {tokenId}
 | volume.status | Body | Enum | 블록 스토리지 상태 |
 | volume.description | Body | String | 블록 스토리지 설명 |
 | volume.multiattach | Body | Boolean | 여러 인스턴스에 연결 가능 여부 |
-{% if "public" in build_flags %}
-{% else %}
+{%- if "public" in build_flags %}
+{%- else %}
 | volume.consistencygroup_id | Body | UUID | 블록 스토리지 컨시스턴시 그룹 ID |
-{% endif %}
+{%- endif %}
 | volume.name | Body | String | 블록 스토리지 이름 |
 | volume.bootable | Body | String | 블록 스토리지 부팅 가능 여부 |
 | volume.created_at | Body | Datetime | 블록 스토리지 생성 시각<br>`YYYY-MM-DDThh:mm:ss.SSSSSS`의 형태 |
 | volume.os-volume-replication:driver_data | Body | String | 블록 스토리지 복제 데이터 |
 | volume.replication_status | Body | String | 블록 스토리지 복제 상태 |
-{% if "public" in build_flags %}
+{%- if "public" in build_flags %}
 | volume.nhn_encryption            | Body | Object | 블록 스토리지 암호화 정보 |
 | volume.nhn_encryption.skm_key_version | Body | Integer | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 버전 |
 | volume.nhn_encryption.skm_key_id | Body | String | 암호화 블록 스토리지 생성에 사용할 Secure Key Manager의 대칭 키 ID |
@@ -1038,16 +1038,16 @@ X-Auth-Token: {tokenId}
 | tenantId | URL | String | O | 테넌트 ID                                    |
 | tokenId | Header | String | O | 토큰 ID                                     |
 | snapshot | Body | Object | O | 스냅숏 생성 요청 객체                              |
-{% else %}
+{%- else %}
 | 이름 | 종류 | 형식 | 필수 | 설명                                             |
 |---|---|---|---|------------------------------------------------|
 | tenantId | URL | String | O | 테넌트 ID                                         |
 | tokenId | Header | String | O | 토큰 ID                                          |
 | snapshot | Body | Object | O | 스냅숏 생성 요청 객체                                   |
-{% endif %}
+{%- endif %}
 | snapshot.volume_id | Body | UUID | O | 원본 블록 스토리지 ID                                  |
 | snapshot.force | Body | Boolean | - | 강제 스냅숏 생성 여부<br>`true`면 블록 스토리지가 연결되어도 스냅숏을 생성 |
-{% if "public" in build_flags %}
+{%- if "public" in build_flags %}
 | snapshot.description | Body | String | - | 스냅숏 설명                                    |
 | snapshot.name | Body | String | - | 스냅숏 이름                                    |
 {% else %}
