@@ -17,8 +17,8 @@ Block storage can be used in many situations:
 
 To use block storage, you need to do the following:
 
-1. [Create block storage](/Storage/Block%20Storage/en/console-guide/#create-block-storage).
-2. [Attach the created block storage to the target instance](/Storage/Block%20Storage/en/console-guide/#attach-block-storage).
+1. [Create block storage](./console-guide/#create-block-storage).
+2. [Attach the created block storage to the target instance](./console-guide/#attach-block-storage).
 3. [Partition, format, and mount the block storage](#use-empty-block-storage) and use it.
 
 Block storage can be attached while the instance is running. Attached block storage is an empty device, so you will need to partition, format, and mount it manually depending on the operating system of the instance before using it.
