@@ -12,7 +12,7 @@ Create block storage to be attached to an instance.
 
 Block storage can be created with empty storage containing no data, or by snapshots of existing block storage.
 
-To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](/Storage/Block%20Storage/en/overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For block storage type, choose either **HDD** or **SSD**, based on the required I/O performance.
+To create empty block storage, select **Empty block storage, with no source** for **Block Storage Source**. Empty block storage must be attached to instance, with partitions divided, and formatted, before use.  Refer to [Block Storage Overview > Use Empty Block Storage](./overview/#use-empty-block-storage) on how to use block storage. The availability zone where empty block storage is to be located must have an instance to which block storage is to be attached. For block storage type, choose either **HDD** or **SSD**, based on the required I/O performance.
 
 You can also create block storage from snapshots. In this case, the block storage size must be the same as or larger than the snapshot size. To set a larger size, the customer must manually adjust partitions of existing block storage or add more partitions so as to make use of increased space.
 {% if "public" in build_flags %}
@@ -333,7 +333,7 @@ Use the following steps to solve the problem by making the file system UUIDs of 
 
 If you set `/etc/fstab` incorrectly when adding block storage, the volume mount may fail during boot and the instance may enter emergency mode.
 
-To prevent this situation, it is recommended to use the `nofail` option according to the [Block Storage Mounting Guide](/Storage/Block%20Storage/en/overview/#mount-block-storage) when adding additional block storage in `/etc/fstab`.
+To prevent this situation, it is recommended to use the `nofail` option according to the [Block Storage Mounting Guide](./overview/#mount-block-storage) when adding additional block storage in `/etc/fstab`.
 
 If you have modified `/etc/fstab` incorrectly and your instance is not booting properly, contact Customer Support.
 {% if "public" in build_flags %}

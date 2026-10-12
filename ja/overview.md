@@ -17,8 +17,8 @@
 
 ブロックストレージを使用するには、次の手順を進行する必要があります。
 
-1. [ブロックストレージを作成](/Storage/Block%20Storage/ja/console-guide/#create-block-storage)します。
-2. 作成したブロックストレージを[対象インスタンスに接続](/Storage/Block%20Storage/ja/console-guide/#attach-block-storage)します。
+1. [ブロックストレージを作成](./console-guide/#create-block-storage)します。
+2. 作成したブロックストレージを[対象インスタンスに接続](./console-guide/#attach-block-storage)します。
 3. ブロックストレージ[パーティション作業、フォーマット、マウント](#use-empty-block-storage)して使用します。
 
 ブロックストレージはインスタンス実行中にも接続できます。接続されたブロックストレージは空のデバイスなので、使用する前にインスタンスのオペレーションシステムに応じてパーティション作業、フォーマット、マウント作業を直接進行する必要があります。
