@@ -1,5 +1,15 @@
 ## Storage > Block Storage > 릴리스 노트
 
+<a id="october-27-2026"></a>
+## 2026. 10. 27.
+
+### 기능 추가
+
+* 블록 스토리지 API v3 제공
+    * OpenStack Cinder API v3 규격을 따릅니다.
+    * 기존 API v2도 계속 사용할 수 있습니다.
+    * [블록 스토리지 API v3 가이드](/Storage/Block%20Storage/ko/public-api-v3-gov/)를 참고하세요.
+
 <a id="june-2-2026"></a>
 ## 2026. 06. 02.
 

@@ -3,6 +3,16 @@
 <a id="storage-block-storage-release-notes"></a>
 ## Storage > Block Storage > Release Notes { #storage-block-storage-release-notes }
 
+<a id="october-27-2026"></a>
+## October 27, 2026
+
+### Added Features
+
+* Block Storage API v3 is now available
+    * It follows the OpenStack Cinder API v3 specification.
+    * The existing API v2 remains available.
+    * See [API v3 Guide for Block Storage](/Storage/Block%20Storage/en/public-api-v3/).
+
 <a id="may-27-2026"></a>
 ## May 27, 2026 { #may-27-2026 }
 
