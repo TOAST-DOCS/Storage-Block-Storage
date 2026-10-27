@@ -3,6 +3,16 @@
 <a id="storage-block-storage-release-notes"></a>
 ## Storage > Block Storage > Release Notes { #storage-block-storage-release-notes }
 
+<a id="october-27-2026"></a>
+## 2026. 10. 27.
+
+### 機能追加
+
+* ブロックストレージAPI v3提供
+    * OpenStack Cinder API v3の仕様に準拠します。
+    * 既存のAPI v2も引き続き使用できます。
+    * [ブロックストレージAPI v3ガイド](/Storage/Block%20Storage/ja/public-api-v3/)を参照してください。
+
 <a id="may-27-2026"></a>
 ## 2026. 05. 27. { #may-27-2026 }
 
